@@ -1,0 +1,65 @@
+{
+  "review": "逐張檢視四次活動的照片與候選素材，不以裁切或另存檔補數量",
+  "count_per_activity": 11,
+  "replacements": [
+    {
+      "date": "0903",
+      "replaced": "0051",
+      "replacement": "0015",
+      "reason": "近似連拍畫面更換為不同構圖"
+    },
+    {
+      "date": "0905",
+      "replaced": "0011",
+      "replacement": "0019",
+      "reason": "近似連拍畫面更換為不同構圖"
+    },
+    {
+      "date": "0910",
+      "replaced": "0037",
+      "replacement": "0045",
+      "reason": "近似連拍畫面更換為不同構圖"
+    },
+    {
+      "date": "0829",
+      "replaced": "0080",
+      "replacement": "0058",
+      "reason": "避免照片區重複頁首封面同一張照片"
+    },
+    {
+      "date": "0903",
+      "replaced": "0014",
+      "replacement": "0028",
+      "reason": "避免照片區重複頁首封面同一張照片"
+    },
+    {
+      "date": "0905",
+      "replaced": "0005",
+      "replacement": "0012",
+      "reason": "避免照片區重複頁首封面同一張照片"
+    },
+    {
+      "date": "0910",
+      "replaced": "0054",
+      "replacement": "0043",
+      "reason": "避免照片區重複頁首封面同一張照片"
+    },
+    {
+      "date": "0903",
+      "replaced": "0047",
+      "replacement": "0014",
+      "reason": "避免照片區重複頁首大橋封面"
+    }
+  ],
+  "new_photo_sequences": {
+    "0829": "0109",
+    "0903": "0018",
+    "0905": "0016",
+    "0910": "0042"
+  },
+  "excluded_near_duplicate_additions": {
+    "0903": "0052",
+    "0905": "0030",
+    "0910": "0046"
+  }
+}

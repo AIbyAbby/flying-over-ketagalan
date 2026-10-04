@@ -1,0 +1,90 @@
+[
+  {
+    "date": "0829",
+    "rms_ratios_against_unfaded_music": [
+      0.141,
+      0.524,
+      0.836,
+      0.899,
+      0.423,
+      0.101
+    ],
+    "sample_seconds": [
+      0,
+      1,
+      2,
+      114,
+      117,
+      119
+    ],
+    "fade_in": "passed",
+    "fade_out": "passed",
+    "manual_listening": false
+  },
+  {
+    "date": "0903",
+    "rms_ratios_against_unfaded_music": [
+      0.216,
+      0.539,
+      0.832,
+      0.921,
+      0.383,
+      0.105
+    ],
+    "sample_seconds": [
+      0,
+      1,
+      2,
+      114,
+      117,
+      119
+    ],
+    "fade_in": "passed",
+    "fade_out": "passed",
+    "manual_listening": false
+  },
+  {
+    "date": "0905",
+    "rms_ratios_against_unfaded_music": [
+      0.322,
+      0.509,
+      0.856,
+      0.921,
+      0.449,
+      0.097
+    ],
+    "sample_seconds": [
+      0,
+      1,
+      2,
+      114,
+      117,
+      119
+    ],
+    "fade_in": "passed",
+    "fade_out": "passed",
+    "manual_listening": false
+  },
+  {
+    "date": "0910",
+    "rms_ratios_against_unfaded_music": [
+      0.289,
+      0.46,
+      0.86,
+      0.895,
+      0.426,
+      0.096
+    ],
+    "sample_seconds": [
+      0,
+      1,
+      2,
+      114,
+      117,
+      119
+    ],
+    "fade_in": "passed",
+    "fade_out": "passed",
+    "manual_listening": false
+  }
+]

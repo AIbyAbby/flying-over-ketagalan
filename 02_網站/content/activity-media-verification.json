@@ -1,0 +1,74 @@
+[
+  {
+    "date": "0829",
+    "full_decode": "passed",
+    "black_intervals": [],
+    "levels": [
+      "[Parsed_volumedetect_0 @ 000001f2addddd40] mean_volume: -21.7 dB",
+      "[Parsed_volumedetect_0 @ 000001f2addddd40] max_volume: -3.8 dB"
+    ],
+    "visual_samples": [
+      2,
+      28,
+      50,
+      72,
+      95,
+      117
+    ],
+    "audio_listening": "not manually auditioned"
+  },
+  {
+    "date": "0903",
+    "full_decode": "passed",
+    "black_intervals": [],
+    "levels": [
+      "[Parsed_volumedetect_0 @ 000001ef3896f740] mean_volume: -20.3 dB",
+      "[Parsed_volumedetect_0 @ 000001ef3896f740] max_volume: -2.9 dB"
+    ],
+    "visual_samples": [
+      2,
+      28,
+      50,
+      72,
+      95,
+      117
+    ],
+    "audio_listening": "not manually auditioned"
+  },
+  {
+    "date": "0905",
+    "full_decode": "passed",
+    "black_intervals": [],
+    "levels": [
+      "[Parsed_volumedetect_0 @ 000001d23f6cd300] mean_volume: -21.0 dB",
+      "[Parsed_volumedetect_0 @ 000001d23f6cd300] max_volume: -7.5 dB"
+    ],
+    "visual_samples": [
+      2,
+      28,
+      50,
+      72,
+      95,
+      117
+    ],
+    "audio_listening": "not manually auditioned"
+  },
+  {
+    "date": "0910",
+    "full_decode": "passed",
+    "black_intervals": [],
+    "levels": [
+      "[Parsed_volumedetect_0 @ 00000156e098eb40] mean_volume: -21.7 dB",
+      "[Parsed_volumedetect_0 @ 00000156e098eb40] max_volume: -4.0 dB"
+    ],
+    "visual_samples": [
+      2,
+      28,
+      50,
+      72,
+      95,
+      117
+    ],
+    "audio_listening": "not manually auditioned"
+  }
+]

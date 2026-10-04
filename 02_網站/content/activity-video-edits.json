@@ -1,0 +1,239 @@
+[
+  {
+    "date": "0829",
+    "title": "北投社空拍紀實",
+    "output": "assets/fieldwork-0829-120s.mp4",
+    "poster": "assets/fieldwork-0829-poster-120s.jpg",
+    "duration": 120,
+    "music": {
+      "date": "0829",
+      "title": "Dream Culture",
+      "artist": "Kevin MacLeod",
+      "page": "https://incompetech.com/music/royalty-free/index.html?Search=Search&isrc=USUAN1300046",
+      "download": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Dream%20Culture.mp3",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "path": "tmp/activity-audio/0829-music.mp3",
+      "edit": "120-second excerpt; 3-second fade in; 6-second fade out",
+      "description": "Dreamy watery piano bits over a tight percussion with some reverse effects to add to the dreamlike state of things."
+    },
+    "audio_fades": {
+      "in_seconds": 3,
+      "out_seconds": 6
+    },
+    "opening_title": {
+      "start": 0,
+      "end": 5
+    },
+    "shots": [
+      {
+        "file": "0829-0106.mp4",
+        "start": 0.5,
+        "duration": 21
+      },
+      {
+        "file": "0829-0089.mp4",
+        "start": 0.5,
+        "duration": 18
+      },
+      {
+        "file": "0829-0095.mp4",
+        "start": 0.5,
+        "duration": 23
+      },
+      {
+        "file": "0829-0084.mp4",
+        "start": 2,
+        "duration": 21
+      },
+      {
+        "file": "0829-0103.mp4",
+        "start": 3,
+        "duration": 21
+      },
+      {
+        "file": "0829-0107.mp4",
+        "start": 3,
+        "duration": 20
+      }
+    ],
+    "transition": {
+      "type": "cross dissolve",
+      "seconds": 0.8
+    }
+  },
+  {
+    "date": "0903",
+    "title": "淡水與八里空拍紀實",
+    "output": "assets/fieldwork-0903-120s.mp4",
+    "poster": "assets/fieldwork-0903-poster-120s.jpg",
+    "duration": 120,
+    "music": {
+      "date": "0903",
+      "title": "Clean Soul",
+      "artist": "Kevin MacLeod",
+      "page": "https://incompetech.com/music/royalty-free/index.html?Search=Search&isrc=USUAN1300033",
+      "download": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Clean%20Soul.mp3",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "path": "tmp/activity-audio/0903-music.mp3",
+      "edit": "120-second excerpt; 3-second fade in; 6-second fade out",
+      "description": "Very clean soft piece with a lot of space in it."
+    },
+    "audio_fades": {
+      "in_seconds": 3,
+      "out_seconds": 6
+    },
+    "opening_title": {
+      "start": 0,
+      "end": 5
+    },
+    "shots": [
+      {
+        "file": "0903-0053.mp4",
+        "start": 1,
+        "duration": 26.2
+      },
+      {
+        "file": "0903-0007.mp4",
+        "start": 0.5,
+        "duration": 20
+      },
+      {
+        "file": "0903-0009.mp4",
+        "start": 2,
+        "duration": 26
+      },
+      {
+        "file": "0903-0024.mp4",
+        "start": 2,
+        "duration": 26
+      },
+      {
+        "file": "0903-0043.mp4",
+        "start": 2,
+        "duration": 25
+      }
+    ],
+    "transition": {
+      "type": "cross dissolve",
+      "seconds": 0.8
+    }
+  },
+  {
+    "date": "0905",
+    "title": "雞籠社 和平島空拍紀實",
+    "output": "assets/fieldwork-0905-120s.mp4",
+    "poster": "assets/fieldwork-0905-poster-120s.jpg",
+    "duration": 120,
+    "music": {
+      "date": "0905",
+      "title": "Fluidscape",
+      "artist": "Kevin MacLeod",
+      "page": "https://incompetech.com/music/royalty-free/index.html?Search=Search&isrc=USUAN1100393",
+      "download": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Fluidscape.mp3",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "path": "tmp/activity-audio/0905-music.mp3",
+      "edit": "120-second excerpt; 3-second fade in; 6-second fade out",
+      "description": "Very long, cool, relaxed piece - no surprises, though the timbre does change from time to time."
+    },
+    "audio_fades": {
+      "in_seconds": 3,
+      "out_seconds": 6
+    },
+    "opening_title": {
+      "start": 0,
+      "end": 5
+    },
+    "shots": [
+      {
+        "file": "0905-0003.mp4",
+        "start": 0.5,
+        "duration": 25
+      },
+      {
+        "file": "0905-0004.mp4",
+        "start": 0.5,
+        "duration": 35
+      },
+      {
+        "file": "0905-0028.mp4",
+        "start": 0.3,
+        "duration": 38
+      },
+      {
+        "file": "0905-0033.mp4",
+        "start": 0.6,
+        "duration": 24.4
+      }
+    ],
+    "transition": {
+      "type": "cross dissolve",
+      "seconds": 0.8
+    }
+  },
+  {
+    "date": "0910",
+    "title": "基隆河流域空拍紀實",
+    "output": "assets/fieldwork-0910-120s.mp4",
+    "poster": "assets/fieldwork-0910-poster-120s.jpg",
+    "duration": 120,
+    "music": {
+      "date": "0910",
+      "title": "Almost in F",
+      "artist": "Kevin MacLeod",
+      "page": "https://incompetech.com/music/royalty-free/index.html?Search=Search&isrc=USUAN1100394",
+      "download": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Almost%20in%20F.mp3",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "path": "tmp/activity-audio/0910-music.mp3",
+      "edit": "120-second excerpt; 3-second fade in; 6-second fade out",
+      "description": "Very long, very slow, trance-inducing piece... 36 cents sharp of the key of F. Yes, there is a good reason for that. No, I'm not going to explain it."
+    },
+    "audio_fades": {
+      "in_seconds": 3,
+      "out_seconds": 6
+    },
+    "opening_title": {
+      "start": 0,
+      "end": 5
+    },
+    "shots": [
+      {
+        "file": "0910-0053.mp4",
+        "start": 1,
+        "duration": 21
+      },
+      {
+        "file": "0910-0004.mp4",
+        "start": 1,
+        "duration": 21
+      },
+      {
+        "file": "0910-0014.mp4",
+        "start": 2,
+        "duration": 22
+      },
+      {
+        "file": "0910-0017.mp4",
+        "start": 1,
+        "duration": 20
+      },
+      {
+        "file": "0910-0030.mp4",
+        "start": 1,
+        "duration": 18
+      },
+      {
+        "file": "0910-0034.mp4",
+        "start": 2,
+        "duration": 22
+      }
+    ],
+    "transition": {
+      "type": "cross dissolve",
+      "seconds": 0.8
+    }
+  }
+]

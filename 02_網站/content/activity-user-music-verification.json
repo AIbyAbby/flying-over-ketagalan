@@ -1,0 +1,26 @@
+[
+  {
+    "date": "0829",
+    "duration": "120.000000",
+    "unchanged_video_hash": "SHA256=7e130426838124343a74db34b58dd70aa96924f54e1f54275d85eafc2cbb2e12",
+    "audio_hash": "SHA256=b8fc28a2225fab3b830bb49872e7266a5699a192616a648394997de3f82bb75e"
+  },
+  {
+    "date": "0903",
+    "duration": "120.000000",
+    "unchanged_video_hash": "SHA256=c2f7dd5b1cc15242293258f65bbfe039c48cbbb30d975aa65b49ba684e60199b",
+    "audio_hash": "SHA256=b8fc28a2225fab3b830bb49872e7266a5699a192616a648394997de3f82bb75e"
+  },
+  {
+    "date": "0905",
+    "duration": "120.000000",
+    "unchanged_video_hash": "SHA256=532a06c7adf4580372f6f7188a2195ac800c5fab00c794600c47352884b89413",
+    "audio_hash": "SHA256=b8fc28a2225fab3b830bb49872e7266a5699a192616a648394997de3f82bb75e"
+  },
+  {
+    "date": "0910",
+    "duration": "120.000000",
+    "unchanged_video_hash": "SHA256=8d1cb57480426abe6e70c0edc0f064f629cdfe03cdeaf89828de54adacb6b810",
+    "audio_hash": "SHA256=b8fc28a2225fab3b830bb49872e7266a5699a192616a648394997de3f82bb75e"
+  }
+]

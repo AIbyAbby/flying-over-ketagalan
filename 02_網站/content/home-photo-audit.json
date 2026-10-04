@@ -1,0 +1,19 @@
+{
+  "homepage_images": [
+    "assets/home-golden-river.jpg",
+    "assets/flight-0905-0030.jpg",
+    "assets/home-0829-0077.jpg",
+    "assets/home-0829-0083.jpg",
+    "assets/flight-0903-0017.jpg",
+    "assets/flight-0905-0022.jpg",
+    "assets/flight-0910-0046.jpg",
+    "assets/home-work-4.jpg",
+    "assets/home-work-0.jpg",
+    "assets/home-work-1.jpg",
+    "assets/home-work-2.jpg",
+    "assets/flight-0905-0035.jpg"
+  ],
+  "count": 12,
+  "duplicate_pixels": false,
+  "reuse_from_other_html_pages": false
+}
