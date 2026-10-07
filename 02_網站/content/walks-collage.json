@@ -1,0 +1,172 @@
+{
+  "groups": [
+    {
+      "id": "air",
+      "title": "空拍與走讀",
+      "photos": [
+        {
+          "source": "../空拍照/LINE_ALBUM_消失台北原住民空拍課_261007_11.jpg",
+          "src": "assets/walks-air-261007-11.jpg",
+          "alt": "空拍練習時，同行者在旁協助觀看螢幕",
+          "focus": "50% 30%"
+        },
+        {
+          "source": "../空拍照/LINE_ALBUM_消失台北原住民空拍課_261007_17.jpg",
+          "src": "assets/walks-air-261007-17.jpg",
+          "alt": "同學拿著操作裝置，觀看空中的鏡頭",
+          "focus": "50% 30%"
+        },
+        {
+          "source": "../空拍照/LINE_ALBUM_消失台北原住民空拍課_261007_15.jpg",
+          "src": "assets/walks-air-261007-15.jpg",
+          "alt": "同學練習操作，夥伴在旁陪同",
+          "focus": "50% 30%"
+        },
+        {
+          "source": "../空拍照/LINE_ALBUM_消失台北原住民空拍課_261007_41.jpg",
+          "src": "assets/walks-air-261007-41.jpg",
+          "alt": "同學共同查看手中的螢幕",
+          "focus": "50% 30%"
+        },
+        {
+          "source": "../空拍照/LINE_ALBUM_消失台北原住民空拍課_261007_33.jpg",
+          "src": "assets/walks-air-261007-33.jpg",
+          "alt": "練習過程中，同學拿著裝置交流",
+          "focus": "50% 30%"
+        },
+        {
+          "source": "../空拍照/LINE_ALBUM_消失台北原住民空拍課_261007_2.jpg",
+          "src": "assets/walks-air-261007-2.jpg",
+          "alt": "同學們聚在河岸橋邊交流與練習",
+          "focus": "50% 45%"
+        },
+        {
+          "source": "../空拍照/LINE_ALBUM_消失台北原住民空拍課_261007_25.jpg",
+          "src": "assets/walks-air-261007-25.jpg",
+          "alt": "同學在戶外練習操作",
+          "focus": "50% 30%"
+        },
+        {
+          "source": "../空拍照/LINE_ALBUM_消失台北原住民空拍課_261007_29.jpg",
+          "src": "assets/walks-air-261007-29.jpg",
+          "alt": "同學低頭查看操作裝置",
+          "focus": "50% 30%"
+        },
+        {
+          "source": "../空拍照/LINE_ALBUM_消失台北原住民空拍課_261007_31.jpg",
+          "src": "assets/walks-air-261007-31.jpg",
+          "alt": "同學在步道旁觀看手中的螢幕",
+          "focus": "50% 35%"
+        },
+        {
+          "source": "../空拍照/LINE_ALBUM_消失台北原住民空拍課_261007_32.jpg",
+          "src": "assets/walks-air-261007-32.jpg",
+          "alt": "同學在樹下查看操作裝置",
+          "focus": "50% 30%"
+        },
+        {
+          "source": "../空拍照/LINE_ALBUM_消失台北原住民空拍課_261007_27.jpg",
+          "src": "assets/walks-air-261007-27.jpg",
+          "alt": "兩位同學共同練習觀看與操作",
+          "focus": "50% 30%"
+        },
+        {
+          "source": "../空拍照/LINE_ALBUM_消失台北原住民空拍課_261007_3.jpg",
+          "src": "assets/walks-air-261007-3.jpg",
+          "alt": "同行者在河岸旁一起交流",
+          "focus": "50% 45%"
+        },
+        {
+          "source": "../空拍照/LINE_ALBUM_消失台北原住民空拍課_261007_35.jpg",
+          "src": "assets/walks-air-261007-35.jpg",
+          "alt": "兩位同學沿著林間步道同行",
+          "focus": "50% 35%"
+        },
+        {
+          "source": "../空拍照/LINE_ALBUM_消失台北原住民空拍課_261007_21.jpg",
+          "src": "assets/walks-air-261007-21.jpg",
+          "alt": "同行者走向樹木環繞的通道",
+          "focus": "50% 55%"
+        },
+        {
+          "source": "../空拍照/LINE_ALBUM_消失台北原住民空拍課_261007_23.jpg",
+          "src": "assets/walks-air-261007-23.jpg",
+          "alt": "同學們停留在山坡步道旁",
+          "focus": "50% 50%"
+        },
+        {
+          "source": "../空拍照/LINE_ALBUM_消失台北原住民空拍課_261007_40.jpg",
+          "src": "assets/walks-air-261007-40.jpg",
+          "alt": "同學們撐著傘交流與討論",
+          "focus": "50% 35%"
+        },
+        {
+          "source": "../空拍照/LINE_ALBUM_消失台北原住民空拍課_261007_43.jpg",
+          "src": "assets/walks-air-261007-43.jpg",
+          "alt": "雨傘下的同行者與地上的空拍機",
+          "focus": "50% 85%"
+        },
+        {
+          "source": "../空拍照/LINE_ALBUM_消失台北原住民空拍課_261003_5.jpg",
+          "src": "assets/walks-air-261003-5.jpg",
+          "alt": "同行者在樹下指向空中的方向",
+          "focus": "50% 40%"
+        }
+      ]
+    },
+    {
+      "id": "museum",
+      "title": "十三行博物館",
+      "photos": [
+        {
+          "source": "../十三行/LINE_ALBUM_消失台北原住民空拍課_261007_5.jpg",
+          "src": "assets/walks-museum-261007-5.jpg",
+          "alt": "同學在展櫃前觀看展件",
+          "focus": "50% 40%"
+        },
+        {
+          "source": "../十三行/LINE_ALBUM_消失台北原住民空拍課_261007_4.jpg",
+          "src": "assets/walks-museum-261007-4.jpg",
+          "alt": "同學操作展場的互動螢幕",
+          "focus": "75% 50%"
+        },
+        {
+          "source": "../十三行/LINE_ALBUM_消失台北原住民空拍課_261007_6.jpg",
+          "src": "assets/walks-museum-261007-6.jpg",
+          "alt": "同學拿著紙張觀看復原的生活情境",
+          "focus": "50% 50%"
+        },
+        {
+          "source": "../十三行/LINE_ALBUM_消失台北原住民空拍課_261007_7.jpg",
+          "src": "assets/walks-museum-261007-7.jpg",
+          "alt": "同學以手機記錄展示內容",
+          "focus": "50% 35%"
+        },
+        {
+          "source": "../十三行/LINE_ALBUM_消失台北原住民空拍課_261007_9.jpg",
+          "src": "assets/walks-museum-261007-9.jpg",
+          "alt": "同學站在展示牆前與同行者交流",
+          "focus": "50% 40%"
+        },
+        {
+          "source": "../十三行/LINE_ALBUM_消失台北原住民空拍課_261007_36.jpg",
+          "src": "assets/walks-museum-261007-36.jpg",
+          "alt": "參訪者在展場裡一起交流",
+          "focus": "50% 45%"
+        },
+        {
+          "source": "../十三行/LINE_ALBUM_消失台北原住民空拍課_261007_1.jpg",
+          "src": "assets/walks-museum-261007-1.jpg",
+          "alt": "同學站在展場入口旁留下參訪身影",
+          "focus": "50% 55%"
+        },
+        {
+          "source": "../十三行/LINE_ALBUM_消失台北原住民空拍課_261007_8.jpg",
+          "src": "assets/walks-museum-261007-8.jpg",
+          "alt": "同學在展場中觀看與記錄",
+          "focus": "50% 30%"
+        }
+      ]
+    }
+  ]
+}

@@ -7,7 +7,7 @@ AIR_PAGES = (
     ('fieldwork-0905.html', '03 雞籠社與和平島 09.05'),
     ('fieldwork-0910.html', '04 基隆河流域 09.10'),
 )
-WORK_PAGES = {'abby.html', 'suifen.html', 'kuncan.html', 'wenjin.html'}
+WORK_PAGES = {'abby.html', 'suifen.html', 'kuncan.html', 'wenjin.html', 'yuan.html'}
 
 
 def render_header(filename):

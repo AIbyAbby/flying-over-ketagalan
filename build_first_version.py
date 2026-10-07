@@ -9,7 +9,7 @@ from walks_page import prepare_walks_photos, render_walks
 import re
 
 parser = argparse.ArgumentParser(description=__doc__)
-parser.add_argument('--pages', nargs='+', choices=['index.html','stories.html','fieldwork.html','works.html','intro.html','walks.html','teacher.html','fieldwork-0829.html','fieldwork-0903.html','fieldwork-0905.html','fieldwork-0910.html','abby.html','suifen.html','kuncan.html','wenjin.html'], help='Only render these HTML filenames.')
+parser.add_argument('--pages', nargs='+', choices=['index.html','stories.html','fieldwork.html','works.html','intro.html','walks.html','teacher.html','fieldwork-0829.html','fieldwork-0903.html','fieldwork-0905.html','fieldwork-0910.html','abby.html','suifen.html','kuncan.html','wenjin.html','yuan.html'], help='Only render these HTML filenames.')
 parser.add_argument('--prepare-media', action='store_true', help='Explicitly rebuild existing photos and video posters.')
 parser.add_argument('--write-content', action='store_true', help='Explicitly export legacy derived Markdown and JSON.')
 args = parser.parse_args()
@@ -107,12 +107,14 @@ WORK_COPY={
  'suifen':('搭上捷運，我們熟悉的城市，也可以成為一條尋找歷史的路。張穗芬從文化資產與遺址出發，把現地影像、博物館展件與生活情境串在一起。城市裡留下的線索，有時是一個地方，有時是一件物品，也可能是我們平常未曾停下來細看的細節。這件作品邀請你放慢觀看，跟著她在日常風景中辨認凱達格蘭故事的痕跡：當過往沒有完整地留在眼前，我們還能從哪裡開始尋找？','每天經過的城市，還藏著哪些未曾細看的歷史線索？跟著張穗芬搭上捷運，走向遺址與博物館，在熟悉的風景裡重新辨認凱達格蘭故事的痕跡。'),
  'kuncan':('「凱達格蘭族，你在哪裡？」高坤燦帶著這個提問，讓鏡頭穿過河灣、都市與古地名。作品將現代河岸的空拍，接合 AI 描繪的過往生活，讓同一片土地的不同時間在影像中相遇。今天看得見的水路與街廓，和創作想像裡的生活情境，彼此映照，也留下需要繼續追問的空間。邀請你跟著這個問題看下去：當聚落的樣貌已經改變，河流與名字，還能為我們留下什麼線索？','如果聚落的樣貌已經改變，我們還能循著什麼找到它？高坤燦讓今日河岸的空拍與 AI 描繪的過往相遇，帶著「你在哪裡」的提問，穿過河灣與城市。'),
  'wenjin':('一座住屋、一件文物、一張古地圖，能讓我們讀回多少生活的線索？黃文津把博物館展示與歷史材料接在一起，從零散的片段尋找人與土地的關係。鏡頭帶我們停留在展件與地圖之間，試著把觀看到的細節，接回更大的生活輪廓。這件作品邀請你從一件物品開始，重新思考它與住屋、水路及聚落的關係：那些留在展場裡的片段，如何讓過往的日常重新進入我們的視野？','一件文物與一張古地圖，能接起怎樣的生活輪廓？跟著黃文津在住屋、展件與歷史材料之間停留，從零散的細節，讀回人與土地的關係。'),
+ 'yuan':('1632年的夜裡，燭火微光映著木桌。遠渡而來的西班牙神父提起羽毛筆，在手記裡記下島嶼北方的山勢、水路與聚落。傅玉安以歷史文獻為起點，運用生成式 AI 重構十七世紀的時空場景。神父的筆尖穿過雞籠社與淡水河口，記錄下往來水上的獨木舟、帆船運載的硫磺，以及族人最初開口說出的詞彙。邀請你藉由異鄉人的凝視，重新走進四百年前凱達格蘭族的生活：當歷史只留下片語，我們如何讓過往重新對我們說話？','十七世紀的微光下，西班牙神父在手記寫下北台灣的水路與聚落。傅玉安以歷史文獻為底，在影像中重現凱達格蘭族四百年前的生活剪影與相遇。'),
 }
 WORK_SOURCES={
  'abby':'空拍奇遇記 Abby.mp4',
  'suifen':'2026_探尋凱達格蘭族的遺跡_張穗芬.mp4',
  'kuncan':'凱達格蘭族的故事-坤燦.mp4',
  'wenjin':'凱達格蘭族的故事-黃文津.mp4',
+ 'yuan':'凱達格蘭1632-玉安.mov',
 }
 
 def first_frame(source, name):
@@ -197,13 +199,14 @@ def page(filename,title,body,home=False,legacy=True):
   body=legacy_body(body)
   title=legacy_body(title)
  body=re.sub(r'(<h[123]\b[^>]*>)沿著河尋找三個社的土地記憶(</h[123]>)',r'\1沿著河<br>尋找三個社的土地記憶\2',body)
- styles='<link rel="stylesheet" href="magazine.css?v=15">'
+ styles='<link rel="stylesheet" href="magazine.css?v=16">'
+ if filename=='walks.html':styles+='<link rel="stylesheet" href="walks.css?v=1">'
  body_class=('home' if home else 'inner') + (' teacher-page' if filename=='teacher.html' else '')
  if filename.startswith('fieldwork-'): body_class+=' field-page'
- if filename in {'abby.html','suifen.html','kuncan.html','wenjin.html'}: body_class+=' work-page'
- if home: styles+='<link rel="stylesheet" href="editorial-home.css?v=6">'
+ if filename in {'abby.html','suifen.html','kuncan.html','wenjin.html','yuan.html'}: body_class+=' work-page'
+ if home: styles+='<link rel="stylesheet" href="editorial-home.css?v=7">'
  html=f'''<!doctype html>
-<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="循著凱達格蘭的足跡，留下田野、空拍與創作的共同記憶。"><meta name="theme-color" content="#234f56"><title>{e(title)}｜消失的原民故事</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&family=Noto+Serif+TC:wght@400;500;600;700&display=swap" rel="stylesheet">{styles}<script src="documentary.js?v=4" defer></script></head>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="循著凱達格蘭的足跡，留下田野、空拍與創作的共同記憶。"><meta name="theme-color" content="#234f56"><title>{e(title)}｜消失的原民故事</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&family=Noto+Serif+TC:wght@400;500;600;700&display=swap" rel="stylesheet">{styles}<script src="documentary.js?v=5" defer></script></head>
 <body class="{body_class}"><a class="skip" href="#main">跳到主要內容</a>{render_header(filename)}<main id="main">{body}</main><footer class="site-footer compact-footer"><a class="back-top ui-control" href="#main" aria-label="回到頁首">回到頁首</a></footer></body></html>'''
  (SITE/filename).write_text(html,encoding='utf-8')
  built_pages.append(filename)
