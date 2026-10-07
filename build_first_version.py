@@ -207,8 +207,9 @@ def page(filename,title,body,home=False,legacy=True):
  if filename in {'abby.html','suifen.html','kuncan.html','wenjin.html','yuan.html'}: body_class+=' work-page'
  if home: styles+='<link rel="stylesheet" href="editorial-home.css?v=7">'
  styles+='<link rel="stylesheet" href="reading-layout.css?v=1">'
+ styles+='<link rel="stylesheet" href="video-layout.css?v=1">'
  html=f'''<!doctype html>
-<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="循著凱達格蘭的足跡，留下田野、空拍與創作的共同記憶。"><meta name="theme-color" content="#234f56"><title>{e(title)}｜消失的原民故事</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&family=Noto+Serif+TC:wght@400;500;600;700&display=swap" rel="stylesheet">{styles}<script src="documentary.js?v=5" defer></script></head>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="循著凱達格蘭的足跡，留下田野、空拍與創作的共同記憶。"><meta name="theme-color" content="#234f56"><title>{e(title)}｜消失的原民故事</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&family=Noto+Serif+TC:wght@400;500;600;700&display=swap" rel="stylesheet">{styles}<script src="documentary.js?v=6" defer></script></head>
 <body class="{body_class}"><a class="skip" href="#main">跳到主要內容</a>{render_header(filename)}<main id="main">{body}</main><footer class="site-footer compact-footer"><a class="back-top ui-control" href="#main" aria-label="回到頁首">回到頁首</a></footer></body></html>'''
  (SITE/filename).write_text(html,encoding='utf-8')
  built_pages.append(filename)
@@ -328,13 +329,13 @@ for idx,c in enumerate(COURSES):
  page('fieldwork-'+c['key']+'.html',c['place']+'・'+c['title'],body)
 
 def video(video_id,image,title,button='播放作品'):
- return f'<div class="video-shell" data-video="{video_id}"><img src="{image}" alt="{e(title)}影片封面" loading="lazy"><button type="button" class="play-button ui-control" aria-label="{e(button+'：'+title)}"><span class="play-icon" aria-hidden="true">▶</span>{button}</button></div><div class="video-links"><a href="https://drive.google.com/file/d/{video_id}/view" target="_blank" rel="noopener">在雲端開啟影片 ↗</a></div>'
+ return f'<div class="video-shell" data-video="{video_id}" data-title="{e(title)}"><img src="{image}" alt="" loading="lazy"><button type="button" class="play-button ui-control" aria-label="{e(button+"："+title)}"><span class="play-icon" aria-hidden="true">▶</span>{button}</button></div><div class="video-links"><a href="https://drive.google.com/file/d/{video_id}/view" target="_blank" rel="noopener">在雲端開啟影片 ↗</a></div>'
 
 for w in WORKS:
  body=f'<header class="article-heading wrap work-heading"><a class="breadcrumb" href="works.html">故事總覽 / 同學作品</a><span class="kicker">{w["author"]}・{w["duration"]}</span><h1>{w["title"]}</h1><p class="article-lead">{w["subtitle"]}</p></header><article class="work-reading wrap"><div class="work-introduction"><span class="kicker">這件作品的出發點</span><p>{w["description"]}</p></div>'+video(w['id'],w['image'],w['title'])+'</article>'
  if w['slug']=='abby':
   voiceover_intro='<p>十三行人究竟是不是凱達格蘭族的祖先？走進十三行博物館，Abby 從田野走讀中拍下的展件影像出發，結合語音敘事與情境音效，完成這份富有探索精神的配音成果。</p><p>透過《番社采風圖》的歷史圖說、一比一復原的干欄式住屋、細緻拍印的幾何陶罐紋樣，以及火塘邊的生活日常，將靜態的照片轉化為生動的歷史漫遊。這不只是一次課堂作業，更是讓走讀足跡有了聲音，讓沉睡千年的考古記憶在當代重新甦醒。</p>'
-  voiceover_shell='<div class="video-shell" data-youtube="S2_Z2z-UeqE"><img src="assets/abby-voiceover-first-frame.jpg" alt="十三行人真的是凱達格蘭族的祖先嗎影片封面" loading="lazy"><button type="button" class="play-button ui-control" aria-label="播放作品：十三行人真的是凱達格蘭族的祖先嗎？"><span class="play-icon" aria-hidden="true">▶</span>播放作品</button></div><div class="video-links"><a href="https://youtu.be/S2_Z2z-UeqE" target="_blank" rel="noopener">在 YouTube 開啟影片 </a></div>'
+  voiceover_shell='<div class="video-shell" data-youtube="S2_Z2z-UeqE" data-title="十三行人真的是凱達格蘭族的祖先嗎？"><img src="assets/abby-voiceover-first-frame.jpg" alt="" loading="lazy"><button type="button" class="play-button ui-control" aria-label="播放作品：十三行人真的是凱達格蘭族的祖先嗎？"><span class="play-icon" aria-hidden="true">▶</span>播放作品</button></div><div class="video-links"><a href="https://youtu.be/S2_Z2z-UeqE" target="_blank" rel="noopener">在 YouTube 開啟影片 ↗</a></div>'
   body+=f'<section class="interview wrap"><div class="work-introduction work-secondary"><span class="kicker">走讀配音功課・4 分 17 秒</span><h2>十三行人真的是凱達格蘭族的祖先嗎？</h2>{voiceover_intro}</div>{voiceover_shell}</section>'
  if w['slug']=='suifen':
   body+='<section class="interview wrap"><div class="section-heading"><span class="kicker">聽創作者說</span><h2>穗芬談創作思維</h2><p>從作品回到創作的過程，聽穗芬分享自己的觀看與思考。</p></div>'+video('1Uxapk_yIMfmXcGxE9QF9Vz7gEEVUsIFz',INTERVIEW_POSTER,'穗芬談創作思維','播放創作分享')+'</section>'

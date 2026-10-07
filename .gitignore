@@ -1,6 +1,7 @@
 __pycache__/
 *.pyc
 scratch/
+test_screenshots/
 .DS_Store
 Thumbs.db
 tmp/

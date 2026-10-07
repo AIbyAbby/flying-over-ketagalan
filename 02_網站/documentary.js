@@ -70,7 +70,7 @@ document.querySelectorAll('.video-shell').forEach(shell=>{
    frame.src=`https://drive.google.com/file/d/${encodeURIComponent(shell.dataset.video)}/preview`;
    frame.allow='autoplay; fullscreen';
   }
-  frame.title=shell.querySelector('img')?.alt.replace('影片封面','')||'影片播放器';
+  frame.title=shell.dataset.title||shell.querySelector('button')?.getAttribute('aria-label')?.replace(/^播放作品[：:]\s*/,'')||shell.querySelector('img')?.alt.replace('影片封面','')||'影片播放器';
   frame.tabIndex=0;
   frame.allowFullscreen=true;
   shell.replaceChildren(frame);
