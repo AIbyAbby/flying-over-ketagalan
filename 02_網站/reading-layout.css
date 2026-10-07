@@ -1,0 +1,109 @@
+/* Reading layer: mobile first; keep media assets and player layout independent. */
+:root {
+  --type-body: 1.1875rem;
+  --type-caption: .9375rem;
+  --type-meta: 1.0625rem;
+  --type-button: 1.0625rem;
+  --type-lead: 1.375rem;
+  --type-h1: 2rem;
+  --type-h2: 1.625rem;
+  --type-h3: 1.5rem;
+  --line-body: 1.9;
+  --layout-gutter: 1rem;
+  --header-clearance: 8rem;
+  --reading-card-padding: 2rem;
+  --reading-card-radius: .75rem;
+  --reading-card-shadow: 0 .125rem .875rem rgba(37,53,47,.045);
+}
+body { font-size:var(--type-body); line-height:var(--line-body); }
+h1,h2,h3 { line-height:1.3; text-wrap:balance; }
+.page-heading h1,.article-heading h1,.walks-heading h1 { font-size:var(--type-h1); line-height:1.3; text-wrap:balance; }
+.page-heading p,.article-heading .article-lead,.work-heading .article-lead,.walks-heading-detail {
+  font-size:var(--type-lead); line-height:1.9; color:var(--ink);
+}
+.reading-block p,.work-introduction p,.work-secondary p,.entry-copy p,
+.walks-section p,.intro-reading p,.section-heading p { font-size:var(--type-body); line-height:var(--line-body); }
+.reading-block>h2,.section-heading h2,.document-maps h2,.list-heading h2,
+.work-secondary h2,.walks-section h2,.walks-page .walks-collage-group>h2 {
+  font-size:var(--type-h2); line-height:1.3; text-wrap:balance;
+}
+.reading-block>h3,.entry-copy h3,.card-copy h3 { font-size:var(--type-h3); line-height:1.3; text-wrap:balance; }
+.kicker,.byline,.breadcrumb,.entry-copy .kicker,.intro-credits p,
+.intro-credits p:first-child,.teacher-page .teacher-byline p {
+  font-size:var(--type-meta); color:var(--muted); line-height:1.9;
+}
+.intro-credits p:first-child { white-space:normal; }
+.document-title { font-size:var(--type-meta)!important; color:var(--muted); }
+figcaption,.teacher-page .teacher-photo figcaption,.scene-grid .scene-photo figcaption,
+.walks-photo figcaption,.walks-gallery figcaption { font-size:var(--type-caption); color:var(--muted); line-height:1.9; }
+.text-link,.entry-link,.view-all,.next-story,.category-nav,
+.primary-entry,.journal-link.primary-entry,.site-footer .back-top,
+.site-footer p,.site-footer .footer-small,.site-footer.compact-footer>div>a {
+  font-size:var(--type-button); line-height:1.8;
+}
+.list-heading>span { font-size:var(--type-meta); }
+.card-label { font-size:var(--type-meta); color:var(--muted); }
+.card-copy p { font-size:var(--type-body); line-height:var(--line-body); }
+.card-action { font-size:var(--type-button); }
+.shared-card-grid { grid-template-columns:minmax(0,1fr); gap:2.5rem; }
+
+/* Brand and navigation form two deliberate rows on small screens. */
+.header-row { grid-template-columns:minmax(0,1fr); gap:0; min-height:0; padding:.5rem var(--layout-gutter); }
+.site-header.shared-header .brand { font-size:1.1875rem; justify-self:start; }
+.top-nav-list { justify-content:flex-start; gap:.25rem; }
+.top-nav-link,.air-toggle,.air-subnav a { font-size:var(--type-button); min-height:2.75rem; }
+.top-nav-link { padding-inline:.5rem; }
+.air-nav-group>.top-nav-link { padding-right:0; }
+.air-toggle { flex-shrink:0; width:2.75rem; justify-content:flex-start; padding-inline:.25rem; }
+.air-subnav { position:static; width:100%; padding:.75rem var(--layout-gutter); border:0; border-top:1px solid var(--ui-border-subtle); }
+.air-subnav ul { display:grid; grid-template-columns:minmax(0,1fr); gap:.25rem; }
+.air-subnav a { padding:.5rem; overflow-wrap:break-word; }
+.nav-scroll-hint { display:block; position:absolute; right:0; top:0; bottom:0; width:1.5rem; opacity:0; }
+.nav-scroll-shell[data-can-scroll=true] .nav-scroll-hint { opacity:1; background:linear-gradient(90deg,transparent,var(--paper)); }
+.nav-scroll-shell[data-scrolled=true]::before { content:''; position:absolute; left:0; top:0; bottom:0; z-index:1; width:1rem; background:linear-gradient(90deg,var(--paper),transparent); }
+
+/* Only prose receives a reading surface; photographs remain outside it. */
+.intro-page { max-width:51rem; padding-block:2rem 4rem; }
+.intro-page .intro-block,.teacher-page .article-heading,.teacher-page .chapter-reading {
+  background:var(--paper-soft); padding:var(--reading-card-padding);
+  border-radius:var(--reading-card-radius); box-shadow:var(--reading-card-shadow);
+}
+.intro-page .intro-block { max-width:51rem; margin-bottom:2.5rem; }
+.intro-page .intro-block h1,.intro-page .intro-block h2 { font-size:var(--type-h2); line-height:1.3; text-wrap:balance; margin-bottom:1.5rem; }
+.intro-page .intro-block p { font-size:var(--type-body); line-height:var(--line-body); }
+.intro-page .intro-block p:last-child { margin-bottom:0; }
+.intro-page .intro-method { display:block; }
+.intro-page .intro-method+.intro-method { border-top:0; }
+.intro-page .intro-method-label { width:3.75rem; height:3.75rem; font-size:1.375rem; margin-bottom:1.25rem; }
+.intro-page .intro-method-copy h2 { font-size:var(--type-h2); }
+.teacher-page .article-heading { width:min(51rem,calc(100% - 2 * var(--layout-gutter))); max-width:51rem; margin-top:2rem; }
+.teacher-page .article-heading h1 { font-size:var(--type-h1); line-height:1.3; text-wrap:balance; }
+.teacher-page .teacher-title-main { text-wrap:balance; }
+.teacher-page .teacher-title-intro { font-size:var(--type-lead); line-height:1.3; margin-bottom:1rem; }
+.teacher-page .article-heading .article-lead { font-size:var(--type-lead); line-height:var(--line-body); }
+.teacher-page .teacher-chapter { padding-top:5rem; }
+.teacher-page .chapter-reading { width:min(51rem,calc(100% - 2 * var(--layout-gutter))); }
+.teacher-page .chapter-reading p { font-size:var(--type-body); line-height:var(--line-body); }
+.teacher-page .chapter-heading { width:min(45rem,calc(100% - 2 * var(--layout-gutter) - 2 * var(--reading-card-padding))); }
+.teacher-page .chapter-heading h2 { font-size:var(--type-h2); line-height:1.3; text-wrap:balance; }
+.teacher-page .teacher-photo figcaption { width:min(45rem,calc(100% - 2 * var(--layout-gutter) - 2 * var(--reading-card-padding))); }
+
+@media (min-width:48rem) {
+  :root { --layout-gutter:2rem; --reading-card-padding:3rem; --type-body:1.3125rem; --type-h1:3rem; --type-h2:2rem; --type-h3:1.75rem; }
+  .shared-card-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:4rem 3rem; }
+  .intro-page .intro-block { margin-bottom:3rem; }
+  .intro-page .intro-method { display:grid; grid-template-columns:5rem minmax(0,1fr); gap:1.5rem; }
+  .intro-page .intro-method-label { width:5rem; height:5rem; font-size:1.625rem; margin-bottom:0; }
+  .air-subnav ul { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+@media (min-width:64rem) {
+  :root { --layout-gutter:3rem; --header-clearance:6rem; }
+  .header-row { grid-template-columns:max-content minmax(0,1fr); gap:1.5rem; min-height:5.125rem; padding:.75rem var(--layout-gutter); }
+  .top-nav-list { justify-content:flex-end; gap:.375rem; }
+  .top-nav-link { padding-inline:.75rem; }
+  .air-nav-group>.top-nav-link { padding-right:0; }
+  .air-subnav { position:absolute; top:100%; right:var(--layout-gutter); width:29rem; padding:.75rem; border:1px solid var(--ui-border-subtle); }
+  .air-subnav ul { grid-template-columns:minmax(0,1fr); }
+  .nav-scroll-hint { display:none; }
+  .nav-scroll-shell[data-scrolled=true]::before { content:none; }
+}

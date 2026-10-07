@@ -29,6 +29,7 @@ def render_entry():
 <meta name="description" content="消失的原民故事：從引言開始，閱讀我們的田野、空拍與創作紀錄。">
 <link rel="canonical" href="intro.html">
 <link rel="stylesheet" href="magazine.css?v=16">
+<link rel="stylesheet" href="reading-layout.css?v=1">
 <title>引言｜消失的原民故事</title>
 </head>
 <body class="inner">
