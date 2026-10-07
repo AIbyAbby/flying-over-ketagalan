@@ -17,6 +17,28 @@ METHODS = [
     ('創作', '讓發現長成故事', '整理照片、剪輯影片，將文獻線索、現場觀察與創作想像編織成作品，留下每個人理解地方的方式。'),
 ]
 
+
+def render_entry():
+    """Keep the public root URL as a static entry to the introduction."""
+    return '''<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="refresh" content="0;url=intro.html">
+<meta name="description" content="消失的原民故事：從引言開始，閱讀我們的田野、空拍與創作紀錄。">
+<link rel="canonical" href="intro.html">
+<link rel="stylesheet" href="magazine.css?v=16">
+<title>引言｜消失的原民故事</title>
+</head>
+<body class="inner">
+<main class="wrap"><header class="page-heading">
+<h1>消失的原民故事</h1>
+<p>''' + render_primary_link('intro.html', '閱讀引言') + '''</p>
+</header></main>
+</body></html>
+'''
+
 def paragraphs(items):
     return ''.join('<p>'+escape(p).replace('\n','<br>')+'</p>' for p in items)
 

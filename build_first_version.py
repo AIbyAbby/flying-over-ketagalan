@@ -103,7 +103,7 @@ for course in COURSES:
  if course['key'] in ACTIVITY_MEDIA:
   course['photos']=[(Path(p['src']).stem.removeprefix('flight-'),p['caption']) for p in ACTIVITY_MEDIA[course['key']]['photos']]
 WORK_COPY={
- 'abby':('空拍機離開地面之後，熟悉的河岸，會不會帶我們走進另一個時代？Abby 從工作坊的學習經驗出發，把今日的空拍影像與 AI 描繪的部落生活接在一起。舟行、水岸與人物交替出現，讓眼前的風景成為想像過往的入口。實拍留下土地此刻的樣貌，創作則追問曾經生活於此的人如何觀看這片水域。邀請你跟著鏡頭，看看這場從教室出發的奇遇，如何在現實與想像之間展開。','當今日的河岸遇上想像中的部落生活，鏡頭會帶我們走向哪個時代？跟著 Abby 從教室出發，在空拍與 AI 情境創作之間，展開一場土地記憶的奇遇。'),
+ 'abby':('當空拍機升空遠眺，社子島與淡水河在鏡頭下展開，開啟了一場穿越時空的奇幻旅程。Abby 從實體空拍課堂出發，將當代水岸實景與生成式 AI 敘事無縫銜接。從時光漩渦地圖到古老水澤，獨木舟上的凝望、大屯山硫穴的蒸騰煙嵐，逐步拼湊出十七世紀凱達格蘭族與山川共生的生活樣貌。這場奇遇不僅記錄了探索土地的熱情，更以科技之眼重新凝視歷史，喚醒深埋在台北盆地地層下的原鄉記憶。','當空拍機升離河岸，現代地景交疊出四百年前的部落記憶。跟著 Abby 乘上時空獨木舟，在空拍與情境創作之間，展開一場重返凱達格蘭的奇遇。'),
  'suifen':('搭上捷運，我們熟悉的城市，也可以成為一條尋找歷史的路。張穗芬從文化資產與遺址出發，把現地影像、博物館展件與生活情境串在一起。城市裡留下的線索，有時是一個地方，有時是一件物品，也可能是我們平常未曾停下來細看的細節。這件作品邀請你放慢觀看，跟著她在日常風景中辨認凱達格蘭故事的痕跡：當過往沒有完整地留在眼前，我們還能從哪裡開始尋找？','每天經過的城市，還藏著哪些未曾細看的歷史線索？跟著張穗芬搭上捷運，走向遺址與博物館，在熟悉的風景裡重新辨認凱達格蘭故事的痕跡。'),
  'kuncan':('「凱達格蘭族，你在哪裡？」高坤燦帶著這個提問，讓鏡頭穿過河灣、都市與古地名。作品將現代河岸的空拍，接合 AI 描繪的過往生活，讓同一片土地的不同時間在影像中相遇。今天看得見的水路與街廓，和創作想像裡的生活情境，彼此映照，也留下需要繼續追問的空間。邀請你跟著這個問題看下去：當聚落的樣貌已經改變，河流與名字，還能為我們留下什麼線索？','如果聚落的樣貌已經改變，我們還能循著什麼找到它？高坤燦讓今日河岸的空拍與 AI 描繪的過往相遇，帶著「你在哪裡」的提問，穿過河灣與城市。'),
  'wenjin':('一座住屋、一件文物、一張古地圖，能讓我們讀回多少生活的線索？黃文津把博物館展示與歷史材料接在一起，從零散的片段尋找人與土地的關係。鏡頭帶我們停留在展件與地圖之間，試著把觀看到的細節，接回更大的生活輪廓。這件作品邀請你從一件物品開始，重新思考它與住屋、水路及聚落的關係：那些留在展場裡的片段，如何讓過往的日常重新進入我們的視野？','一件文物與一張古地圖，能接起怎樣的生活輪廓？跟著黃文津在住屋、展件與歷史材料之間停留，從零散的細節，讀回人與土地的關係。'),
@@ -200,6 +200,7 @@ def page(filename,title,body,home=False,legacy=True):
   title=legacy_body(title)
  body=re.sub(r'(<h[123]\b[^>]*>)沿著河尋找三個社的土地記憶(</h[123]>)',r'\1沿著河<br>尋找三個社的土地記憶\2',body)
  styles='<link rel="stylesheet" href="magazine.css?v=16">'
+ if filename=='teacher.html':styles='<link rel="stylesheet" href="magazine.css?v=17">'
  if filename=='walks.html':styles+='<link rel="stylesheet" href="walks.css?v=1">'
  body_class=('home' if home else 'inner') + (' teacher-page' if filename=='teacher.html' else '')
  if filename.startswith('fieldwork-'): body_class+=' field-page'
@@ -225,8 +226,10 @@ save_md('home.md','消失的原民故事',HOME_PARAGRAPHS)
 hero='''<section class="cover"><img class="cover-photo" src="assets/flight-0829-0080.jpg" alt="課程實際空拍的河面、河岸與山勢" fetchpriority="high"><div class="cover-lines" aria-hidden="true"><span></span><span></span><i></i></div><div class="cover-copy"><span class="kicker">循著凱達格蘭的足跡</span><h1>消失的<br>原民故事<span class="title-dot">。</span></h1><p>從地面走讀，到空中的觀看。<br>把土地的記憶，寫進我們的鏡頭。</p><a class="cover-button" href="works.html">走進故事 <span aria-hidden="true">↗</span></a></div><div class="cover-bottom"><span>田野・空拍・創作紀實</span><a href="#beginning">往下閱讀 ↓</a></div></section>'''
 home_intro='<section class="home-intro wrap" id="beginning"><div class="intro-heading"><span class="kicker">我們一起出發尋找</span><h2>名字留了下來，<br>故事去了哪裡？</h2><div class="intro-index"><span>文獻</span><span>田野</span><span>空拍</span><span>創作</span></div></div><div class="intro-reading">'+''.join('<p>'+e(p)+'</p>' for p in HOME_PARAGRAPHS)+'<a class="text-link" href="works.html">沿著足跡，走進故事 ↗</a></div></section>'
 home_close='<section class="home-close">'+photo('assets/teacher-photo-13-0.jpg','','home-group')+'<div><span class="kicker">共同留下的記憶</span><h2>同一片土地，<br>不同的觀看。</h2><a class="cover-button" href="works.html">閱讀老師、田野與同學作品 ↗</a></div></section>'
-from editorial_home import render_home
-page('index.html','首頁',render_home(ROOT, COURSES, WORKS, photo, CARD_SUMMARIES),home=True)
+from editorial_home import render_entry
+if selected_pages is None or 'index.html' in selected_pages:
+ (SITE/'index.html').write_text(render_entry(),encoding='utf-8')
+ built_pages.append('index.html')
 
 overview='''<div class="wrap"><header class="page-heading"><a class="breadcrumb" href="index.html">首頁 /</a><span class="kicker">故事總覽</span><h1>每一次出發，<br>都有一條走進故事的路。</h1><p>從老師的敘述出發，沿著四次田野的足跡，<br class="desktop-break">看見同學們如何把土地與記憶，轉化成自己的作品。</p></header><nav class="category-nav" aria-label="內容分類"><a href="#teacher">老師的敘述</a><a href="#fieldwork">田野與空拍</a><a href="#works">同學作品</a></nav>'''
 overview+='<section class="entry-section" id="teacher"><div class="list-heading"><span>01</span><div><span class="kicker">故事的起點</span><h2>老師的敘述</h2></div></div>'+row('teacher.html','assets/teacher-photo-3-0.jpg','何懷嵩・課程設計手記','華麗轉向：台北原民故事的知識共構教學實踐','一座很會遺忘的城市，如何重新讀回土地的記憶？老師從課程的起點寫起，留下文獻、走讀、空拍與創作之間，師生共同建立理解的過程。','從文獻走向現場，讀回土地與人的記憶。')+'</section>'
@@ -329,7 +332,7 @@ def video(video_id,image,title,button='播放作品'):
 for w in WORKS:
  body=f'<header class="article-heading wrap work-heading"><a class="breadcrumb" href="works.html">故事總覽 / 同學作品</a><span class="kicker">{w["author"]}・{w["duration"]}</span><h1>{w["title"]}</h1><p class="article-lead">{w["subtitle"]}</p></header><article class="work-reading wrap"><div class="work-introduction"><span class="kicker">這件作品的出發點</span><p>{w["description"]}</p></div>'+video(w['id'],w['image'],w['title'])+'</article>'
  if w['slug']=='abby':
-  voiceover_intro='<p>參觀完十三行博物館後，老師也教我們如何為自己的作品配音，並請我們完成「配音功課」。</p><p>Abby就把參觀時拍下的照片，加入 AI 配音與音效，重新串起這趟十三行之旅。</p><p>一張張照片，不只是課堂作業，也成了這次走讀的另一種記錄方式——讓照片有了聲音，也讓走過的故事再次活起來。</p>'
+  voiceover_intro='<p>十三行人究竟是不是凱達格蘭族的祖先？走進十三行博物館，Abby 從田野走讀中拍下的展件影像出發，結合語音敘事與情境音效，完成這份富有探索精神的配音成果。</p><p>透過《番社采風圖》的歷史圖說、一比一復原的干欄式住屋、細緻拍印的幾何陶罐紋樣，以及火塘邊的生活日常，將靜態的照片轉化為生動的歷史漫遊。這不只是一次課堂作業，更是讓走讀足跡有了聲音，讓沉睡千年的考古記憶在當代重新甦醒。</p>'
   voiceover_shell='<div class="video-shell" data-youtube="S2_Z2z-UeqE"><img src="assets/abby-voiceover-first-frame.jpg" alt="十三行人真的是凱達格蘭族的祖先嗎影片封面" loading="lazy"><button type="button" class="play-button ui-control" aria-label="播放作品：十三行人真的是凱達格蘭族的祖先嗎？"><span class="play-icon" aria-hidden="true">▶</span>播放作品</button></div><div class="video-links"><a href="https://youtu.be/S2_Z2z-UeqE" target="_blank" rel="noopener">在 YouTube 開啟影片 </a></div>'
   body+=f'<section class="interview wrap"><div class="work-introduction work-secondary"><span class="kicker">走讀配音功課・4 分 17 秒</span><h2>十三行人真的是凱達格蘭族的祖先嗎？</h2>{voiceover_intro}</div>{voiceover_shell}</section>'
  if w['slug']=='suifen':

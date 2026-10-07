@@ -309,10 +309,10 @@ h1,h2,h3{font-family:var(--sans);color:var(--river-dark);letter-spacing:.01em}h1
 
 /* Teacher notes only: retain the PDF wording and keep the common site shell. */
 .teacher-page .article-heading { width:min(var(--layout-reading),calc(100% - 2 * var(--layout-gutter))); max-width:var(--layout-reading); padding:48px 0 0; }
-.teacher-page .article-heading h1 { font:600 clamp(29px,2.8vw,40px)/1.6 var(--serif); letter-spacing:0; margin-bottom:26px; }
-.teacher-page .teacher-title-intro { display:block; font:500 23px/1.6 var(--serif); margin-bottom:10px; }
+.teacher-page .article-heading h1 { font:900 clamp(32px,4.2vw,54px)/1.6 var(--sans); letter-spacing:.01em; margin-bottom:26px; }
+.teacher-page .teacher-title-intro { display:block; font:600 23px/1.6 var(--sans); margin-bottom:10px; }
 .teacher-page .teacher-title-main { display:block; text-wrap:pretty; }
-.teacher-page .article-heading .article-lead { font:400 19px/2.1 var(--serif); color:var(--muted); margin-bottom:28px; }
+.teacher-page .article-heading .article-lead { font:400 var(--type-body)/var(--line-body) var(--serif); color:var(--ink); margin-bottom:28px; }
 .teacher-page .teacher-byline { padding-top:20px; border-top:1px solid var(--ui-border-subtle); }
 .teacher-page .teacher-byline p { font:400 13px/2 var(--sans); color:var(--muted); margin:0 0 6px; }
 .teacher-page .teacher-chapter-links { display:flex; align-items:center; flex-wrap:wrap; font:400 13px/1.8 var(--sans); color:var(--river-dark); margin-top:20px; }
@@ -323,8 +323,8 @@ h1,h2,h3{font-family:var(--sans);color:var(--river-dark);letter-spacing:.01em}h1
 .teacher-page .teacher-chapter { padding-top:108px; margin-bottom:0; scroll-margin-top:100px; }
 .teacher-page .chapter-heading,.teacher-page .chapter-reading,.teacher-page .teacher-photo figcaption { width:min(var(--layout-reading),calc(100vw - 2 * var(--layout-gutter))); margin-inline:auto; }
 .teacher-page .chapter-heading { display:block; margin-bottom:28px; }
-.teacher-page .chapter-heading h2 { font:600 27px/1.7 var(--serif); color:var(--river-dark); margin:0; }
-.teacher-page .chapter-reading p { font:400 19px/2 var(--serif); text-align:left; margin-bottom:28px; }
+.teacher-page .chapter-heading h2 { font:600 var(--type-h2)/1.55 var(--sans); color:var(--river-dark); margin:0; }
+.teacher-page .chapter-reading p { font:400 var(--type-body)/var(--line-body) var(--serif); text-align:left; margin-bottom:28px; }
 .teacher-page .chapter-reading p:last-child { margin-bottom:0; }
 .teacher-page .chapter-reading + .chapter-reading { margin-top:28px; }
 .teacher-page .teacher-photo { width:100%; margin:36px 0; }
@@ -336,7 +336,7 @@ h1,h2,h3{font-family:var(--sans);color:var(--river-dark);letter-spacing:.01em}h1
  .teacher-page .article-heading { padding-top:28px; }
  .teacher-page .article-heading .article-lead { font-size:17px; }
  .teacher-page .teacher-chapter { padding-top:96px; }
- .teacher-page .chapter-reading p { font-size:17px; line-height:2; }
+ .teacher-page .chapter-reading p { font-size:17px; line-height:2.05; }
  .teacher-page .teacher-article { padding-bottom:40px; }
  .teacher-page .teacher-photo { margin-block:28px; }
 }
@@ -344,11 +344,12 @@ h1,h2,h3{font-family:var(--sans);color:var(--river-dark);letter-spacing:.01em}h1
 /* Magazine typography: keep punctuation intact, tighten glyph spacing and line breaks. */
 .teacher-page .article-heading h1,.teacher-page .article-heading .article-lead,
 .teacher-page .chapter-heading h2,.teacher-page .chapter-reading p {
- font-kerning:normal; font-feature-settings:"palt" 1; letter-spacing:0;
+ font-kerning:normal; font-feature-settings:"palt" 1;
  line-break:strict; word-break:normal; text-spacing-trim:trim-start;
 }
-.teacher-page .teacher-heading-topic { white-space:nowrap; }
+.teacher-page .teacher-heading-topic { white-space:normal; }
 @media (max-width:720px) { .teacher-page .teacher-title-intro { font-size:21px; } }
+@media (max-width:720px) { .teacher-page .article-heading h1 { font-size:32px; line-height:1.65; } }
 
 /* Shared grids; museum portraits use reversible crops focused on people and gestures. */
 .reading-container { width:min(var(--layout-reading),calc(100% - 2 * var(--layout-gutter))); margin-inline:auto; }

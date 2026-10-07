@@ -40,16 +40,35 @@ def render_collages(root):
         body += f'<section class="walks-collage-group" aria-labelledby="{heading_id}">'
         body += f'<h2 id="{heading_id}" class="reading-container">{escape(group["title"])}</h2>'
         photos = group['photos']
-        for start in range(0, len(photos), 6):
-            panel = photos[start:start + 6]
-            classes = 'walks-collage-panel' if len(panel) == 6 else 'walks-collage-pair'
+        panels = group.get('panels', [{'count': min(6, len(photos) - start), 'layout': 'feature'} for start in range(0, len(photos), 6)])
+        if sum(spec['count'] for spec in panels) != len(photos):
+            raise ValueError('拼貼分組數量與照片不符')
+        start = 0
+        for spec in panels:
+            panel = photos[start:start + spec['count']]
+            start += spec['count']
+            focus_layout = spec['layout'] == 'focus'
+            small_layout = spec['layout'] == 'small'
+            classes = 'walks-collage-panel' if len(panel) >= 5 else 'walks-collage-pair'
+            if small_layout:
+                classes += ' collage-small-panel'
+            if spec['layout'] == 'exhibits':
+                classes += ' collage-exhibit-panel'
+            if spec['layout'] == 'museum-mirror':
+                classes += ' collage-museum-mirror'
+            if spec['layout'] == 'museum-finish':
+                classes += ' collage-museum-finish'
+            if focus_layout:
+                classes += ' collage-focus-panel'
             body += f'<div class="{classes}">'
             for index, item in enumerate(panel):
                 with Image.open(root / '02_網站' / item['src']) as image:
                     width, height = image.size
-                role = ' collage-feature' if index == 0 and len(panel) == 6 else ''
-                role += ' collage-wide' if index == 5 else ''
-                role += ' collage-portrait' if index == 5 and height > width else ''
+                role = ' collage-feature' if index == 0 and len(panel) >= 5 and not small_layout else ''
+                is_wide = not small_layout and (index == 5 or (focus_layout and index == 4))
+                role += ' collage-wide' if is_wide else ''
+                role += ' collage-portrait' if is_wide and height > width else ''
+                role += ' collage-focus-tall' if focus_layout and index == 3 else ''
                 body += f'<figure class="collage-photo{role}" style="--photo-focus:{escape(item["focus"], quote=True)}">'
                 body += f'<img src="{escape(item["src"], quote=True)}" alt="{escape(item["alt"], quote=True)}" width="{width}" height="{height}" loading="lazy" decoding="async"></figure>'
             body += '</div>'
