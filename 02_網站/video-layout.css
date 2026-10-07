@@ -165,6 +165,16 @@ html, body {
   margin-block: 0 var(--space-2, 16px);
 }
 
+/* 影片上方故事說明段落 (.film-description) - 字級 16px、行高 1.9，維持優雅閱讀感 */
+.activity-film .film-description {
+  font-family: var(--sans, "Noto Sans TC", sans-serif);
+  font-size: 16px;
+  line-height: 1.9;
+  color: var(--ink, #25352f);
+  margin-block: var(--space-2, 16px) var(--space-3, 24px);
+  max-width: var(--layout-media, 900px);
+}
+
 /* 田野原生 video 標籤：手機滿版、預留 16:9 aspect-ratio */
 .activity-film video {
   display: block;
