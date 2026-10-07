@@ -1,0 +1,48 @@
+{
+  "date": "2026-10-06",
+  "activity": "0903",
+  "previous": "assets/fieldwork-0903-120s-user-music.mp4",
+  "output": "assets/fieldwork-0903-120s-trim18-v2.mp4",
+  "duration": 120,
+  "dimensions": [
+    1920,
+    1080
+  ],
+  "removed_previous_seconds": [
+    0,
+    18
+  ],
+  "shots": [
+    {
+      "source": "assets/fieldwork-0903-120s-user-music.mp4",
+      "source_in": 18,
+      "source_out": 120,
+      "duration": 102,
+      "timeline_start": 0
+    },
+    {
+      "source": "tmp/activity-video-sources/0903-0023.mp4",
+      "source_in": 0.5,
+      "source_out": 12.1,
+      "duration": 11.6,
+      "timeline_start": 101.2
+    },
+    {
+      "source": "tmp/activity-video-sources/0903-0053.mp4",
+      "source_in": 27.3,
+      "source_out": 35.3,
+      "duration": 8,
+      "timeline_start": 112
+    }
+  ],
+  "cross_dissolve_seconds": 0.8,
+  "opening_title_seconds": [
+    0,
+    5
+  ],
+  "audio_stream_hash": "SHA256=b8fc28a2225fab3b830bb49872e7266a5699a192616a648394997de3f82bb75e",
+  "audio_unchanged": true,
+  "full_decode_passed": true,
+  "output_sha256": "f9d7643d3a6313e8d3ecc29b6cb0160cf6c108e16e90820e34dfc31df8810be7",
+  "visual_review": "補入片段首中尾畫面檢視；全片人工播放驗收尚待使用者確認"
+}

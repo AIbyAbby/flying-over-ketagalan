@@ -1,0 +1,52 @@
+{
+  "activity": "0910",
+  "revision": "last30-v4",
+  "active_output": "assets/fieldwork-0910-120s-river-ending-v3.mp4",
+  "previous_backup": "C:\\Users\\abby8\\.codex\\visualizations\\2026\\10\\04\\01a104d7-821f-7362-b3fb-e1149d1493a1\\0910-before-last30-original.mp4",
+  "removed_timeline": [
+    90,
+    120
+  ],
+  "shots": [
+    {
+      "source": "previous active version",
+      "timeline": [
+        0,
+        90
+      ],
+      "source_range": [
+        0,
+        90
+      ]
+    },
+    {
+      "source": "tmp/activity-video-sources/0910-0050.mp4",
+      "timeline": [
+        90,
+        113
+      ],
+      "source_range": [
+        0.5,
+        23.5
+      ]
+    },
+    {
+      "source": "tmp/activity-video-sources/0910-0052.mp4",
+      "timeline": [
+        113,
+        120
+      ],
+      "source_range": [
+        0.5,
+        7.5
+      ]
+    }
+  ],
+  "duration": 120,
+  "audio_unchanged": true,
+  "audio_stream_hash": "SHA256=b8fc28a2225fab3b830bb49872e7266a5699a192616a648394997de3f82bb75e",
+  "full_decode_passed": true,
+  "output_sha256": "adfbc272a30b2700d908447883149b87aeec2b1c495c5211ecb0f1d32a2ebc57",
+  "review": "片尾首中尾取樣檢查；尚未完整人工播放與聽審",
+  "website_regenerated": false
+}

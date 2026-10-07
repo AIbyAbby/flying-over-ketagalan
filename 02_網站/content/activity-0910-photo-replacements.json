@@ -1,0 +1,29 @@
+{
+  "date": "2026-10-06",
+  "replacements": [
+    {
+      "replaced": "0018",
+      "replacement": "0040",
+      "caption": "橋身斜入水岸，隔河的街屋與遠山一同入鏡",
+      "source_url": "https://drive.google.com/file/d/1k6qLNf-9Su7m-k2sxRTFXzAZ8JUv9ZjR/view?usp=drivesdk"
+    },
+    {
+      "replaced": "0024",
+      "replacement": "0023",
+      "caption": "兩座橋在水上前後相望，帶出不同的渡河尺度",
+      "source_url": "https://drive.google.com/file/d/1ax8CyZuLRmdpmiV3XQnZjcuZsgNqq-KK/view?usp=drivesdk"
+    },
+    {
+      "replaced": "0033",
+      "replacement": "0041",
+      "caption": "河道從樓房旁斜斜轉過，綠意沿著岸線延續",
+      "source_url": "https://drive.google.com/file/d/1xdLmyhUDTH_7zzFQfrQ27DkY2MK93mQ8/view?usp=drivesdk"
+    }
+  ],
+  "retained_residential_photos": [
+    "0043",
+    "0042"
+  ],
+  "count": 11,
+  "distinct_gallery_pixel_hashes": 44
+}

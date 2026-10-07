@@ -2,20 +2,23 @@
 from pathlib import Path
 from html import escape as e
 import json, shutil, subprocess
-from PIL import Image
-from teacher_pages import ordered_teacher, HEADINGS, CAPTIONS, source_text
+from PIL import Image, ImageOps
+from teacher_pages import ordered_teacher, HEADINGS, CAPTIONS, source_text, teacher_header
+from shared_components import render_header, render_card, render_intro, render_overview
 import re
 
 ROOT=Path(__file__).resolve().parent
 SITE=ROOT/'02_網站'
 CONTENT=SITE/'content'
 CONTENT.mkdir(exist_ok=True)
+CARD_SUMMARIES=json.loads((CONTENT/'card-summaries.json').read_text(encoding='utf-8'))
+INTRO_DATA=json.loads((CONTENT/'intro.json').read_text(encoding='utf-8'))
 TEACHER_SOURCE=source_text(ROOT)
 TEACHER_CAPTIONS={name:re.search(pattern,TEACHER_SOURCE).group() for name,pattern in CAPTIONS}
 (CONTENT/'teacher-photo-captions.md').write_text('# 老師照片原文註釋\n\n'+'\n\n'.join(f'![{caption}](../assets/{name})\n\n{caption}' for name,caption in TEACHER_CAPTIONS.items())+'\n',encoding='utf-8')
 
 COURSES=[
- dict(key='0829',date='08.29',place='北投社',title='兩條河相遇的地方',cover='0829-0080',
+ dict(key='0829',date='08.29',place='北投社',title='兩河交會口，尋找消失的凱達格蘭',cover='0829-0080',
  intro='''來到社子島頭，河風迎面而來。淡水河與基隆河在此交會，我們攤開古地圖，找到「干豆門」的位置，再抬頭望向對岸，關渡就在不遠處。
 
 紙上的地名，第一次和腳下的土地產生了連結。
@@ -31,7 +34,7 @@ COURSES=[
 站在兩條河交會的地方，我們看見的不只是地理位置，也開始理解一個聚落與土地之間最初的關係。''',
  short='從社子島頭出發，在河流交會處重新觀看土地。',
  photos=[('0829-0080','沿著河面望向遠方，水路、河岸與山勢在同一個視野裡展開。'),('0829-0042','一起走到現場，讓課堂上的地名有了眼前的風景。'),('0829-0110','水道穿過河岸植被，空拍讓細小的地景關係變得清楚。')]),
- dict(key='0903',date='09.03',place='淡水與八里',title='一片水，兩岸生活',cover='0903-0047',
+ dict(key='0903',date='09.03',place='淡水與八里',title='淡水河口空拍與十三行走讀',cover='0903-0047',
  intro='''河口的風帶著海的氣息。
 
 淡水與八里隔著河相望，如今淡江大橋橫跨其間，讓兩岸的往來變得便利。只是站在水岸時，我們仍不免想到：橋出現以前，人們又是如何渡過這段水路？
@@ -49,7 +52,7 @@ COURSES=[
 渡河、往來與交流，也讓水面成為連結生活的一條路。''',
  short='從河口兩岸的空拍，到十三行展場裡的生活線索。',
  photos=[('0903-0014','從空中看向河口，海岸、港灣與水面的尺度一起展開。'),('0903-0047','淡江大橋跨過河面，當代建設與河口地形相互映照。'),('0903-0029','鏡頭轉向海岸，陸地與水域的交界成為另一條閱讀路徑。')]),
- dict(key='0905',date='09.05',place='雞籠社與和平島',title='山海之間，一個留下來的名字',cover='0905-0005',
+ dict(key='0905',date='09.05',place='雞籠社與和平島',title='站上社寮砲台，回望雞籠社的山海',cover='0905-0005',
  intro='''和平島的風，帶著明顯的海味。
 
 我們來到社寮砲台附近，從山勢望向港灣與水道，再回頭尋找古地圖上的「雞籠社」。地圖裡的聚落畫在山海之間，而今天的景象，已經有了截然不同的面貌。
@@ -65,7 +68,7 @@ COURSES=[
 透過空拍，也讓那個久遠的「雞籠社」，在今天的山海之間重新被看見。''',
  short='走進和平島，從岩岸、港口與聚落觀看雞籠社。',
  photos=[('0905-0005','和平島的海岸與岩層，在高處呈現出不同於地面的尺度。'),('0905-0015','貼著海岸觀看，岩壁、浪花與沿岸步道彼此交錯。'),('0905-0023','從海岸轉向城市，水道、港口與街廓形成層層地景。')]),
- dict(key='0910',date='09.10',place='基隆河流域',title='河灣裡，尋找三個社',cover='0910-0054',
+ dict(key='0910',date='09.10',place='基隆河流域',title='沿著河尋找三個社的土地記憶',cover='0910-0054',
  intro='''峰仔峙社、錫口社、塔塔悠社。
 
 三個名字，分布在基隆河流域。這一天，我們從汐止出發，沿著河岸尋找它們曾經所在的位置，也停留在舊社橋與可以眺望河谷的高處。
@@ -131,12 +134,12 @@ def intro_parts(value):
 def intro_lead(value):
  return intro_parts(value)[0]
 
-def photo(src,caption='',cls='',priority=False):
+def photo(src,caption='',cls='',priority=False,show_caption=True):
  caption=TEACHER_CAPTIONS.get(Path(src).name,caption)
  path=SITE/src
  with Image.open(path) as image: width,height=image.size
  loading='fetchpriority="high"' if priority else 'loading="lazy"'
- return f'<figure class="{cls}"><img src="{src}" width="{width}" height="{height}" alt="{e(caption)}" {loading}>'+ (f'<figcaption>{e(caption)}</figcaption>' if caption else '')+'</figure>'
+ return f'<figure class="{cls}"><img src="{src}" width="{width}" height="{height}" alt="{e(caption)}" {loading}>'+ (f'<figcaption>{e(caption)}</figcaption>' if caption and show_caption else '')+'</figure>'
 
 def row(url,image,label,title,intro,short,playable=False):
  caption=TEACHER_CAPTIONS.get(Path(image).name)
@@ -145,18 +148,12 @@ def row(url,image,label,title,intro,short,playable=False):
  action='觀看作品' if playable else '閱讀故事'
  return f'<a class="entry" href="{url}"><div class="entry-image">{picture}</div><div class="entry-copy"><h3>{e(title)}</h3><span class="kicker">{e(label)}</span><p class="desktop-intro">{e(intro_lead(intro))}</p><p class="mobile-intro">{e(short)}</p><span class="entry-link">{action}</span></div></a>'
 
-def page(filename,title,body,home=False):
- nav=[('index.html','卷首'),('stories.html','故事目錄'),('teacher.html','土地的記憶')]+[(f'fieldwork-{c["key"]}.html',c['date']+' '+c['place'].replace('・',' ')) for c in COURSES]+[(w['slug']+'.html',w['title']) for w in WORKS]
- links=''.join(f'<a class="ui-control" href="{url}"'+(' aria-current="page"' if url==filename else '')+f'>{e(label)}</a>' for url,label in nav)
- html=f'''<!doctype html>
-<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="循著凱達格蘭的足跡，留下田野、空拍與創作的共同記憶。"><meta name="theme-color" content="#203b3b"><title>{e(title)}｜消失的原民故事</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&family=Noto+Serif+TC:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="documentary.css?v=1"><script src="documentary.js?v=1" defer></script></head>
-<body class="{'home' if home else 'inner'}"><a class="skip" href="#main">跳到主要內容</a><header class="site-header"><button type="button" class="menu-toggle" aria-label="開啟選單" aria-expanded="false" aria-controls="nav"><span></span><span></span><span></span></button><a class="brand" href="index.html">消失的原民故事<span>田野・空拍・創作紀實</span></a><a class="header-link" href="stories.html">走進故事 <span aria-hidden="true">↗</span></a></header><div class="nav-shade" hidden></div><nav id="nav" class="drawer" aria-label="主要導覽" hidden><span class="kicker">沿著足跡，走進故事</span>{links}</nav><main id="main">{body}</main><footer class="site-footer"><div><a href="index.html">消失的原民故事</a><p>循著凱達格蘭的足跡，<br>讓土地的記憶繼續被看見。</p></div><div><p>南港社區大學 × 臺北市原住民族部落大學 民族學苑</p><p class="footer-small">文獻研讀・現場走讀・空拍紀錄・影音創作</p><a href="stories.html">閱讀所有故事 ↗</a></div><a class="back-top" href="#main" aria-label="回到頁首">↑</a></footer></body></html>'''
- html=html.replace('documentary.css?v=1','magazine.css?v=3').replace('documentary.js?v=1','documentary.js?v=2')
- html=re.sub(r'<a class="header-link"[^>]*>.*?</a>','',html,flags=re.S)
- if filename=='stories.html':
-  html=html.replace('<link rel="stylesheet" href="magazine.css?v=3">','<link rel="stylesheet" href="magazine.css?v=3"><link rel="stylesheet" href="stories-trial.css?v=2">')
- if home:
-  html=html.replace('</head>','<link rel="stylesheet" href="editorial-home.css?v=2"></head>')
+def legacy_body(html):
+ # Old prose retains its established formatting; new components keep their arrows.
+ protected=[]
+ def protect(match):
+  protected.append(match[0]); return f'__SHARED_{len(protected)-1}__'
+ html=re.sub(r'<a class="(?:shared-card|primary-entry)\b.*?</a>|<span class="viewall-arrow".*?</span>',protect,html,flags=re.S)
  for old,new in [('老師的敘述','土地的記憶'),('老師的陳述','土地的記憶'),('故事總覽','故事目錄'),('田野與空拍','沿河而行'),('四堂田野與空拍紀實','沿河而行'),('同學作品','鏡頭裡的故事')]:
   html=html.replace(old,new)
  html=html.replace('四堂沿河而行紀實','沿河而行')
@@ -175,9 +172,24 @@ def page(filename,title,body,home=False):
  html=html.replace('閱讀老師、田野與鏡頭裡的故事','翻閱土地與影像的故事')
  html=html.replace('閱讀老師、田野與同學作品','翻閱土地與影像的故事')
  html=html.replace('原民故事</h1>','原民故事</h1>')
- # Keep shared control hooks and cache versions in the generator.
- html=html.replace('class="menu-toggle"','class="menu-toggle ui-control"').replace('class="back-top"','class="back-top ui-control"').replace('class="cover-button"','class="cover-button ui-control"')
- html=html.replace('magazine.css?v=3','magazine.css?v=7').replace('editorial-home.css?v=2','editorial-home.css?v=4')
+ for i,component in enumerate(protected): html=html.replace(f'__SHARED_{i}__',component)
+ return html
+
+
+def page(filename,title,body,home=False,legacy=True):
+ if legacy:
+  body=legacy_body(body)
+  title=legacy_body(title)
+ body=re.sub(r'(<h[123]\b[^>]*>)沿著河尋找三個社的土地記憶(</h[123]>)',r'\1沿著河<br>尋找三個社的土地記憶\2',body)
+ styles='<link rel="stylesheet" href="magazine.css?v=10">'
+ if filename.startswith('fieldwork-'): styles=styles.replace('?v=10','?v=14')
+ if filename=='teacher.html': styles=styles.replace('?v=10','?v=12')
+ body_class=('home' if home else 'inner') + (' teacher-page' if filename=='teacher.html' else '')
+ if filename=='stories.html': styles+='<link rel="stylesheet" href="stories-trial.css?v=3">'
+ if home: styles+='<link rel="stylesheet" href="editorial-home.css?v=5">'
+ html=f'''<!doctype html>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="循著凱達格蘭的足跡，留下田野、空拍與創作的共同記憶。"><meta name="theme-color" content="#234f56"><title>{e(title)}｜消失的原民故事</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&family=Noto+Serif+TC:wght@400;500;600;700&display=swap" rel="stylesheet">{styles}<script src="documentary.js?v=3" defer></script></head>
+<body class="{body_class}"><a class="skip" href="#main">跳到主要內容</a>{render_header(filename)}<main id="main">{body}</main><footer class="site-footer compact-footer"><a class="back-top ui-control" href="#main" aria-label="回到頁首">回到頁首</a></footer></body></html>'''
  (SITE/filename).write_text(html,encoding='utf-8')
 
 # Web-sized copies; retain originals and photographic content.
@@ -191,11 +203,11 @@ HOME_PARAGRAPHS=[
  '這裡留下老師的敘述、四次田野與空拍紀實，以及同學們用影像寫成的故事。我們把一起走過、看過、思索過的片刻留在這裡，也邀請你循著這些足跡，重新觀看這片土地。',
 ]
 save_md('home.md','消失的原民故事',HOME_PARAGRAPHS)
-hero='''<section class="cover"><img class="cover-photo" src="assets/flight-0829-0080.jpg" alt="課程實際空拍的河面、河岸與山勢" fetchpriority="high"><div class="cover-lines" aria-hidden="true"><span></span><span></span><i></i></div><div class="cover-copy"><span class="kicker">循著凱達格蘭的足跡</span><h1>消失的<br>原民故事<span class="title-dot">。</span></h1><p>從地面走讀，到空中的觀看。<br>把土地的記憶，寫進我們的鏡頭。</p><a class="cover-button" href="stories.html">走進故事 <span aria-hidden="true">↗</span></a></div><div class="cover-bottom"><span>田野・空拍・創作紀實</span><a href="#beginning">往下閱讀 ↓</a></div></section>'''
-home_intro='<section class="home-intro wrap" id="beginning"><div class="intro-heading"><span class="kicker">我們一起出發尋找</span><h2>名字留了下來，<br>故事去了哪裡？</h2><div class="intro-index"><span>文獻</span><span>田野</span><span>空拍</span><span>創作</span></div></div><div class="intro-reading">'+''.join('<p>'+e(p)+'</p>' for p in HOME_PARAGRAPHS)+'<a class="text-link" href="stories.html">沿著足跡，走進故事 ↗</a></div></section>'
-home_close='<section class="home-close">'+photo('assets/teacher-photo-13-0.jpg','','home-group')+'<div><span class="kicker">共同留下的記憶</span><h2>同一片土地，<br>不同的觀看。</h2><a class="cover-button" href="stories.html">閱讀老師、田野與同學作品 ↗</a></div></section>'
+hero='''<section class="cover"><img class="cover-photo" src="assets/flight-0829-0080.jpg" alt="課程實際空拍的河面、河岸與山勢" fetchpriority="high"><div class="cover-lines" aria-hidden="true"><span></span><span></span><i></i></div><div class="cover-copy"><span class="kicker">循著凱達格蘭的足跡</span><h1>消失的<br>原民故事<span class="title-dot">。</span></h1><p>從地面走讀，到空中的觀看。<br>把土地的記憶，寫進我們的鏡頭。</p><a class="cover-button" href="works.html">走進故事 <span aria-hidden="true">↗</span></a></div><div class="cover-bottom"><span>田野・空拍・創作紀實</span><a href="#beginning">往下閱讀 ↓</a></div></section>'''
+home_intro='<section class="home-intro wrap" id="beginning"><div class="intro-heading"><span class="kicker">我們一起出發尋找</span><h2>名字留了下來，<br>故事去了哪裡？</h2><div class="intro-index"><span>文獻</span><span>田野</span><span>空拍</span><span>創作</span></div></div><div class="intro-reading">'+''.join('<p>'+e(p)+'</p>' for p in HOME_PARAGRAPHS)+'<a class="text-link" href="works.html">沿著足跡，走進故事 ↗</a></div></section>'
+home_close='<section class="home-close">'+photo('assets/teacher-photo-13-0.jpg','','home-group')+'<div><span class="kicker">共同留下的記憶</span><h2>同一片土地，<br>不同的觀看。</h2><a class="cover-button" href="works.html">閱讀老師、田野與同學作品 ↗</a></div></section>'
 from editorial_home import render_home
-page('index.html','首頁',render_home(ROOT, COURSES, WORKS, photo),home=True)
+page('index.html','首頁',render_home(ROOT, COURSES, WORKS, photo, CARD_SUMMARIES),home=True)
 
 overview='''<div class="wrap"><header class="page-heading"><a class="breadcrumb" href="index.html">首頁 /</a><span class="kicker">故事總覽</span><h1>每一次出發，<br>都有一條走進故事的路。</h1><p>從老師的敘述出發，沿著四次田野的足跡，<br class="desktop-break">看見同學們如何把土地與記憶，轉化成自己的作品。</p></header><nav class="category-nav" aria-label="內容分類"><a href="#teacher">老師的敘述</a><a href="#fieldwork">田野與空拍</a><a href="#works">同學作品</a></nav>'''
 overview+='<section class="entry-section" id="teacher"><div class="list-heading"><span>01</span><div><span class="kicker">故事的起點</span><h2>老師的敘述</h2></div></div>'+row('teacher.html','assets/teacher-photo-3-0.jpg','何懷嵩・課程設計手記','華麗轉向：台北原民故事的知識共構教學實踐','一座很會遺忘的城市，如何重新讀回土地的記憶？老師從課程的起點寫起，留下文獻、走讀、空拍與創作之間，師生共同建立理解的過程。','從文獻走向現場，讀回土地與人的記憶。')+'</section>'
@@ -205,16 +217,44 @@ overview+='</section><section class="entry-section" id="works"><div class="list-
 for w in WORKS: overview+=row(w['slug']+'.html',w['image'],w['author']+'・'+w['duration'],w['title'],w['description'],w['short'],playable=True)
 overview+='</section></div>'
 page('stories.html','故事總覽',overview)
-page('fieldwork.html','田野與空拍',overview.replace('故事總覽','田野與作品總覽'))
+FIELDWORK_OVERVIEW=json.loads((CONTENT/'fieldwork-overview.json').read_text(encoding='utf-8'))
+air_cards=[render_card(f'fieldwork-{c["key"]}.html',f'assets/flight-{c["cover"]}.jpg',c['title'],FIELDWORK_OVERVIEW['cards'][c['key']]['summary'],label=f'{c["place"]}｜{c["date"]}',cta=FIELDWORK_OVERVIEW['cards'][c['key']]['cta']) for c in COURSES]
+page('fieldwork.html','空拍紀錄',render_overview('空拍紀錄',FIELDWORK_OVERVIEW['lead'],'四次出發',air_cards,'fieldwork.html',show_breadcrumb=False,show_view_all=False),legacy=False)
+work_cards=[render_card(w['slug']+'.html',w['image'],w['title'],CARD_SUMMARIES[w['slug']],label=w['author']+'｜'+w['duration'],playable=True) for w in WORKS]
+page('works.html','影音創作',render_overview('影音創作','從共同走過的土地，長出各自觀看與敘說的方式。','鏡頭裡的故事',work_cards,'works.html'),legacy=False)
+# Retain the supplied full-resolution photograph and export a web-sized copy.
+intro_source=ROOT/INTRO_DATA['image_source']
+intro_target=SITE/INTRO_DATA['image']
+if intro_source.exists():
+ with Image.open(intro_source) as source:
+  preview=ImageOps.exif_transpose(source)
+  preview.thumbnail((2560,2560),Image.Resampling.LANCZOS)
+  preview.convert('RGB').save(intro_target,quality=90,optimize=True)
+elif not intro_target.exists():
+ raise FileNotFoundError(f'引言照片不存在：{intro_source}')
+closing_source=ROOT/INTRO_DATA['closing_image_source'] if INTRO_DATA.get('closing_image_source') else None
+if closing_source:
+ closing_target=SITE/INTRO_DATA['closing_image']
+ if closing_source.exists():
+  with Image.open(closing_source) as source:
+   preview=ImageOps.exif_transpose(source)
+   preview.thumbnail((2560,2560),Image.Resampling.LANCZOS)
+   preview.convert('RGB').save(closing_target,quality=90,optimize=True)
+ elif not closing_target.exists():
+  raise FileNotFoundError(f'引言結尾圖片不存在：{closing_source}')
+page('intro.html','引言',render_intro(INTRO_DATA,photo),legacy=False)
+page('walks.html','現場走讀','<div class="wrap placeholder-page"><h1>現場走讀</h1><p role="status">整理中</p></div>',legacy=False)
 
-teacher_heading='<header class="article-heading wrap"><a class="breadcrumb" href="stories.html#teacher">故事總覽 / 土地的記憶</a><span class="kicker">課程設計手記</span><h1>華麗轉向<br>台北原民故事的知識共構教學實踐</h1><p class="article-lead">「消失的原民故事 凱達格蘭社空拍創作工作坊」課程設計手記</p><p class="byline">何懷嵩｜世新大學廣播電視電影學系副教授<br>南港社區大學 × 臺北市原住民族部落大學 民族學苑</p></header>'
-chapter_nav='<nav class="chapter-nav" aria-label="文章章節">'+''.join(f'<a class="ui-control" href="#chapter-{i}">{i:02d} {e(h[2:])}</a>' for i,h in enumerate(HEADINGS,1))+'</nav>'
+teacher_title,teacher_subtitle,teacher_institution,teacher_author=teacher_header(ROOT)
+teacher_title_intro,teacher_title_separator,teacher_title_main=teacher_title.partition('：')
+teacher_title_markup='<span class="teacher-title-intro">'+e(teacher_title_intro)+'</span><span class="teacher-title-main">'+e(teacher_title_main)+'</span>'
+teacher_heading='<header class="article-heading wrap"><h1>'+teacher_title_markup+'</h1><p class="article-lead">'+e(teacher_subtitle.removeprefix('——'))+'</p><div class="teacher-byline"><p>'+e(teacher_institution)+'</p><p>'+e(teacher_author)+'</p></div></header>'
 teacher_body=ordered_teacher(ROOT)
-page('teacher.html','老師的敘述',teacher_heading+'<div class="teacher-layout wrap">'+chapter_nav+'<article class="teacher-article">'+teacher_body+'</article></div><div class="reading-end wrap"><span class="kicker">故事繼續</span><a href="stories.html#fieldwork">沿著四次出發，走進田野與空拍 →</a></div>')
+page('teacher.html',teacher_title,teacher_heading+'<article class="teacher-article">'+teacher_body+'</article>',legacy=False)
 
 for idx,c in enumerate(COURSES):
  lead=''.join('<p>'+e(part).replace('\n','<br>')+'</p>' for part in intro_parts(c['intro']))
- body=f'<header class="article-heading wrap"><a class="breadcrumb" href="stories.html#fieldwork">故事總覽 / 田野與空拍</a><span class="kicker">{c["date"]}・{c["place"]}</span><h1>{c["title"]}</h1><div class="article-lead">{lead}</div></header>'
+ body=f'<header class="article-heading wrap"><span class="kicker">{c["date"]}・{c["place"]}</span><h1>{c["title"]}</h1><div class="article-lead">{lead}</div></header>'
  body+=photo(f'assets/flight-{c["cover"]}.jpg','','field-cover',True)
  body+='<article class="field-article wrap"><div class="reading-block"><span class="kicker">這一次，為何出發</span><h2>把老師提出的問題，<br>帶到眼前的土地。</h2>'
  paragraphs=intro_parts(c['intro'])
@@ -254,10 +294,10 @@ for idx,c in enumerate(COURSES):
   body+='<section class="museum-story"><div class="reading-block"><span class="kicker">從地景，回到生活的線索</span><h2>在十三行，<br>讓看過的土地與展件相遇。</h2><p>'+e(museum)+'</p></div>'+photo('assets/teacher-photo-6-1.jpg',caption,'museum-photo')+'</section>'
   paragraphs+=['## 在十三行，讓看過的土地與展件相遇。',museum,caption]
  body+='</article><nav class="next-story wrap" aria-label="繼續閱讀">'
- body+='<a href="stories.html#fieldwork">← 四堂紀實</a>'
+ body+='<a href="fieldwork.html">← 四堂紀實</a>'
  if idx<3:
   nxt=COURSES[idx+1];body+=f'<a href="fieldwork-{nxt["key"]}.html">下一次出發：{nxt["place"]} →</a>'
- else:body+='<a href="stories.html#works">看見同學的作品 →</a>'
+ else:body+='<a href="works.html">看見同學的作品 →</a>'
  body+='</nav>'
  save_md('fieldwork-'+c['key']+'.md',c['date']+' '+c['place']+'｜'+c['title'],paragraphs)
  page('fieldwork-'+c['key']+'.html',c['place']+'・'+c['title'],body)
@@ -266,7 +306,11 @@ def video(video_id,image,title,button='播放作品'):
  return f'<div class="video-shell" data-video="{video_id}"><img src="{image}" alt="{e(title)}影片封面" loading="lazy"><button type="button" class="play-button ui-control" aria-label="{e(button+'：'+title)}"><span class="play-icon" aria-hidden="true">▶</span>{button}</button></div><div class="video-links"><a href="https://drive.google.com/file/d/{video_id}/view" target="_blank" rel="noopener">在雲端開啟影片 ↗</a></div>'
 
 for w in WORKS:
- body=f'<header class="article-heading wrap work-heading"><a class="breadcrumb" href="stories.html#works">故事總覽 / 同學作品</a><span class="kicker">{w["author"]}・{w["duration"]}</span><h1>{w["title"]}</h1><p class="article-lead">{w["subtitle"]}</p></header><article class="work-reading wrap"><div class="work-introduction"><span class="kicker">這件作品的出發點</span><p>{w["description"]}</p></div>'+video(w['id'],w['image'],w['title'])+'</article>'
+ body=f'<header class="article-heading wrap work-heading"><a class="breadcrumb" href="works.html">故事總覽 / 同學作品</a><span class="kicker">{w["author"]}・{w["duration"]}</span><h1>{w["title"]}</h1><p class="article-lead">{w["subtitle"]}</p></header><article class="work-reading wrap"><div class="work-introduction"><span class="kicker">這件作品的出發點</span><p>{w["description"]}</p></div>'+video(w['id'],w['image'],w['title'])+'</article>'
+ if w['slug']=='abby':
+  voiceover_intro='<p>參觀完十三行博物館後，老師也教我們如何為自己的作品配音，並請我們完成「配音功課」。</p><p>Abby就把參觀時拍下的照片，加入 AI 配音與音效，重新串起這趟十三行之旅。</p><p>一張張照片，不只是課堂作業，也成了這次走讀的另一種記錄方式——讓照片有了聲音，也讓走過的故事再次活起來。</p>'
+  voiceover_shell='<div class="video-shell" data-youtube="S2_Z2z-UeqE"><img src="assets/abby-voiceover-first-frame.jpg" alt="十三行人真的是凱達格蘭族的祖先嗎影片封面" loading="lazy"><button type="button" class="play-button ui-control" aria-label="播放作品：十三行人真的是凱達格蘭族的祖先嗎？"><span class="play-icon" aria-hidden="true">▶</span>播放作品</button></div><div class="video-links"><a href="https://youtu.be/S2_Z2z-UeqE" target="_blank" rel="noopener">在 YouTube 開啟影片 </a></div>'
+  body+=f'<section class="interview wrap"><div class="work-introduction work-secondary"><span class="kicker">走讀配音功課・4 分 17 秒</span><h2>十三行人真的是凱達格蘭族的祖先嗎？</h2>{voiceover_intro}</div>{voiceover_shell}</section>'
  if w['slug']=='suifen':
   body+='<section class="interview wrap"><div class="section-heading"><span class="kicker">聽創作者說</span><h2>穗芬談創作思維</h2><p>從作品回到創作的過程，聽穗芬分享自己的觀看與思考。</p></div>'+video('1Uxapk_yIMfmXcGxE9QF9Vz7gEEVUsIFz',INTERVIEW_POSTER,'穗芬談創作思維','播放創作分享')+'</section>'
  body+='<section class="other-works wrap"><div class="section-heading"><span class="kicker">還有另一種觀看</span><h2>繼續走進其他作品</h2></div>'
@@ -279,4 +323,4 @@ for w in WORKS:
 (CONTENT/'works.json').write_text(json.dumps(WORKS,ensure_ascii=False,indent=2),encoding='utf-8')
 (CONTENT/'fieldwork.json').write_text(json.dumps(COURSES,ensure_ascii=False,indent=2),encoding='utf-8')
 (SITE/'.nojekyll').touch()
-print('Built homepage, overview, teacher, four fieldwork pages, and four work pages.')
+print('Built 15 pages: shared navigation, introduction, overviews, and existing articles.')

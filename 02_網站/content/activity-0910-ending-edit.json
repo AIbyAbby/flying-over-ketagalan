@@ -1,0 +1,74 @@
+{
+  "date": "2026-10-06",
+  "activity": "0910",
+  "previous": "assets/fieldwork-0910-120s-user-music.mp4",
+  "output": "assets/fieldwork-0910-120s-recut-ending-v2.mp4",
+  "removed_previous_seconds": [
+    [
+      79,
+      120
+    ]
+  ],
+  "duration": 120,
+  "dimensions": [
+    1920,
+    1080
+  ],
+  "shots": [
+    {
+      "source": "02_網站\\assets\\fieldwork-0910-120s-user-music.mp4",
+      "source_in": 0,
+      "source_out": 79,
+      "duration": 79,
+      "timeline_start": 0
+    },
+    {
+      "source": "tmp\\activity-video-sources\\0910-0039.mp4",
+      "source_in": 24,
+      "source_out": 38.5,
+      "duration": 14.5,
+      "timeline_start": 78.2
+    },
+    {
+      "source": "tmp\\activity-video-sources\\0910-0050.mp4",
+      "source_in": 20,
+      "source_out": 35.6,
+      "duration": 15.6,
+      "timeline_start": 91.9
+    },
+    {
+      "source": "tmp\\activity-video-sources\\0910-0052.mp4",
+      "source_in": 14,
+      "source_out": 27.3,
+      "duration": 13.3,
+      "timeline_start": 106.7
+    }
+  ],
+  "replacement_sources": [
+    {
+      "source_id": "1shuL0zX_FjzGoZvAm9OBzyzMNiJtCNff",
+      "title": "DJI_20260910102006_0039_D_1.mp4",
+      "url": "https://drive.google.com/file/d/1shuL0zX_FjzGoZvAm9OBzyzMNiJtCNff/view?usp=drivesdk",
+      "path": "tmp\\activity-video-sources\\0910-0039.mp4"
+    },
+    {
+      "source_id": "1bqSm2CHTnfzzQZ0L7zEGEL6QvnzqEQh9",
+      "title": "DJI_20260910111549_0050_D_1.mp4",
+      "url": "https://drive.google.com/file/d/1bqSm2CHTnfzzQZ0L7zEGEL6QvnzqEQh9/view?usp=drivesdk",
+      "path": "tmp\\activity-video-sources\\0910-0050.mp4"
+    },
+    {
+      "source_id": "1qmSEQJyowbkXy8Mx17rrCqy0Ev2jWos9",
+      "title": "DJI_20260910111654_0052_D_1.mp4",
+      "url": "https://drive.google.com/file/d/1qmSEQJyowbkXy8Mx17rrCqy0Ev2jWos9/view?usp=drivesdk",
+      "path": "tmp\\activity-video-sources\\0910-0052.mp4"
+    }
+  ],
+  "cross_dissolve_seconds": 0.8,
+  "opening_title_preserved": true,
+  "audio_stream_hash": "SHA256=b8fc28a2225fab3b830bb49872e7266a5699a192616a648394997de3f82bb75e",
+  "audio_unchanged": true,
+  "full_decode_passed": true,
+  "output_sha256": "021146ac19faa1e9384153998c3d2d16c780d46c76de3497d64775be4e2aeb0c",
+  "visual_review": "新素材及成品接點畫面取樣檢視；全片人工播放驗收尚待使用者確認"
+}

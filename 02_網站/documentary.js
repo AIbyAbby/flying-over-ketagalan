@@ -1,36 +1,66 @@
-const toggle=document.querySelector('.menu-toggle');
-const nav=document.querySelector('#nav');
-const shade=document.querySelector('.nav-shade');
 const header=document.querySelector('.site-header');
-function setMenu(open,returnFocus=false){
+const toggle=document.querySelector('.air-toggle');
+const panel=document.querySelector('#air-subnav');
+const nav=document.querySelector('.top-nav');
+function setAirMenu(open,returnFocus=false){
+ if(!toggle||!panel)return;
  toggle.setAttribute('aria-expanded',String(open));
- toggle.setAttribute('aria-label',open?'關閉選單':'開啟選單');
- nav.hidden=!open;shade.hidden=!open;
- document.body.classList.toggle('menu-open',open);
- header.classList.toggle('scrolled',open||window.scrollY>60);
- if(open)nav.querySelector('a')?.focus();
- else if(returnFocus)toggle.focus();
+ toggle.setAttribute('aria-label',open?'收合空拍紀錄子選單':'展開空拍紀錄子選單');
+ panel.hidden=!open;
+ if(returnFocus)toggle.focus();
 }
-toggle.addEventListener('click',()=>setMenu(toggle.getAttribute('aria-expanded')!=='true'));
-shade.addEventListener('click',()=>setMenu(false,true));
-nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>setMenu(false)));
-document.addEventListener('keydown',event=>{
- if(nav.hidden)return;
- if(event.key==='Escape'){setMenu(false,true);return;}
- if(event.key==='Tab'){
-  const links=[toggle,...nav.querySelectorAll('a')];
-  if(event.shiftKey&&document.activeElement===links[0]){event.preventDefault();links.at(-1).focus();}
-  else if(!event.shiftKey&&document.activeElement===links.at(-1)){event.preventDefault();toggle.focus();}
- }
-});
-function headerTone(){header.classList.toggle('scrolled',window.scrollY>60||!nav.hidden);}
+if(toggle&&panel){
+ const links=[...panel.querySelectorAll('a')];
+ toggle.addEventListener('click',()=>setAirMenu(panel.hidden));
+ toggle.addEventListener('keydown',event=>{
+  if(event.key==='ArrowDown'||event.key==='ArrowUp'){
+   event.preventDefault();setAirMenu(true);
+   (event.key==='ArrowDown'?links[0]:links.at(-1))?.focus();
+  }
+ });
+ panel.addEventListener('keydown',event=>{
+  const index=links.indexOf(document.activeElement);
+  if(event.key==='ArrowDown'||event.key==='ArrowUp'){
+   event.preventDefault();links[(index+(event.key==='ArrowDown'?1:-1)+links.length)%links.length]?.focus();
+  }
+  if(event.key==='Home'||event.key==='End'){
+   event.preventDefault();(event.key==='Home'?links[0]:links.at(-1))?.focus();
+  }
+ });
+ document.addEventListener('keydown',event=>{
+  if(event.key==='Escape'&&!panel.hidden){event.preventDefault();setAirMenu(false,true);}
+ });
+ document.addEventListener('click',event=>{
+  if(!toggle.contains(event.target)&&!panel.contains(event.target))setAirMenu(false);
+ });
+ document.addEventListener('focusin',event=>{
+  if(!toggle.contains(event.target)&&!panel.contains(event.target))setAirMenu(false);
+ });
+ links.forEach(link=>link.addEventListener('click',()=>setAirMenu(false)));
+}
+if(nav){
+ const shell=nav.closest('.nav-scroll-shell');
+ function scrollHint(){shell.dataset.canScroll=String(nav.scrollWidth-nav.clientWidth-nav.scrollLeft>2);}
+ nav.addEventListener('scroll',scrollHint,{passive:true});
+ window.addEventListener('resize',scrollHint);
+ if(window.ResizeObserver)new ResizeObserver(scrollHint).observe(nav);
+ document.fonts?.ready.then(scrollHint);
+ scrollHint();
+}
+function headerTone(){header?.classList.toggle('scrolled',window.scrollY>60);}
 window.addEventListener('scroll',headerTone,{passive:true});headerTone();
 document.querySelectorAll('.video-shell').forEach(shell=>{
  shell.querySelector('button')?.addEventListener('click',()=>{
   const frame=document.createElement('iframe');
-  frame.src=`https://drive.google.com/file/d/${encodeURIComponent(shell.dataset.video)}/preview`;
-  frame.title=shell.querySelector('img').alt.replace('影片封面','');
-  frame.allow='autoplay; fullscreen';frame.allowFullscreen=true;
+  if(shell.dataset.youtube){
+   frame.src=`https://www.youtube-nocookie.com/embed/${encodeURIComponent(shell.dataset.youtube)}?autoplay=1&rel=0`;
+   frame.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+  }else{
+   frame.src=`https://drive.google.com/file/d/${encodeURIComponent(shell.dataset.video)}/preview`;
+   frame.allow='autoplay; fullscreen';
+  }
+  frame.title=shell.querySelector('img')?.alt.replace('影片封面','')||'影片播放器';
+  frame.allowFullscreen=true;
   shell.replaceChildren(frame);
  });
 });

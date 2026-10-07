@@ -43,10 +43,17 @@ SELECTIONS = [
 
 def source_text(root):
     pages=[]
-    for page in PdfReader(root/'老師.pdf').pages:
+    for page in PdfReader(root/'02_網站/materials/teacher.pdf').pages:
         raw=re.sub(r'^\s*\d+\s*\n', '', page.extract_text() or '')
         pages.append(''.join(raw.splitlines()).strip())
     return ''.join(pages)
+
+def teacher_header(root):
+    raw = PdfReader(root/'02_網站/materials/teacher.pdf').pages[0].extract_text() or ''
+    lines = [line.strip() for line in raw.splitlines() if line.strip()]
+    if lines[0] != '1' or len(lines) < 5:
+        raise ValueError('Unexpected teacher PDF title block')
+    return lines[1:5]
 
 def ordered_teacher(root):
     text=source_text(root)
@@ -69,12 +76,16 @@ def ordered_teacher(root):
         cursor=pos+len(value if kind=='heading' else value[1])
     if text[cursor:].strip(): full.append((cursor,'paragraph',text[cursor:].strip()))
     events=full
-    pieces=[];markdown=['# 華麗轉向：台北原民故事的知識共構教學實踐','作者：何懷嵩'];opened=False
+    title, subtitle, institution, author = teacher_header(root)
+    pieces=[];markdown=['# '+title, subtitle, institution, author];opened=False
     for _,kind,value in events:
         if kind=='heading':
             if opened: pieces.append('</section>')
             i=HEADINGS.index(value)+1
-            pieces.append(f'<section class="teacher-chapter" id="chapter-{i}"><div class="chapter-heading"><span class="chapter-number">{i:02d}</span><h2>{escape(value[2:])}</h2></div>')
+            display_heading = re.sub(r'^[一二三四五六]、', '', value)
+            topic, separator, detail = display_heading.partition('：')
+            heading_html = ('<span class="teacher-heading-topic">'+escape(topic+separator)+'</span>'+escape(detail)) if separator else escape(display_heading)
+            pieces.append(f'<section class="teacher-chapter" id="chapter-{i}"><div class="chapter-heading"><h2>{heading_html}</h2></div>')
             markdown.append('## '+value);opened=True
         elif kind=='paragraph':
             paragraphs=[];current=''

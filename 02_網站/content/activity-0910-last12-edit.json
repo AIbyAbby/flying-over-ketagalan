@@ -1,0 +1,20 @@
+{
+  "activity": "0910",
+  "previous": "assets/fieldwork-0910-120s-recut-ending-v2.mp4",
+  "output": "assets/fieldwork-0910-120s-river-ending-v3.mp4",
+  "replaced_seconds": [
+    108,
+    120
+  ],
+  "replacement_source": "tmp/activity-video-sources/0910-0050.mp4",
+  "source_seconds": [
+    1,
+    13
+  ],
+  "description": "河灣、沙洲、綠地與遠山；未使用的取景段落，避開橋梁",
+  "duration": 120,
+  "audio_unchanged": true,
+  "audio_stream_hash": "SHA256=b8fc28a2225fab3b830bb49872e7266a5699a192616a648394997de3f82bb75e",
+  "output_sha256": "75b33c2b6725acfc88710d193d8bec35fdcd60ca8417686cdadf5efe85d3428d",
+  "review": "片尾首中尾取樣檢查；完整人工播放與聽審尚待使用者確認"
+}

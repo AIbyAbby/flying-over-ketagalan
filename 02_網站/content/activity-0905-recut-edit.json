@@ -1,0 +1,72 @@
+{
+  "date": "2026-10-06",
+  "activity": "0905",
+  "previous": "assets/fieldwork-0905-120s-user-music.mp4",
+  "output": "assets/fieldwork-0905-120s-recut-v2.mp4",
+  "removed_previous_seconds": [
+    [
+      24,
+      58
+    ],
+    [
+      98,
+      120
+    ]
+  ],
+  "duration": 120,
+  "dimensions": [
+    1920,
+    1080
+  ],
+  "shots": [
+    {
+      "source": "02_網站\\assets\\fieldwork-0905-120s-user-music.mp4",
+      "source_in": 0,
+      "source_out": 24,
+      "duration": 24,
+      "timeline_start": 0
+    },
+    {
+      "source": "tmp\\activity-video-sources\\0905-0001.mp4",
+      "source_in": 16.5,
+      "source_out": 41.3,
+      "duration": 24.8,
+      "timeline_start": 23.2
+    },
+    {
+      "source": "02_網站\\assets\\fieldwork-0905-120s-user-music.mp4",
+      "source_in": 58,
+      "source_out": 98,
+      "duration": 40,
+      "timeline_start": 47.2
+    },
+    {
+      "source": "tmp\\activity-video-sources\\0905-0002.mp4",
+      "source_in": 17,
+      "source_out": 50.6,
+      "duration": 33.6,
+      "timeline_start": 86.4
+    }
+  ],
+  "replacement_sources": [
+    {
+      "source_id": "1pDV7c5gaeN0a32wB1EXkvttVupkCBE4Z",
+      "title": "DJI_20260905134810_0001_D_1.mp4",
+      "url": "https://drive.google.com/file/d/1pDV7c5gaeN0a32wB1EXkvttVupkCBE4Z/view?usp=drivesdk",
+      "path": "tmp\\activity-video-sources\\0905-0001.mp4"
+    },
+    {
+      "source_id": "1rquTWbhdBY5zAc0PZZTI2-djXB6zSl2B",
+      "title": "DJI_20260905134916_0002_D_1.mp4",
+      "url": "https://drive.google.com/file/d/1rquTWbhdBY5zAc0PZZTI2-djXB6zSl2B/view?usp=drivesdk",
+      "path": "tmp\\activity-video-sources\\0905-0002.mp4"
+    }
+  ],
+  "cross_dissolve_seconds": 0.8,
+  "opening_title_preserved": true,
+  "audio_stream_hash": "SHA256=b8fc28a2225fab3b830bb49872e7266a5699a192616a648394997de3f82bb75e",
+  "audio_unchanged": true,
+  "full_decode_passed": true,
+  "output_sha256": "ddcecf9d7239c5c9258802d1d596632526c869ea94927604076432256f6ef076",
+  "visual_review": "新素材與成品首中尾及接點畫面取樣檢視；全片人工播放驗收尚待使用者確認"
+}

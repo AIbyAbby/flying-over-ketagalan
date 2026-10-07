@@ -2,6 +2,7 @@
 from html import escape
 from pathlib import Path
 from PIL import Image
+from shared_components import render_card, render_section_heading, render_primary_link
 
 OPENING = [
     '我們原以為，自己已經很熟悉這座城市。',
@@ -19,13 +20,15 @@ METHODS = [
 def paragraphs(items):
     return ''.join('<p>'+escape(p).replace('\n','<br>')+'</p>' for p in items)
 
-def chapter(number, title, items, image, photo, link='', label='閱讀故事', image_caption=''):
-    content = '<section class="journal-chapter"><div class="journal-copy"><span class="journal-number">'+escape(number)+'</span><h2>'+escape(title)+'</h2><div class="journal-reading">'+paragraphs(items)+'</div>'
+def chapter(number, title, items, image, photo, link='', label='閱讀故事', image_caption='', primary=False, all_url=''):
+    destination = all_url or ('fieldwork.html' if link.startswith('fieldwork-') else link)
+    heading = render_section_heading(title, destination) if destination else '<h2>'+escape(title)+'</h2>'
+    content = '<section class="journal-chapter"><div class="journal-copy"><span class="journal-number">'+escape(number)+'</span>'+heading+'<div class="journal-reading">'+paragraphs(items)+'</div>'
     if link:
-        content += '<a class="journal-link ui-control" href="'+escape(link)+'">'+escape(label)+'</a>'
+        content += (render_primary_link(link, label, 'journal-link ui-control') if primary else '<a class="journal-link ui-control" href="'+escape(link)+'">'+escape(label)+'</a>')
     return content+'</div>'+photo(image,image_caption,'journal-picture')+'</section>'
 
-def render_home(root, courses, works, photo):
+def render_home(root, courses, works, photo, summaries):
     site = root/'02_網站'
     source = root.parent/'金色時光城市河谷與歷史幽影.png'
     target = site/'assets/home-golden-river.jpg'
@@ -48,22 +51,20 @@ def render_home(root, courses, works, photo):
         '當空拍機緩緩升起，被建築遮住的河灣展開了，原本分散的兩岸也連成一幅完整的風景。我們開始試著從水路理解這座城市：哪裡可以靠岸，哪裡通往更遠的地方，山與河如何牽引人們生活的方向。',
         '空拍機彷彿成了一部穿越時光的機器。鏡頭拍下當下，思緒卻循著文獻與地形，往更早的年代伸展。當橋梁尚未橫跨水面，當街道還沒有今日的模樣，曾在這裡生活的人，會從怎樣的角度看見河岸與天空？',
         '這些想像成為創作的起點，也提醒我們繼續查找、比對，分辨哪些已有依據，哪些仍有待追問。',
-    ],'assets/home-0829-0077.jpg',photo,image_caption='關渡河岸｜水路、山勢與城市在空中視野裡相接')
-    body += '<section id="journeys" class="journal-section-heading"><span class="journal-number">03　田野與空拍</span><h2>四次出發的風景</h2><p>循著水路與古地名<br>從河口走向海岸 再讀回城市的來處</p></section>'
+    ],'assets/home-0829-0077.jpg',photo,image_caption='關渡河岸｜水路、山勢與城市在空中視野裡相接', all_url='fieldwork.html')
+    body += '<section id="journeys" class="journal-section-heading"><span class="journal-number">03　田野與空拍</span>'+render_section_heading('四次出發的風景','fieldwork.html')+'<p>循著水路與古地名<br>從河口走向海岸 再讀回城市的來處</p></section>'
     home_covers={'0829':'home-0829-0083.jpg','0903':'flight-0903-0017.jpg','0905':'flight-0905-0022.jpg','0910':'flight-0910-0046.jpg'}
     for i,c in enumerate(courses,1):
         body += chapter(f'{i:02d}　{c["date"]}　{c["place"]}',c['title'],c['intro'].split('\n\n'),
-                        'assets/'+home_covers[c['key']],photo,f'fieldwork-{c["key"]}.html','走進這次田野與空拍',
-                        image_caption=c['date']+' '+c['place']+'｜現場影像')
-    body += '<section id="creations" class="journal-works"><div class="journal-copy"><span class="journal-number">04　影像創作</span><h2>把觀看寫成故事</h2><div class="journal-reading">'+paragraphs([
+                        'assets/'+home_covers[c['key']],photo,f'fieldwork-{c["key"]}.html','走進這次沿河而行',
+                        image_caption=c['date']+' '+c['place']+'｜現場影像', primary=True)
+    body += '<section id="creations" class="journal-works"><div class="journal-copy"><span class="journal-number">04　影像創作</span>'+render_section_heading('把觀看寫成故事','works.html')+'<div class="journal-reading">'+paragraphs([
         '回到課堂，照片、影片與討論逐漸長成各自的作品。有人從古地名出發，有人凝視博物館中的展件，也有人讓實拍畫面與歷史情境的創作相遇。我們在彼此的敘述裡，看見了自己未曾留意的細節。',
-    ])+'</div></div><div class="journal-work-grid">'
+    ])+'</div></div><div class="journal-work-grid shared-card-grid">'
     for w in works:
-        with Image.open(site/w['image']) as image:
-            width,height=image.size
-        body += '<a class="journal-work" href="'+w['slug']+'.html"><div class="work-poster"><img src="'+w['image']+'" width="'+str(width)+'" height="'+str(height)+'" alt="'+escape(w['title'])+' 影片第一個畫面" loading="lazy"><span class="poster-play" aria-hidden="true">▶</span></div><span class="journal-number">'+escape(w['author'])+'</span><h3>'+escape(w['title'])+'</h3><p>'+escape(w['short'])+'</p><span class="entry-link">觀看作品</span></a>'
+        body += render_card(w['slug']+'.html', w['image'], w['title'], summaries[w['slug']], label=w['author'], playable=True)
     body += '</div></section>'
     body += chapter('05　寫在旅程之後','讓土地的記憶繼續被看見',[
         '這裡收錄的，是一段一起學習觀看的旅程。「消失」是我們對那些逐漸被忽略的故事所提出的追問。當我們願意停下腳步，重新讀一個名字、看一段河流，熟悉的城市，也就有了更深的來處。',
-    ],'assets/flight-0905-0035.jpg',photo,'stories.html','翻閱所有故事',image_caption='和平島｜雲霧中的海岸與遠方島嶼')
+    ],'assets/flight-0905-0035.jpg',photo,'works.html','觀看影音創作',image_caption='和平島｜雲霧中的海岸與遠方島嶼')
     return body+'</div>'
