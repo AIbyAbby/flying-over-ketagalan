@@ -55,7 +55,7 @@ def teacher_header(root):
         raise ValueError('Unexpected teacher PDF title block')
     return lines[1:5]
 
-def ordered_teacher(root):
+def ordered_teacher(root,write_content=True):
     text=source_text(root)
     events=[]
     for heading in HEADINGS: events.append((text.index(heading),'heading',heading))
@@ -99,5 +99,6 @@ def ordered_teacher(root):
             pieces.append(f'<figure class="teacher-photo"><img src="assets/{filename}" alt="{escape(caption)}" loading="lazy"><figcaption>{escape(caption)}</figcaption></figure>')
             markdown.append(f'![{caption}](../assets/{filename})\n\n{caption}')
     if opened: pieces.append('</section>')
-    (root/'02_網站/content/teacher-ordered.md').write_text('\n\n'.join(markdown)+'\n',encoding='utf-8')
+    if write_content:
+        (root/'02_網站/content/teacher-ordered.md').write_text('\n\n'.join(markdown)+'\n',encoding='utf-8')
     return ''.join(pieces)

@@ -35,8 +35,7 @@ def render_home(root, courses, works, photo, summaries):
     if not target.exists():
         with Image.open(source) as im:
             im.convert('RGB').save(target, quality=94, optimize=True)
-    (site/'content/home.md').write_text('# 消失的原民故事\n\n從地面走讀，從空中的觀看，把土地的記憶寫進我們的鏡頭\n\n'+'\n\n'.join(OPENING)+'\n', encoding='utf-8')
-    body = '<div class="editorial-journal"><header class="journal-opening" id="origins"><span class="journal-number">循著凱達格蘭的足跡</span><h1>消失的原民故事</h1><p class="journal-subtitle"><span>從地面走讀，從空中的觀看</span><span>把土地的記憶寫進我們的鏡頭</span></p><div class="journal-reading">'+paragraphs(OPENING)+'</div><nav class="journal-contents" aria-label="首頁章節"><a href="#origins">故事緣起</a><a href="#course-notes">課程手記</a><a href="#journeys">四次出發</a><a href="#creations">影像創作</a></nav></header>'
+    body = '<div class="editorial-journal"><header class="journal-opening" id="origins"><span class="journal-number">循著凱達格蘭的足跡</span><h1>消失的原民故事</h1><p class="journal-subtitle"><span>從地面走讀，從空中的觀看</span><span>把土地的記憶寫進我們的鏡頭</span></p><div class="journal-opening-actions">'+render_primary_link('fieldwork.html','走進四次空拍紀錄')+'<a class="journal-link" href="walks.html">看看我們一起走過的地方 →</a></div><div class="journal-reading">'+paragraphs(OPENING)+'</div><nav class="journal-contents" aria-label="首頁章節"><a href="#origins">故事緣起</a><a href="#course-notes">課程手記</a><a href="#journeys">四次出發</a><a href="#creations">影像創作</a></nav></header>'
     method_html='<section class="journal-methods" aria-label="我們如何進行這個計畫">'
     for term,title,description in METHODS:
         method_html+='<div class="journal-method"><span class="method-mark">'+term+'</span><h2>'+title+'</h2><p>'+description+'</p></div>'
@@ -55,7 +54,7 @@ def render_home(root, courses, works, photo, summaries):
     body += '<section id="journeys" class="journal-section-heading"><span class="journal-number">03　田野與空拍</span>'+render_section_heading('四次出發的風景','fieldwork.html')+'<p>循著水路與古地名<br>從河口走向海岸 再讀回城市的來處</p></section>'
     home_covers={'0829':'home-0829-0083.jpg','0903':'flight-0903-0017.jpg','0905':'flight-0905-0022.jpg','0910':'flight-0910-0046.jpg'}
     for i,c in enumerate(courses,1):
-        body += chapter(f'{i:02d}　{c["date"]}　{c["place"]}',c['title'],c['intro'].split('\n\n'),
+        body += chapter(f'{i:02d}　{c["date"]}　{c["place"]}',c['title'],c['intro'].split('\n\n')[:1],
                         'assets/'+home_covers[c['key']],photo,f'fieldwork-{c["key"]}.html','走進這次沿河而行',
                         image_caption=c['date']+' '+c['place']+'｜現場影像', primary=True)
     body += '<section id="creations" class="journal-works"><div class="journal-copy"><span class="journal-number">04　影像創作</span>'+render_section_heading('把觀看寫成故事','works.html')+'<div class="journal-reading">'+paragraphs([

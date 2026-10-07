@@ -1,11 +1,20 @@
 """Build the discussed documentary edition. Originals remain untouched."""
 from pathlib import Path
 from html import escape as e
-import json, shutil, subprocess
+import argparse, json, shutil, subprocess
 from PIL import Image, ImageOps
 from teacher_pages import ordered_teacher, HEADINGS, CAPTIONS, source_text, teacher_header
 from shared_components import render_header, render_card, render_intro, render_overview
+from walks_page import prepare_walks_photos, render_walks
 import re
+
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument('--pages', nargs='+', choices=['index.html','stories.html','fieldwork.html','works.html','intro.html','walks.html','teacher.html','fieldwork-0829.html','fieldwork-0903.html','fieldwork-0905.html','fieldwork-0910.html','abby.html','suifen.html','kuncan.html','wenjin.html'], help='Only render these HTML filenames.')
+parser.add_argument('--prepare-media', action='store_true', help='Explicitly rebuild existing photos and video posters.')
+parser.add_argument('--write-content', action='store_true', help='Explicitly export legacy derived Markdown and JSON.')
+args = parser.parse_args()
+selected_pages = set(args.pages) if args.pages else None
+built_pages = []
 
 ROOT=Path(__file__).resolve().parent
 SITE=ROOT/'02_網站'
@@ -15,7 +24,8 @@ CARD_SUMMARIES=json.loads((CONTENT/'card-summaries.json').read_text(encoding='ut
 INTRO_DATA=json.loads((CONTENT/'intro.json').read_text(encoding='utf-8'))
 TEACHER_SOURCE=source_text(ROOT)
 TEACHER_CAPTIONS={name:re.search(pattern,TEACHER_SOURCE).group() for name,pattern in CAPTIONS}
-(CONTENT/'teacher-photo-captions.md').write_text('# 老師照片原文註釋\n\n'+'\n\n'.join(f'![{caption}](../assets/{name})\n\n{caption}' for name,caption in TEACHER_CAPTIONS.items())+'\n',encoding='utf-8')
+if args.write_content:
+ (CONTENT/'teacher-photo-captions.md').write_text('# 老師照片原文註釋\n\n'+'\n\n'.join(f'![{caption}](../assets/{name})\n\n{caption}' for name,caption in TEACHER_CAPTIONS.items())+'\n',encoding='utf-8')
 
 COURSES=[
  dict(key='0829',date='08.29',place='北投社',title='兩河交會口，尋找消失的凱達格蘭',cover='0829-0080',
@@ -108,6 +118,9 @@ WORK_SOURCES={
 def first_frame(source, name):
  """Use the first decoded frame, including an intentional black opening."""
  target=SITE/'assets'/name
+ if not args.prepare_media:
+  if target.exists(): return 'assets/'+name
+  raise FileNotFoundError(f'缺少現有媒體：{target}；請明確使用 --prepare-media 建立。')
  if not source.exists():
   if target.exists(): return 'assets/'+name
   raise FileNotFoundError(source)
@@ -126,7 +139,8 @@ for key,media in ACTIVITY_MEDIA.items():
  media['video']['poster']=first_frame(SITE/media['video']['src'],'fieldwork-'+key+'-first-frame.jpg')
 
 def save_md(name,title,paragraphs):
- (CONTENT/name).write_text('# '+title+'\n\n'+'\n\n'.join(paragraphs)+'\n',encoding='utf-8')
+ if args.write_content:
+  (CONTENT/name).write_text('# '+title+'\n\n'+'\n\n'.join(paragraphs)+'\n',encoding='utf-8')
 
 def intro_parts(value):
  return [part.strip() for part in value.split('\n\n') if part.strip()]
@@ -177,23 +191,25 @@ def legacy_body(html):
 
 
 def page(filename,title,body,home=False,legacy=True):
+ if selected_pages is not None and filename not in selected_pages:
+  return
  if legacy:
   body=legacy_body(body)
   title=legacy_body(title)
  body=re.sub(r'(<h[123]\b[^>]*>)沿著河尋找三個社的土地記憶(</h[123]>)',r'\1沿著河<br>尋找三個社的土地記憶\2',body)
- styles='<link rel="stylesheet" href="magazine.css?v=10">'
- if filename.startswith('fieldwork-'): styles=styles.replace('?v=10','?v=14')
- if filename=='teacher.html': styles=styles.replace('?v=10','?v=12')
+ styles='<link rel="stylesheet" href="magazine.css?v=15">'
  body_class=('home' if home else 'inner') + (' teacher-page' if filename=='teacher.html' else '')
- if filename=='stories.html': styles+='<link rel="stylesheet" href="stories-trial.css?v=3">'
- if home: styles+='<link rel="stylesheet" href="editorial-home.css?v=5">'
+ if filename.startswith('fieldwork-'): body_class+=' field-page'
+ if filename in {'abby.html','suifen.html','kuncan.html','wenjin.html'}: body_class+=' work-page'
+ if home: styles+='<link rel="stylesheet" href="editorial-home.css?v=6">'
  html=f'''<!doctype html>
-<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="循著凱達格蘭的足跡，留下田野、空拍與創作的共同記憶。"><meta name="theme-color" content="#234f56"><title>{e(title)}｜消失的原民故事</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&family=Noto+Serif+TC:wght@400;500;600;700&display=swap" rel="stylesheet">{styles}<script src="documentary.js?v=3" defer></script></head>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="循著凱達格蘭的足跡，留下田野、空拍與創作的共同記憶。"><meta name="theme-color" content="#234f56"><title>{e(title)}｜消失的原民故事</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&family=Noto+Serif+TC:wght@400;500;600;700&display=swap" rel="stylesheet">{styles}<script src="documentary.js?v=4" defer></script></head>
 <body class="{body_class}"><a class="skip" href="#main">跳到主要內容</a>{render_header(filename)}<main id="main">{body}</main><footer class="site-footer compact-footer"><a class="back-top ui-control" href="#main" aria-label="回到頁首">回到頁首</a></footer></body></html>'''
  (SITE/filename).write_text(html,encoding='utf-8')
+ built_pages.append(filename)
 
 # Web-sized copies; retain originals and photographic content.
-for p in sorted((ROOT/'tmp/source-photos').glob('*.jpg')):
+for p in sorted((ROOT/'tmp/source-photos').glob('*.jpg')) if args.prepare_media else []:
  with Image.open(p) as im:
   im=im.convert('RGB');im.thumbnail((1800,1800));im.save(SITE/'assets'/('flight-'+p.stem+'.jpg'),quality=88,optimize=True)
 
@@ -221,11 +237,11 @@ FIELDWORK_OVERVIEW=json.loads((CONTENT/'fieldwork-overview.json').read_text(enco
 air_cards=[render_card(f'fieldwork-{c["key"]}.html',f'assets/flight-{c["cover"]}.jpg',c['title'],FIELDWORK_OVERVIEW['cards'][c['key']]['summary'],label=f'{c["place"]}｜{c["date"]}',cta=FIELDWORK_OVERVIEW['cards'][c['key']]['cta']) for c in COURSES]
 page('fieldwork.html','空拍紀錄',render_overview('空拍紀錄',FIELDWORK_OVERVIEW['lead'],'四次出發',air_cards,'fieldwork.html',show_breadcrumb=False,show_view_all=False),legacy=False)
 work_cards=[render_card(w['slug']+'.html',w['image'],w['title'],CARD_SUMMARIES[w['slug']],label=w['author']+'｜'+w['duration'],playable=True) for w in WORKS]
-page('works.html','影音創作',render_overview('影音創作','從共同走過的土地，長出各自觀看與敘說的方式。','鏡頭裡的故事',work_cards,'works.html'),legacy=False)
+page('works.html','影音創作',render_overview('影音創作','從共同走過的土地，長出各自觀看與敘說的方式。','鏡頭裡的故事',work_cards,'works.html',show_breadcrumb=False,show_view_all=False),legacy=False)
 # Retain the supplied full-resolution photograph and export a web-sized copy.
 intro_source=ROOT/INTRO_DATA['image_source']
 intro_target=SITE/INTRO_DATA['image']
-if intro_source.exists():
+if args.prepare_media and intro_source.exists():
  with Image.open(intro_source) as source:
   preview=ImageOps.exif_transpose(source)
   preview.thumbnail((2560,2560),Image.Resampling.LANCZOS)
@@ -235,7 +251,7 @@ elif not intro_target.exists():
 closing_source=ROOT/INTRO_DATA['closing_image_source'] if INTRO_DATA.get('closing_image_source') else None
 if closing_source:
  closing_target=SITE/INTRO_DATA['closing_image']
- if closing_source.exists():
+ if args.prepare_media and closing_source.exists():
   with Image.open(closing_source) as source:
    preview=ImageOps.exif_transpose(source)
    preview.thumbnail((2560,2560),Image.Resampling.LANCZOS)
@@ -243,13 +259,15 @@ if closing_source:
  elif not closing_target.exists():
   raise FileNotFoundError(f'引言結尾圖片不存在：{closing_source}')
 page('intro.html','引言',render_intro(INTRO_DATA,photo),legacy=False)
-page('walks.html','現場走讀','<div class="wrap placeholder-page"><h1>現場走讀</h1><p role="status">整理中</p></div>',legacy=False)
+if selected_pages is None or 'walks.html' in selected_pages:
+ prepare_walks_photos(ROOT)
+ page('walks.html','現場走讀',render_walks(ROOT,photo),legacy=False)
 
 teacher_title,teacher_subtitle,teacher_institution,teacher_author=teacher_header(ROOT)
 teacher_title_intro,teacher_title_separator,teacher_title_main=teacher_title.partition('：')
 teacher_title_markup='<span class="teacher-title-intro">'+e(teacher_title_intro)+'</span><span class="teacher-title-main">'+e(teacher_title_main)+'</span>'
 teacher_heading='<header class="article-heading wrap"><h1>'+teacher_title_markup+'</h1><p class="article-lead">'+e(teacher_subtitle.removeprefix('——'))+'</p><div class="teacher-byline"><p>'+e(teacher_institution)+'</p><p>'+e(teacher_author)+'</p></div></header>'
-teacher_body=ordered_teacher(ROOT)
+teacher_body=ordered_teacher(ROOT,write_content=args.write_content)
 page('teacher.html',teacher_title,teacher_heading+'<article class="teacher-article">'+teacher_body+'</article>',legacy=False)
 
 for idx,c in enumerate(COURSES):
@@ -320,7 +338,8 @@ for w in WORKS:
  save_md(w['slug']+'.md',w['title'],['作者：'+w['author'],w['subtitle'],w['description'],'影片：https://drive.google.com/file/d/'+w['id']+'/view'])
  page(w['slug']+'.html',w['title'],body)
 
-(CONTENT/'works.json').write_text(json.dumps(WORKS,ensure_ascii=False,indent=2),encoding='utf-8')
-(CONTENT/'fieldwork.json').write_text(json.dumps(COURSES,ensure_ascii=False,indent=2),encoding='utf-8')
+if args.write_content:
+ (CONTENT/'works.json').write_text(json.dumps(WORKS,ensure_ascii=False,indent=2),encoding='utf-8')
+ (CONTENT/'fieldwork.json').write_text(json.dumps(COURSES,ensure_ascii=False,indent=2),encoding='utf-8')
 (SITE/'.nojekyll').touch()
-print('Built 15 pages: shared navigation, introduction, overviews, and existing articles.')
+print('Built '+str(len(built_pages))+' pages: '+', '.join(built_pages))

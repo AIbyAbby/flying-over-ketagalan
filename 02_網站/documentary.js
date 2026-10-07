@@ -40,11 +40,22 @@ if(toggle&&panel){
 }
 if(nav){
  const shell=nav.closest('.nav-scroll-shell');
- function scrollHint(){shell.dataset.canScroll=String(nav.scrollWidth-nav.clientWidth-nav.scrollLeft>2);}
+ function scrollHint(){
+  shell.dataset.canScroll=String(nav.scrollWidth-nav.clientWidth-nav.scrollLeft>2);
+  shell.dataset.scrolled=String(nav.scrollLeft>2);
+ }
+ function revealCurrent(){
+  const current=nav.querySelector('[aria-current="page"]');
+  if(!current)return;
+  const bounds=nav.getBoundingClientRect(),link=current.getBoundingClientRect();
+  if(link.right>bounds.right)nav.scrollLeft+=link.right-bounds.right+4;
+  else if(link.left<bounds.left)nav.scrollLeft-=bounds.left-link.left+4;
+ }
  nav.addEventListener('scroll',scrollHint,{passive:true});
  window.addEventListener('resize',scrollHint);
  if(window.ResizeObserver)new ResizeObserver(scrollHint).observe(nav);
- document.fonts?.ready.then(scrollHint);
+ document.fonts?.ready.then(()=>{revealCurrent();scrollHint();});
+ revealCurrent();
  scrollHint();
 }
 function headerTone(){header?.classList.toggle('scrolled',window.scrollY>60);}
@@ -60,7 +71,9 @@ document.querySelectorAll('.video-shell').forEach(shell=>{
    frame.allow='autoplay; fullscreen';
   }
   frame.title=shell.querySelector('img')?.alt.replace('影片封面','')||'影片播放器';
+  frame.tabIndex=0;
   frame.allowFullscreen=true;
   shell.replaceChildren(frame);
+  frame.focus({preventScroll:true});
  });
 });
