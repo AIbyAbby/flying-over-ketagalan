@@ -267,3 +267,30 @@ html, body {
     max-width: var(--layout-media, 900px);
   }
 }
+
+/* --------------------------------------------------------------------------
+   6. 鏡頭裡的現場 - 置頂主圖 (.scene-feature-photo)
+   -------------------------------------------------------------------------- */
+.scene-feature-photo {
+  margin: 0 0 var(--space-4, 32px) 0;
+  width: 100%;
+}
+
+.scene-feature-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+@media (min-width: 48rem) {
+  .scene-feature-photo {
+    margin-bottom: var(--space-5, 48px);
+  }
+  .scene-feature-photo img {
+    border-radius: 8px;
+  }
+}
+
