@@ -2,7 +2,7 @@
 from html import escape
 from pathlib import Path
 from PIL import Image
-from shared_components import render_card, render_section_heading, render_primary_link
+from shared_components import render_card, render_section_heading, render_primary_link, render_seo, render_header, render_footer
 
 OPENING = [
     '我們原以為，自己已經很熟悉這座城市。',
@@ -21,23 +21,24 @@ METHODS = [
 def render_entry():
     """Keep the public root URL as a static entry to the introduction."""
     return '''<!doctype html>
-<html lang="zh-Hant">
+<html lang="zh-Hant-TW">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta http-equiv="refresh" content="0;url=intro.html">
-<meta name="description" content="消失的原民故事：從引言開始，閱讀我們的田野、空拍與創作紀錄。">
-<link rel="canonical" href="intro.html">
+<meta http-equiv="refresh" content="0; url=intro.html">
+''' + render_seo('index.html', '消失的原民故事') + '''
 <link rel="stylesheet" href="magazine.css?v=16">
-<link rel="stylesheet" href="reading-layout.css?v=1">
-<title>引言｜消失的原民故事</title>
+<link rel="stylesheet" href="reading-layout.css?v=final-polish-1">
+<title>消失的原民故事</title>
+<script src="documentary.js?v=6" defer></script>
 </head>
-<body class="inner">
-<main class="wrap"><header class="page-heading">
+<body id="top" class="inner"><a class="skip" href="#main">跳到主要內容</a>''' + render_header('index.html') + '''
+<main id="main" class="wrap"><header class="page-heading">
 <h1>消失的原民故事</h1>
 <p>''' + render_primary_link('intro.html', '閱讀引言') + '''</p>
 </header></main>
-</body></html>
+<noscript><p class="redirect-note">若未自動跳轉，請<a href="intro.html">閱讀引言</a>。</p></noscript>
+''' + render_footer() + '''</body></html>
 '''
 
 def paragraphs(items):

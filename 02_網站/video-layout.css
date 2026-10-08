@@ -101,6 +101,23 @@ html, body {
   line-height: 1;
 }
 
+/* 作品與空拍封面：只顯示播放符號，保留可辨識的點擊範圍。 */
+.video-shell .play-button--icon {
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  gap: 0;
+  box-sizing: border-box;
+  border-radius: 50%;
+  text-decoration: none;
+}
+
+.video-shell .play-button--icon .play-icon {
+  font-size: 20px;
+  margin: 0;
+  transform: translateX(1px);
+}
+
 /* 鍵盤操作無障礙焦點外框 */
 .video-shell .play-button:focus-visible {
   outline: 3px solid #ffffff;

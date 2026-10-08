@@ -216,3 +216,149 @@ figcaption,.teacher-page .teacher-photo figcaption,.scene-grid .scene-photo figc
 .field-page .fieldwork-youtube .fieldwork-youtube-link:focus-visible {
  outline:3px solid #fff; outline-offset:3px; box-shadow:0 0 0 6px var(--river-dark);
 }
+
+/* Editorial date and place grouping for fieldwork entry cards. */
+.fieldwork-overview .field-entry-heading {
+ display:flex; align-items:baseline; gap:1rem; margin:0 0 1.25rem;
+}
+.fieldwork-overview .field-entry-date {
+ flex-shrink:0; font:400 1.875rem/1.35 var(--serif);
+ letter-spacing:.04em; color:var(--river-dark);
+}
+.fieldwork-overview .field-entry-place {
+ min-width:0;
+ font:600 1.875rem/1.35 var(--serif); letter-spacing:.06em; color:var(--river-dark);
+}
+@media (min-width:48rem) {
+ .fieldwork-overview .field-entry-date,
+ .fieldwork-overview .field-entry-place { font-size:2.125rem; }
+}
+
+/* Fieldwork editorial cards: breathing room and stronger serif headings. */
+.fieldwork-overview .field-entry-preview {
+ padding:1.25rem; background:var(--paper-soft); border:0;
+ border-radius:.875rem; box-shadow:var(--reading-card-shadow);
+}
+.fieldwork-overview .field-entry-preview .card-copy { padding:1.75rem 0 .25rem; text-align:left; }
+.fieldwork-overview .field-entry-preview .field-entry-heading { margin-bottom:1.5rem; gap:.875rem; }
+.fieldwork-overview .field-entry-preview .field-entry-date {
+ font-family:Georgia,"Times New Roman",var(--serif); font-weight:400; letter-spacing:.025em;
+}
+.fieldwork-overview .field-entry-preview .field-entry-place { font-weight:700; letter-spacing:.06em; }
+.fieldwork-overview .field-entry-preview .card-copy > p { margin:0 0 1.5rem; }
+.fieldwork-overview .field-entry-preview .fieldwork-card-action {
+ align-self:flex-start; justify-content:center; text-align:center;
+ border-radius:.375rem; margin-top:0; min-height:2.75rem;
+}
+@media (min-width:48rem) {
+ .fieldwork-overview .field-entry-preview { padding:1.5rem; }
+ .fieldwork-overview .field-entry-preview .card-copy { padding-top:2rem; }
+}
+
+/* Optional viewing-quality reminder beneath the fieldwork cover. */
+.field-page .activity-film .fieldwork-youtube { margin-bottom:.5rem; }
+.field-page .activity-film .film-quality-note {
+ margin:0 0 .75rem;
+ font:400 .9375rem/1.8 var(--sans);
+ color:var(--muted); text-align:right; overflow-wrap:break-word;
+}
+
+.field-page .activity-film .film-watch-link {
+ display:inline-flex; align-items:center; justify-content:center; gap:.5rem;
+ min-height:2.75rem; padding:.5rem 1rem; margin:0 0 1.5rem;
+ box-sizing:border-box; border-radius:.375rem;
+ background:var(--river-dark); color:#fff; text-decoration:none;
+ font:500 1rem/1.5 var(--sans);
+}
+.field-page .activity-film .film-watch-link:hover { background:var(--ink); }
+.field-page .activity-film .film-watch-link:active { transform:translateY(1px); }
+.field-page .activity-film .film-watch-link:focus-visible {
+ outline:3px solid var(--river-dark); outline-offset:3px;
+}
+
+/* Keep all four date/place headings on one line at readable sizes. */
+.fieldwork-overview .field-entry-preview .field-entry-heading { gap:.5rem; }
+.fieldwork-overview .field-entry-preview .field-entry-date,
+.fieldwork-overview .field-entry-preview .field-entry-place {
+ font-size:1.3125rem; white-space:nowrap; letter-spacing:.025em;
+}
+@media (min-width:64rem) {
+ .fieldwork-overview .field-entry-preview .field-entry-date,
+ .fieldwork-overview .field-entry-preview .field-entry-place { font-size:1.5rem; }
+}
+
+/* Compact fieldwork entry buttons with a comfortable touch target. */
+.fieldwork-overview .field-entry-preview .fieldwork-card-action {
+ min-height:2.75rem; padding:.5rem .875rem;
+ font:500 1rem/1.6 var(--sans); letter-spacing:.025em;
+ border-radius:.375rem;
+}
+.fieldwork-overview .field-entry-preview .field-entry-play {
+ font-size:.75em; vertical-align:.08em; margin-right:.2rem;
+}
+
+/* Final reading/accessibility polish; player rules and video markup stay intact. */
+:root { --reading-sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif; }
+html { scroll-behavior:smooth; }
+body { font-family:var(--reading-sans); line-break:strict; }
+p,li,figcaption { text-wrap:pretty; }
+h1,h2,h3 { text-wrap:balance; }
+:is(.intro-page .intro-block,.teacher-page .chapter-reading,.walks-section,
+    .work-introduction,.work-secondary,.creator-note,.card-copy,.entry-copy,.reading-block) > p {
+ font-family:var(--reading-sans); line-height:1.9; max-width:38em;
+}
+.work-heading .article-lead,.teacher-page .article-heading .article-lead {
+ font-family:var(--reading-sans); max-width:38em;
+}
+.field-page .activity-film .film-description { font-family:var(--reading-sans); max-width:38em; }
+.intro-page .intro-signature { text-align:right; margin-top:1.5rem; color:var(--river-dark); }
+.responsive-picture { display:block; width:100%; }
+:is(.card-media,.work-poster,.collage-photo) > .responsive-picture { height:100%; }
+:is(a,button,[tabindex]):focus-visible {
+ outline:3px solid var(--river-dark); outline-offset:4px;
+}
+:is(.top-nav-link,.air-toggle,.air-subnav a):focus-visible { outline-offset:-4px; }
+.skip { min-width:44px; min-height:44px; }
+.skip:focus-visible { top:10px; }
+:is(.brand,.breadcrumb,.text-link,.view-all,.back-top,.next-story,.chapter-nav a,
+    .category-nav a,.teacher-chapter-links a,.page-sequence a,.redirect-note a) {
+ display:inline-flex; align-items:center; min-width:44px; min-height:44px;
+}
+.site-header.shared-header :is(.top-nav-link,.air-subnav a)[aria-current="page"] {
+ font-weight:700; border-bottom:3px solid var(--river-dark);
+ background:rgba(35,79,86,.06); color:var(--river-dark);
+}
+.work-card .stretched-link { display:inline-flex; align-items:center; min-height:44px; }
+.work-card .stretched-link::after { content:""; position:absolute; inset:0; z-index:1; }
+.work-card:focus-within { outline:3px solid var(--river-dark); outline-offset:5px; }
+.work-card .stretched-link:focus-visible { outline:none; }
+.work-card .card-copy { padding-right:1rem; }
+.work-card .card-arrow { pointer-events:none; }
+.page-sequence {
+ display:flex; flex-wrap:wrap; justify-content:space-between; gap:.75rem 1.5rem;
+ width:min(51rem,calc(100% - 2 * var(--layout-gutter))); margin:1rem auto 3rem;
+ padding-top:1rem; border-top:1px solid var(--ui-border-subtle);
+ font:400 1rem/1.8 var(--reading-sans); color:var(--river-dark);
+}
+.page-sequence a { gap:.5rem; text-decoration:underline; text-underline-offset:.25em; }
+.page-sequence a span { color:var(--muted); font-size:.875rem; }
+.page-sequence .sequence-next { margin-left:auto; }
+.site-footer .copyright {
+ max-width:38em; margin:1.25rem auto 0; font:400 .875rem/1.9 var(--reading-sans);
+ color:var(--muted); text-wrap:pretty;
+}
+.contact-placeholder { color:var(--river-dark); font-weight:600; }
+.redirect-note { width:min(38em,calc(100% - 2rem)); margin:1rem auto; }
+.not-found { max-width:51rem; padding-block:3rem; }
+.not-found nav { display:flex; flex-wrap:wrap; gap:.5rem 1.25rem; }
+.not-found nav a { display:inline-flex; align-items:center; min-height:44px; text-decoration:underline; }
+@media (max-width:63.99rem) {
+ .top-nav-list { width:100%; min-width:0; flex-wrap:wrap; justify-content:flex-start; row-gap:0; }
+ .top-nav { overflow:visible; }
+ .nav-scroll-hint,.nav-scroll-shell::before { display:none!important; }
+ :root { --header-clearance:11rem; }
+}
+@media (prefers-reduced-motion:reduce) {
+ html { scroll-behavior:auto; }
+ *,*::before,*::after { scroll-behavior:auto!important; }
+}

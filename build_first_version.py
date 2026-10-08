@@ -4,12 +4,13 @@ from html import escape as e
 import argparse, json, shutil, subprocess
 from PIL import Image, ImageOps
 from teacher_pages import ordered_teacher, HEADINGS, CAPTIONS, source_text, teacher_header
-from shared_components import render_header, render_card, render_intro, render_overview
+from shared_components import (render_header, render_card, render_intro, render_overview,
+                               render_seo, render_footer, render_page_sequence, PUBLIC_BASE)
 from walks_page import prepare_walks_photos, render_walks
 import re
 
 parser = argparse.ArgumentParser(description=__doc__)
-parser.add_argument('--pages', nargs='+', choices=['index.html','stories.html','fieldwork.html','works.html','intro.html','walks.html','teacher.html','fieldwork-0829.html','fieldwork-0903.html','fieldwork-0905.html','fieldwork-0910.html','abby.html','suifen.html','kuncan.html','wenjin.html','yuan.html'], help='Only render these HTML filenames.')
+parser.add_argument('--pages', nargs='+', choices=['index.html','404.html','stories.html','fieldwork.html','works.html','intro.html','walks.html','teacher.html','fieldwork-0829.html','fieldwork-0903.html','fieldwork-0905.html','fieldwork-0910.html','abby.html','suifen.html','kuncan.html','wenjin.html','yuan.html'], help='Only render these HTML filenames.')
 parser.add_argument('--prepare-media', action='store_true', help='Explicitly rebuild existing photos and video posters.')
 parser.add_argument('--write-content', action='store_true', help='Explicitly export legacy derived Markdown and JSON.')
 args = parser.parse_args()
@@ -155,7 +156,51 @@ def photo(src,caption='',cls='',priority=False,show_caption=True):
  path=SITE/src
  with Image.open(path) as image: width,height=image.size
  loading='fetchpriority="high"' if priority else 'loading="lazy"'
- return f'<figure class="{cls}"><img src="{src}" width="{width}" height="{height}" alt="{e(caption)}" {loading}>'+ (f'<figcaption>{e(caption)}</figcaption>' if caption and show_caption else '')+'</figure>'
+ return f'<figure class="{cls}"><img src="{src}" width="{width}" height="{height}" alt="{e(caption)}" {loading} decoding="async">'+ (f'<figcaption>{e(caption)}</figcaption>' if caption and show_caption else '')+'</figure>'
+
+
+def responsive_images(markup):
+ """Size non-player images and supply WebP copies; original JPEGs stay intact."""
+ protected=[]
+ def protect(match):
+  protected.append(match[0]); return f'__PLAYER_UNCHANGED_{len(protected)-1}__'
+ markup=re.sub(r'<section\b[^>]*class="[^"]*\bactivity-film\b[^"]*"[^>]*>.*?</section>|<div\b[^>]*class="[^"]*\bvideo-shell\b[^"]*"[^>]*>.*?</div>',protect,markup,flags=re.S)
+ def picture(match):
+  tag=match[0]
+  src=re.search(r'\bsrc="([^"]+)"',tag)
+  if not src or src[1].startswith(('http:','https:','data:')): return tag
+  path=SITE/src[1]
+  if not path.exists(): return tag
+  with Image.open(path) as source:
+   width,height=source.size
+   for name,value in (('width',str(width)),('height',str(height)),('decoding','async')):
+    if not re.search(r'\b'+name+r'=',tag): tag=tag[:-1]+f' {name}="{value}">'
+   if 'fetchpriority="high"' not in tag and 'loading=' not in tag: tag=tag[:-1]+' loading="lazy">'
+   if path.suffix.lower() not in ('.jpg','.jpeg') or width<800: return tag
+   sizes=sorted(set((min(480,width),min(960,width),min(1600,width))))
+   variants=[]
+   for size in sizes:
+    target=path.with_name(path.stem+f'-w{size}.webp')
+    valid_variant=False
+    if target.exists():
+     with Image.open(target) as existing: valid_variant=existing.width==size
+    if not valid_variant or target.stat().st_mtime_ns<path.stat().st_mtime_ns:
+     preview=source.convert('RGB').resize((size,round(height*size/width)),Image.Resampling.LANCZOS)
+     preview.save(target,'WEBP',quality=82,method=6)
+    variants.append(target.relative_to(SITE).as_posix()+f' {size}w')
+  # Cards and collage cells need less data than full article photographs.
+  if 'first-frame' in src[1] or 'fieldwork-overview' in markup:
+   sizes_attr='(min-width: 1200px) 520px, (min-width: 768px) calc((100vw - 112px) / 2), calc(100vw - 72px)'
+  elif '/walks-' in src[1]:
+   sizes_attr='(min-width: 768px) 500px, calc(100vw - 32px)'
+  elif 'fetchpriority="high"' in tag:
+   sizes_attr='100vw'
+  else:
+   sizes_attr='(min-width: 1200px) 1100px, (min-width: 768px) calc(100vw - 64px), calc(100vw - 32px)'
+  return f'<picture class="responsive-picture"><source type="image/webp" srcset="{", ".join(variants)}" sizes="{sizes_attr}">{tag}</picture>'
+ markup=re.sub(r'<img\b[^>]*>',picture,markup)
+ for index,original in enumerate(protected): markup=markup.replace(f'__PLAYER_UNCHANGED_{index}__',original)
+ return markup
 
 def row(url,image,label,title,intro,short,playable=False):
  caption=TEACHER_CAPTIONS.get(Path(image).name)
@@ -212,11 +257,14 @@ def page(filename,title,body,home=False,legacy=True):
  if filename.startswith('fieldwork-'): body_class+=' field-page'
  if filename in {'abby.html','suifen.html','kuncan.html','wenjin.html','yuan.html'}: body_class+=' work-page'
  if home: styles+='<link rel="stylesheet" href="editorial-home.css?v=7">'
- styles+='<link rel="stylesheet" href="reading-layout.css?v=1">'
- styles+='<link rel="stylesheet" href="video-layout.css?v=1">'
+ styles+='<link rel="stylesheet" href="reading-layout.css?v=final-polish-1">'
+ styles+='<link rel="stylesheet" href="video-layout.css?v='+('abby-play-icon-2' if filename=='abby.html' or filename.startswith('fieldwork-') else '1')+'">'
  html=f'''<!doctype html>
-<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="循著凱達格蘭的足跡，留下田野、空拍與創作的共同記憶。"><meta name="theme-color" content="#234f56"><title>{e(title)}｜消失的原民故事</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&family=Noto+Serif+TC:wght@400;500;600;700&display=swap" rel="stylesheet">{styles}<script src="documentary.js?v=6" defer></script></head>
-<body class="{body_class}"><a class="skip" href="#main">跳到主要內容</a>{render_header(filename)}<main id="main">{body}</main><footer class="site-footer compact-footer"><a class="back-top ui-control" href="#main" aria-label="回到頁首">回到頁首</a></footer></body></html>'''
+<html lang="zh-Hant-TW"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">{render_seo(filename,title)}<meta name="theme-color" content="#234f56"><title>{e(title)}｜消失的原民故事</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&family=Noto+Serif+TC:wght@400;500;600;700&display=swap" rel="stylesheet">{styles}<script src="documentary.js?v=6" defer></script></head>
+<body id="top" class="{body_class}"><a class="skip" href="#main">跳到主要內容</a>{render_header(filename)}<main id="main">{responsive_images(body)}{render_page_sequence(filename)}</main>{render_footer()}</body></html>'''
+ if filename=='404.html':
+  # A Pages 404 is also served at arbitrary nested URLs; fragments stay local.
+  html=re.sub(r'(href|src)="(?!https?:|#|/)([^"]+)"',lambda m:m[1]+'="/flying-over-ketagalan/'+m[2]+'"',html)
  (SITE/filename).write_text(html,encoding='utf-8')
  built_pages.append(filename)
 
@@ -248,11 +296,19 @@ for w in WORKS: overview+=row(w['slug']+'.html',w['image'],w['author']+'・'+w['
 overview+='</section></div>'
 page('stories.html','故事總覽',overview)
 FIELDWORK_OVERVIEW=json.loads((CONTENT/'fieldwork-overview.json').read_text(encoding='utf-8'))
-air_cards=[render_card(f'fieldwork-{c["key"]}.html',f'assets/flight-{c["cover"]}.jpg',f'{c["date"]} {c["place"]}',FIELDWORK_OVERVIEW['cards'][c['key']]['summary'],label='空拍紀實影片',cta=FIELDWORK_OVERVIEW['cards'][c['key']]['cta']) for c in COURSES]
+def render_air_entry(c):
+ config=FIELDWORK_OVERVIEW['cards'][c['key']]
+ card=render_card(f'fieldwork-{c["key"]}.html',f'assets/flight-{c["cover"]}.jpg',c['place'],config['summary'],cta=config['cta'])
+ heading='<h3 class="field-entry-heading"><span class="field-entry-date">'+e(c['date'])+'</span><span class="field-entry-place">'+e(c['place'])+'</span></h3>'
+ card=card.replace('<h3>'+e(c['place'])+'</h3>',heading,1)
+ card=card.replace('class="shared-card"','class="shared-card field-entry-preview"',1)
+ card=card.replace('<span>▶ 點此觀看影片</span>','<span><span class="field-entry-play" aria-hidden="true">▶</span> 點此觀看影片</span>',1)
+ return card.replace('<span class="entry-arrow" aria-hidden="true">→</span>','',1)
+air_cards=[render_air_entry(c) for c in COURSES]
 page('fieldwork.html','空拍紀錄',render_overview('空拍紀錄',FIELDWORK_OVERVIEW['lead'],'四次出發',air_cards,'fieldwork.html',show_breadcrumb=False,show_view_all=False),legacy=False)
 def render_work_card(w):
  author='Abby 陳翠碧' if w['slug']=='abby' else w['author']
- card=render_card(w['slug']+'.html',w['image'],w['title'],CARD_SUMMARIES[w['slug']],playable=True)
+ card=render_card(w['slug']+'.html',w['image'],w['title'],CARD_SUMMARIES[w['slug']],playable=True,stretched=True)
  return card.replace('</h3>','</h3><span class="card-label">創作者｜'+e(author)+'</span>',1)
 work_cards=[render_work_card(w) for w in WORKS]
 page('works.html','影音創作',render_overview('影音創作','從共同走過的土地，長出各自觀看與敘說的方式。','鏡頭裡的故事',work_cards,'works.html',show_breadcrumb=False,show_view_all=False),legacy=False)
@@ -338,10 +394,12 @@ for idx,c in enumerate(COURSES):
  save_md('fieldwork-'+c['key']+'.md',c['date']+' '+c['place']+'｜'+c['title'],paragraphs)
  page('fieldwork-'+c['key']+'.html',c['place']+'・'+c['title'],body)
 
-def video(video_id,image,title,button='播放作品',youtube_id=None):
+def video(video_id,image,title,button='播放作品',youtube_id=None,direct_youtube=False):
+ if youtube_id and direct_youtube:
+  return f'<div class="video-shell" data-youtube="{youtube_id}" data-title="{e(title)}"><img src="{image}" alt="" loading="lazy"><a href="https://youtu.be/{youtube_id}" target="_blank" rel="noopener" class="play-button play-button--icon ui-control" aria-label="{e("在 YouTube 播放："+title)}"><span class="play-icon" aria-hidden="true">▶</span></a></div>'
  if youtube_id:
   return f'<div class="video-shell" data-youtube="{youtube_id}" data-title="{e(title)}"><img src="{image}" alt="" loading="lazy"><button type="button" class="play-button ui-control" aria-label="{e(button+"："+title)}"><span class="play-icon" aria-hidden="true">▶</span>{button}</button></div><div class="video-links"><a href="https://youtu.be/{youtube_id}" target="_blank" rel="noopener">在 YouTube 開啟影片 ↗</a></div>'
- return f'<div class="video-shell" data-video="{video_id}" data-title="{e(title)}"><img src="{image}" alt="" loading="lazy"><button type="button" class="play-button ui-control" aria-label="{e(button+"："+title)}"><span class="play-icon" aria-hidden="true">▶</span>{button}</button></div><div class="video-links"><a href="https://drive.google.com/file/d/{video_id}/view" target="_blank" rel="noopener">在雲端開啟影片 ↗</a></div>'
+ return f'<div class="video-shell" data-video="{video_id}" data-title="{e(title)}"><img src="{image}" alt="" loading="lazy"><button type="button" class="play-button ui-control" aria-label="{e(button+"："+title)}"><span class="play-icon" aria-hidden="true">▶</span>{button}</button></div>'
 
 def render_creation_journey(source):
  chunks=source.read_text(encoding='utf-8').strip().split('\n\n')
@@ -355,13 +413,13 @@ def render_creation_journey(source):
 
 for w in WORKS:
  youtube_id=w.get('youtube')
- body=f'<header class="article-heading wrap work-heading"><h1>{w["title"]}</h1><p class="article-lead">{w["subtitle"]}</p><p class="work-author">創作者｜{w["author"]}</p></header><article class="work-reading wrap"><div class="work-introduction"><p>{w["description"]}</p></div>'+video(w['id'],w['image'],w['title'],youtube_id=youtube_id)+'</article>'
+ body=f'<header class="article-heading wrap work-heading"><h1>{w["title"]}</h1><p class="article-lead">{w["subtitle"]}</p><p class="work-author">創作者｜{w["author"]}</p></header><article class="work-reading wrap"><div class="work-introduction"><p>{w["description"]}</p></div>'+video(w['id'],w['image'],w['title'],youtube_id=youtube_id,direct_youtube=w['slug']=='abby')+'</article>'
  if w['slug']=='yuan':
   body+=render_creation_journey(CONTENT/'yuan-creation-journey.md')
  if w['slug']=='abby':
   body+=render_creation_journey(CONTENT/'abby-creation-journey.md')
   voiceover_intro='<p>十三行人究竟是不是凱達格蘭族的祖先？走進十三行博物館，Abby 從田野走讀中拍下的展件影像出發，結合語音敘事與情境音效，完成這份富有探索精神的配音成果。</p><p>透過《番社采風圖》的歷史圖說、一比一復原的干欄式住屋、細緻拍印的幾何陶罐紋樣，以及火塘邊的生活日常，將靜態的照片轉化為生動的歷史漫遊。這不只是一次課堂作業，更是讓走讀足跡有了聲音，讓沉睡千年的考古記憶在當代重新甦醒。</p>'
-  voiceover_shell='<div class="video-shell" data-youtube="S2_Z2z-UeqE" data-title="十三行人真的是凱達格蘭族的祖先嗎？"><img src="assets/abby-voiceover-first-frame.jpg" alt="" loading="lazy"><button type="button" class="play-button ui-control" aria-label="播放作品：十三行人真的是凱達格蘭族的祖先嗎？"><span class="play-icon" aria-hidden="true">▶</span>播放作品</button></div><div class="video-links"><a href="https://youtu.be/S2_Z2z-UeqE" target="_blank" rel="noopener">在 YouTube 開啟影片 ↗</a></div>'
+  voiceover_shell=video(None,'assets/abby-voiceover-first-frame.jpg','十三行人真的是凱達格蘭族的祖先嗎？',youtube_id='S2_Z2z-UeqE',direct_youtube=True)
   body+=f'<section class="interview wrap"><div class="work-introduction work-secondary"><h2>十三行人真的是凱達格蘭族的祖先嗎？</h2><p class="work-author">配音功課　創作者｜Abby 陳翠碧</p>{voiceover_intro}</div>{voiceover_shell}</section>'
  if w['slug']=='suifen':
   body+='<section class="interview wrap"><div class="section-heading"><span class="kicker">聽創作者說</span><h2>穗芬談創作思維</h2><p>從作品回到創作的過程，聽穗芬分享自己的觀看與思考。</p></div>'+video('1Uxapk_yIMfmXcGxE9QF9Vz7gEEVUsIFz',INTERVIEW_POSTER,'穗芬談創作思維','播放創作分享')+'</section>'
@@ -373,8 +431,24 @@ for w in WORKS:
  save_md(w['slug']+'.md',w['title'],['作者：'+w['author'],w['subtitle'],w['description'],'影片：'+video_link])
  page(w['slug']+'.html',w['title'],body)
 
+page('404.html','找不到這個頁面','<div class="wrap not-found"><header class="page-heading"><p class="kicker">404</p><h1>找不到這個頁面</h1><p>這個連結可能已經移動。歡迎回到引言，繼續閱讀我們共同留下的故事。</p></header><p><a class="primary-entry" href="intro.html">回到引言</a></p><nav aria-label="尋找其他篇章"><a href="teacher.html">課程手記</a><a href="fieldwork.html">空拍紀錄</a><a href="walks.html">現場走讀</a><a href="works.html">影音創作</a></nav></div>',legacy=False)
+
 if args.write_content:
  (CONTENT/'works.json').write_text(json.dumps(WORKS,ensure_ascii=False,indent=2),encoding='utf-8')
  (CONTENT/'fieldwork.json').write_text(json.dumps(COURSES,ensure_ascii=False,indent=2),encoding='utf-8')
 (SITE/'.nojekyll').touch()
+og_cover=SITE/'assets/og-cover.jpg'
+if not og_cover.exists():
+ with Image.open(SITE/'assets/intro-panorama.jpg') as image:
+  ImageOps.fit(image.convert('RGB'),(1200,630),Image.Resampling.LANCZOS,centering=(.5,.75)).save(og_cover,quality=88,optimize=True)
+from PIL import ImageDraw
+icon=Image.new('RGB',(180,180),'#234f56')
+draw=ImageDraw.Draw(icon)
+draw.polygon([(72,45),(126,81),(72,117)],fill='#fbf7ef')
+draw.arc((27,104,153,161),0,180,fill='#fbf7ef',width=5)
+if not (SITE/'apple-touch-icon.png').exists(): icon.save(SITE/'apple-touch-icon.png')
+if not (SITE/'favicon.ico').exists(): icon.save(SITE/'favicon.ico',sizes=[(16,16),(32,32),(48,48)])
+(SITE/'robots.txt').write_text('User-agent: *\nAllow: /\nSitemap: '+PUBLIC_BASE+'sitemap.xml\n',encoding='utf-8')
+urls=''.join('<url><loc>'+PUBLIC_BASE+p.name+'</loc></url>\n' for p in sorted(SITE.glob('*.html')))
+(SITE/'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+urls+'</urlset>\n',encoding='utf-8')
 print('Built '+str(len(built_pages))+' pages: '+', '.join(built_pages))
