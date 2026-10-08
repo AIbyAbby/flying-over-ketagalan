@@ -395,3 +395,40 @@ body.inner .work-card .card-copy p { margin-bottom:var(--space-3); }
 @media (max-width:48rem) {
  body.inner .work-card .card-copy { padding:var(--space-3); }
 }
+
+/* 2026-10-09 approved site-wide text/media alignment. */
+:root {
+ --layout-content:1000px;
+ --layout-site:var(--layout-content);
+ --layout-media:var(--layout-content);
+ --layout-reading:var(--layout-content);
+ --text-base:clamp(1.0625rem,1.02rem + .2vw,1.1875rem);
+}
+:root body.inner :is(.page-heading,.article-heading,.section-heading,.intro-block,.chapter-reading,.work-introduction,.work-secondary,.creator-note,.reflection-body,.reading-block,.walks-section,.entry-copy,.card-copy) p {max-width:none;}
+:root body.inner :is(h1,h2,h3) {font-family:var(--serif);line-height:1.35;}
+@media(min-width:48rem) {
+ :root {--text-base:1.25rem;--text-xs:.875rem;}
+ :root body.inner h1 {font-size:var(--text-2xl);}
+ :root body.inner h2 {font-size:var(--text-xl);}
+ :root body.inner h3 {font-size:var(--text-lg);}
+}
+:root body.inner .intro-page,
+:root body.inner .intro-page .intro-block {max-width:var(--layout-content);}
+:root body.inner :is(.work-introduction,.reading-block) {max-width:100%;}
+:root body.inner .shared-overview .page-heading {padding-block:var(--space-5) var(--space-3);margin-bottom:var(--space-3);}
+:root body.inner .shared-section-heading h2 {margin-top:0;}
+/* Paper-card text and following photographs share the same inset. */
+:root body.teacher-page .teacher-article {width:min(var(--layout-content),calc(100% - 2 * var(--layout-gutter)));}
+:root body.teacher-page .article-heading {width:min(var(--layout-content),calc(100% - 2 * var(--layout-gutter)));max-width:var(--layout-content);}
+:root body.teacher-page .chapter-reading {width:100%;max-width:none;}
+:root body.teacher-page :is(.chapter-heading,.teacher-photo) {width:calc(100% - 2 * var(--reading-card-padding));margin-inline:auto;}
+:root body.teacher-page .teacher-photo figcaption {width:100%;max-width:none;}
+@media(max-width:48rem) {
+ :root body.inner h3 {font-family:var(--sans);}
+}
+
+:root body.inner .intro-page .intro-closing-photo {width:calc(100% - 2 * var(--reading-card-padding));}
+@media(min-width:48rem) {
+ :root body.inner :is(.page-heading,.section-heading) > p,
+ :root body.inner .work-heading .article-lead {font-size:var(--text-base);line-height:1.85;}
+}

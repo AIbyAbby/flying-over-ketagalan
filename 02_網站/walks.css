@@ -1,6 +1,6 @@
 /* Photo essay: mobile first; preserve the selected subjects and crop focus. */
-.walks-page { --collage-gap:12px; }
-.walks-page .reading-container { width:min(720px,calc(100% - 2 * var(--layout-gutter))); margin-inline:auto; }
+.walks-page { --collage-gap:12px; --walks-content-width:var(--layout-content,1000px); }
+.walks-page .reading-container { width:min(var(--walks-content-width),calc(100% - 2 * var(--layout-gutter))); margin-inline:auto; }
 .walks-page .walks-heading { padding-block:2rem 1.5rem; }
 .walks-page .walks-heading h1 { margin:0; }
 .walks-page .walks-section { margin-bottom:3rem; }
@@ -9,7 +9,7 @@
 .walks-page .walks-collages { margin-block:2rem; }
 .walks-page :is(.walks-collage-panel,.walks-collage-pair) {
  display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:var(--collage-gap);
- width:min(1000px,calc(100% - 2 * var(--layout-gutter))); margin:0 auto 1.5rem; align-items:stretch;
+ width:min(var(--walks-content-width),calc(100% - 2 * var(--layout-gutter))); margin:0 auto 1.5rem; align-items:stretch;
 }
 .walks-page .collage-photo { position:relative; margin:0; min-width:0; width:100%; max-width:100%; overflow:hidden; aspect-ratio:1; display:block; }
 .walks-page .collage-photo :is(picture, .responsive-picture) { display:block; width:100%; height:100%; }
@@ -49,3 +49,6 @@
  .walks-page .collage-museum-finish > :last-child { grid-column:auto; aspect-ratio:auto; }
  .walks-page .walks-next { flex-direction:row; align-items:center; justify-content:space-between; flex-wrap:wrap; }
 }
+
+/* Approved: align walk essay text with the collage edges. */
+:root body .walks-page .walks-section p { max-width:none; }

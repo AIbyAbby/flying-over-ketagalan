@@ -267,7 +267,7 @@ def page(filename,title,body,home=False,legacy=True):
  html=f'''<!doctype html>
 <html lang="zh-Hant-TW"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">{render_seo(filename,title)}<meta name="theme-color" content="#234f56"><title>{e(title)}｜消失的原民故事</title><link rel="stylesheet" href="uiux-fonts.css?v=1">{styles}<script src="documentary.js?v=6" defer></script>{reflection_script}</head>
 <body id="top" class="{body_class}"><a class="skip" href="#main">跳到主要內容</a>{render_header(filename)}<main id="main">{responsive_images(body)}{render_page_sequence(filename)}</main>{render_footer()}</body></html>'''
- html=re.sub(r'(\.css\?v=)[^\"\s]+',r'\1release-20261008-2',html)
+ html=re.sub(r'(\.css\?v=)[^\"\s]+',r'\1aligned-content-20261009-2',html)
  if filename=='404.html':
   # A Pages 404 is also served at arbitrary nested URLs; fragments stay local.
   html=re.sub(r'(href|src)="(?!https?:|#|/)([^"]+)"',lambda m:m[1]+'="/flying-over-ketagalan/'+m[2]+'"',html)
