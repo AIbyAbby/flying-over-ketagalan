@@ -214,7 +214,7 @@ def legacy_body(html):
  protected=[]
  def protect(match):
   protected.append(match[0]); return f'__SHARED_{len(protected)-1}__'
- html=re.sub(r'<a class="(?:shared-card|primary-entry)\b.*?</a>|<span class="viewall-arrow".*?</span>|<section class="creator-note wrap".*?</section>',protect,html,flags=re.S)
+ html=re.sub(r'<a class="(?:shared-card|primary-entry)\b.*?</a>|<span class="viewall-arrow".*?</span>|<section class="creator-note wrap".*?</section>|<details class="reflection-card wrap".*?</details>',protect,html,flags=re.S)
  for old,new in [('老師的敘述','土地的記憶'),('老師的陳述','土地的記憶'),('故事總覽','故事目錄'),('田野與空拍','沿河而行'),('四堂田野與空拍紀實','沿河而行'),('同學作品','鏡頭裡的故事')]:
   html=html.replace(old,new)
  html=html.replace('四堂沿河而行紀實','沿河而行')
@@ -259,8 +259,280 @@ def page(filename,title,body,home=False,legacy=True):
  if home: styles+='<link rel="stylesheet" href="editorial-home.css?v=7">'
  styles+='<link rel="stylesheet" href="reading-layout.css?v=final-polish-1">'
  styles+='<link rel="stylesheet" href="video-layout.css?v='+('abby-play-icon-2' if filename=='abby.html' or filename.startswith('fieldwork-') else '1')+'">'
+ if filename in {'abby.html','yuan.html'}: styles+='<link rel="stylesheet" href="uiux-polish.css?v=reflection-1">'
+ reflection_script='<script src="work-reflection.js?v=review-1" defer></script>' if filename in {'abby.html','yuan.html'} else ''
  html=f'''<!doctype html>
-<html lang="zh-Hant-TW"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">{render_seo(filename,title)}<meta name="theme-color" content="#234f56"><title>{e(title)}｜消失的原民故事</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&family=Noto+Serif+TC:wght@400;500;600;700&display=swap" rel="stylesheet">{styles}<script src="documentary.js?v=6" defer></script></head>
+<html lang="zh-Hant-TW"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">{render_seo(filename,title)}<meta name="theme-color" content="#234f56"><title>{e(title)}｜消失的原民故事</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&family=Noto+Serif+TC:wght@400;500;600;700&display=swap" rel="stylesheet">{styles}<script src="documentary.js?v=6" defer></script>{reflection_script}</head>
+<body id="top" class="{body_class}"><a class="skip" href="#main">跳到主要內容</a>{render_header(filename)}<main id="main">{responsive_images(body)}{render_page_sequence(filename)}</main>{render_footer()}</body></html>'''
+ if filename=='404.html':
+  # A Pages 404 is also served at arbitrary nested URLs; fragments stay local.
+  html=re.sub(r'(href|src)="(?!https?:|#|/)([^"]+)"',lambda m:m[1]+'="/flying-over-ketagalan/'+m[2]+'"',html)
+ (SITE/filename).write_text(html,encoding='utf-8')
+ built_pages.append(filename)
+
+# Web-sized copies; retain originals and photographic content.
+for p in sorted((ROOT/'tmp/source-photos').glob('*.jpg')) if args.prepare_media else []:
+ with Image.open(p) as im:
+  im=im.convert('RGB');im.thumbnail((1800,1800));im.save(SITE/'assets'/('flight-'+p.stem+'.jpg'),quality=88,optimize=True)
+
+HOME_PARAGRAPHS=[
+ '北投、關渡、八里、錫口——有些名字，我們每天經過，卻未必知道它們曾經承載的故事。老師帶著文獻與古地圖，我們帶著各自的經驗，一起走向凱達格蘭族曾經生活的地方。',
+ '從河岸與街廓，到十三行博物館的展場，我們在眼前的風景裡尋找線索。當空拍機升起，河灣、山勢與聚落的關係有了不同的尺度；回到地面，這些發現又成為彼此對話、各自創作的起點。',
+ '這裡留下老師的敘述、四次田野與空拍紀實，以及同學們用影像寫成的故事。我們把一起走過、看過、思索過的片刻留在這裡，也邀請你循著這些足跡，重新觀看這片土地。',
+]
+save_md('home.md','消失的原民故事',HOME_PARAGRAPHS)
+hero='''<section class="cover"><img class="cover-photo" src="assets/flight-0829-0080.jpg" alt="課程實際空拍的河面、河岸與山勢" fetchpriority="high"><div class="cover-lines" aria-hidden="true"><span></span><span></span><i></i></div><div class="cover-copy"><span class="kicker">循著凱達格蘭的足跡</span><h1>消失的<br>原民故事<span class="title-dot">。</span></h1><p>從地面走讀，到空中的觀看。<br>把土地的記憶，寫進我們的鏡頭。</p><a class="cover-button" href="works.html">走進故事 <span aria-hidden="true">↗</span></a></div><div class="cover-bottom"><span>田野・空拍・創作紀實</span><a href="#beginning">往下閱讀 ↓</a></div></section>'''
+home_intro='<section class="home-intro wrap" id="beginning"><div class="intro-heading"><span class="kicker">我們一起出發尋找</span><h2>名字留了下來，<br>故事去了哪裡？</h2><div class="intro-index"><span>文獻</span><span>田野</span><span>空拍</span><span>創作</span></div></div><div class="intro-reading">'+''.join('<p>'+e(p)+'</p>' for p in HOME_PARAGRAPHS)+'<a class="text-link" href="works.html">沿著足跡，走進故事 ↗</a></div></section>'
+home_close='<section class="home-close">'+photo('assets/teacher-photo-13-0.jpg','','home-group')+'<div><span class="kicker">共同留下的記憶</span><h2>同一片土地，<br>不同的觀看。</h2><a class="cover-button" href="works.html">閱讀老師、田野與同學作品 ↗</a></div></section>'
+from editorial_home import render_entry
+if selected_pages is None or 'index.html' in selected_pages:
+ (SITE/'index.html').write_text(render_entry(),encoding='utf-8')
+ built_pages.append('index.html')
+
+overview='''<div class="wrap"><header class="page-heading"><a class="breadcrumb" href="index.html">首頁 /</a><span class="kicker">故事總覽</span><h1>每一次出發，<br>都有一條走進故事的路。</h1><p>從老師的敘述出發，沿著四次田野的足跡，<br class="desktop-break">看見同學們如何把土地與記憶，轉化成自己的作品。</p></header><nav class="category-nav" aria-label="內容分類"><a href="#teacher">老師的敘述</a><a href="#fieldwork">田野與空拍</a><a href="#works">同學作品</a></nav>'''
+overview+='<section class="entry-section" id="teacher"><div class="list-heading"><span>01</span><div><span class="kicker">故事的起點</span><h2>老師的敘述</h2></div></div>'+row('teacher.html','assets/teacher-photo-3-0.jpg','何懷嵩・課程設計手記','華麗轉向：台北原民故事的知識共構教學實踐','一座很會遺忘的城市，如何重新讀回土地的記憶？老師從課程的起點寫起，留下文獻、走讀、空拍與創作之間，師生共同建立理解的過程。','從文獻走向現場，讀回土地與人的記憶。')+'</section>'
+overview+='<section class="entry-section" id="fieldwork"><div class="list-heading"><span>02</span><div><span class="kicker">一起走過的現場</span><h2>四堂田野與空拍紀實</h2></div></div>'
+for c in COURSES: overview+=row(f'fieldwork-{c["key"]}.html',f'assets/flight-{c["cover"]}.jpg',c['date']+'・'+c['place'],c['title'],c['intro'],c['short'])
+overview+='</section><section class="entry-section" id="works"><div class="list-heading"><span>03</span><div><span class="kicker">各自寫成的故事</span><h2>同學作品</h2></div></div>'
+for w in WORKS: overview+=row(w['slug']+'.html',w['image'],w['author']+'・'+w['duration'],w['title'],w['description'],w['short'],playable=True)
+overview+='</section></div>'
+page('stories.html','故事總覽',overview)
+FIELDWORK_OVERVIEW=json.loads((CONTENT/'fieldwork-overview.json').read_text(encoding='utf-8'))
+def render_air_entry(c):
+ config=FIELDWORK_OVERVIEW['cards'][c['key']]
+ card=render_card(f'fieldwork-{c["key"]}.html',f'assets/flight-{c["cover"]}.jpg',c['place'],config['summary'],cta=config['cta'])
+ heading='<h3 class="field-entry-heading"><span class="field-entry-date">'+e(c['date'])+'</span><span class="field-entry-place">'+e(c['place'])+'</span></h3>'
+ card=card.replace('<h3>'+e(c['place'])+'</h3>',heading,1)
+ card=card.replace('class="shared-card"','class="shared-card field-entry-preview"',1)
+ card=card.replace('<span>▶ 點此觀看影片</span>','<span><span class="field-entry-play" aria-hidden="true">▶</span> 點此觀看影片</span>',1)
+ return card.replace('<span class="entry-arrow" aria-hidden="true">→</span>','',1)
+air_cards=[render_air_entry(c) for c in COURSES]
+page('fieldwork.html','空拍紀錄',render_overview('空拍紀錄',FIELDWORK_OVERVIEW['lead'],'四次出發',air_cards,'fieldwork.html',show_breadcrumb=False,show_view_all=False),legacy=False)
+def render_work_card(w):
+ author='Abby 陳翠碧' if w['slug']=='abby' else w['author']
+ card=render_card(w['slug']+'.html',w['image'],w['title'],CARD_SUMMARIES[w['slug']],playable=True,stretched=True)
+ return card.replace('</h3>','</h3><span class="card-label">創作者｜'+e(author)+'</span>',1)
+work_cards=[render_work_card(w) for w in WORKS]
+page('works.html','影音創作',render_overview('影音創作','從共同走過的土地，長出各自觀看與敘說的方式。','鏡頭裡的故事',work_cards,'works.html',show_breadcrumb=False,show_view_all=False),legacy=False)
+# Retain the supplied full-resolution photograph and export a web-sized copy.
+intro_source=ROOT/INTRO_DATA['image_source']
+intro_target=SITE/INTRO_DATA['image']
+if args.prepare_media and intro_source.exists():
+ with Image.open(intro_source) as source:
+  preview=ImageOps.exif_transpose(source)
+  preview.thumbnail((2560,2560),Image.Resampling.LANCZOS)
+  preview.convert('RGB').save(intro_target,quality=90,optimize=True)
+elif not intro_target.exists():
+ raise FileNotFoundError(f'引言照片不存在：{intro_source}')
+closing_source=ROOT/INTRO_DATA['closing_image_source'] if INTRO_DATA.get('closing_image_source') else None
+if closing_source:
+ closing_target=SITE/INTRO_DATA['closing_image']
+ if args.prepare_media and closing_source.exists():
+  with Image.open(closing_source) as source:
+   preview=ImageOps.exif_transpose(source)
+   preview.thumbnail((2560,2560),Image.Resampling.LANCZOS)
+   preview.convert('RGB').save(closing_target,quality=90,optimize=True)
+ elif not closing_target.exists():
+  raise FileNotFoundError(f'引言結尾圖片不存在：{closing_source}')
+page('intro.html','引言',render_intro(INTRO_DATA,photo),legacy=False)
+if selected_pages is None or 'walks.html' in selected_pages:
+ prepare_walks_photos(ROOT)
+ page('walks.html','現場走讀',render_walks(ROOT,photo),legacy=False)
+
+teacher_title,teacher_subtitle,teacher_institution,teacher_author=teacher_header(ROOT)
+teacher_title_intro,teacher_title_separator,teacher_title_main=teacher_title.partition('：')
+teacher_title_markup='<span class="teacher-title-intro">'+e(teacher_title_intro)+'</span><span class="teacher-title-main">'+e(teacher_title_main)+'</span>'
+teacher_heading='<header class="article-heading wrap"><h1>'+teacher_title_markup+'</h1><p class="article-lead">'+e(teacher_subtitle.removeprefix('——'))+'</p><div class="teacher-byline"><p>'+e(teacher_institution)+'</p><p>'+e(teacher_author)+'</p></div></header>'
+teacher_body=ordered_teacher(ROOT,write_content=args.write_content)
+page('teacher.html',teacher_title,teacher_heading+'<article class="teacher-article">'+teacher_body+'</article>',legacy=False)
+
+for idx,c in enumerate(COURSES):
+ lead=''.join('<p>'+e(part).replace('\n','<br>')+'</p>' for part in intro_parts(c['intro']))
+ body=f'<header class="article-heading wrap"><span class="kicker">{c["date"]}・{c["place"]}</span><h1>{c["title"]}</h1><div class="article-lead">{lead}</div></header>'
+ body+=photo(f'assets/flight-{c["cover"]}.jpg','','field-cover',True)
+ body+='<article class="field-article wrap"><div class="reading-block"><span class="kicker">這一次，為何出發</span><h2>把老師提出的問題，<br>帶到眼前的土地。</h2>'
+ paragraphs=intro_parts(c['intro'])
+ notice=(CONTENT/('notice-'+c['key']+'.md')).read_text(encoding='utf-8')
+ for passage in notice.strip().split('\n\n'):
+  if passage.startswith('# '):
+   body+='<p class="document-title">'+e(passage[2:])+'</p>'
+  elif passage.startswith('### '): body+='<h3>'+e(passage[4:])+'</h3>'
+  elif passage.startswith('## '): body+='<h2>'+e(passage[3:])+'</h2>'
+  else: body+='<p>'+e(passage)+'</p>'
+  paragraphs.append(passage)
+ body+='</div><section class="scene-section"><div class="section-heading"><span class="kicker">鏡頭裡的現場</span><h2>換一個高度，<br>重新觀看。</h2></div><div class="scene-grid">'
+ for p,caption in c['photos']:
+  body+=photo('assets/flight-'+p+'.jpg',caption,'scene-photo');paragraphs += [f'![{caption}](../assets/flight-{p}.jpg)',caption]
+ body+='</div></section>'
+ if c['key'] in ACTIVITY_MEDIA:
+  clip=ACTIVITY_MEDIA[c['key']]['video']
+  film_title=clip.get('title',c['place'].replace('・',' ')+'空拍紀實')
+  body+='<section class="activity-film"><div class="section-heading"><span class="kicker">兩分鐘空拍紀實</span><p class="film-location">拍攝地點｜'+e(clip['location'])+'</p><h2>'+e(film_title)+'</h2></div>'
+  body+=f'<video controls playsinline preload="none" poster="{clip["poster"]}" aria-label="{e(film_title)} 兩分鐘空拍影片"><source src="{clip["src"]}" type="video/mp4">您的瀏覽器無法播放此影片，<a href="{clip["src"]}">開啟空拍影片</a>。</video>'
+  body+=f'<a class="film-open" href="{clip["src"]}"><span aria-hidden="true">▶</span> 開啟空拍影片</a>'
+  if 'music' in clip and clip['music'].get('source_type')=='user_provided':
+   pass
+  elif 'music' in clip:
+   score=clip['music']
+   body+=f'<p class="music-credit">配樂 <a href="{e(score["page"])}">{e(score["title"])}</a> — Kevin MacLeod（incompetech.com）<br><a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> 節錄與淡入淡出</p>'
+  body+='</section>'
+  paragraphs+=['## '+film_title,'拍攝地點｜'+clip['location'],f'影片：[{c["date"]}兩分鐘空拍](../{clip["src"]})']
+ maps=sorted((SITE/'assets').glob('notice-'+c['key']+'-map-*.jpg'))
+ if maps:
+  body+='<section class="document-maps"><h2>在地圖上讀回風景</h2>'
+  for mp in maps: body+=photo('assets/'+mp.name,'田野通告中的地景與空域參考圖','source-map')
+  body+='</section>'
+ if c['key']=='0903':
+  museum='我們也把十三行博物館與歷史現場納入課程場域。十三行的展櫃裡，專注看著鎮館之寶的人面陶罐，反覆思索藝術美感在凱達格蘭人生活中的可能，那些被復原的生活情境模型，在走讀之後看起來完全不一樣了，學員不再是觀眾，而是帶著問題來對照答案的人。同一組展件，第一次看是知識，第二次看是證據。'
+  caption='遺址博物館館研析：走讀之後再回到展場，學員看的不是展示，而是自己問題的答案。'
+  body+='<section class="museum-story"><div class="reading-block"><span class="kicker">從地景，回到生活的線索</span><h2>在十三行，<br>讓看過的土地與展件相遇。</h2><p>'+e(museum)+'</p></div>'+photo('assets/teacher-photo-6-1.jpg',caption,'museum-photo')+'</section>'
+  paragraphs+=['## 在十三行，讓看過的土地與展件相遇。',museum,caption]
+ body+='</article><nav class="next-story wrap" aria-label="繼續閱讀">'
+ body+='<a href="fieldwork.html">← 四堂紀實</a>'
+ if idx<3:
+  nxt=COURSES[idx+1];body+=f'<a href="fieldwork-{nxt["key"]}.html">下一次出發：{nxt["place"]} →</a>'
+ else:body+='<a href="works.html">看見同學的作品 →</a>'
+ body+='</nav>'
+ save_md('fieldwork-'+c['key']+'.md',c['date']+' '+c['place']+'｜'+c['title'],paragraphs)
+ page('fieldwork-'+c['key']+'.html',c['place']+'・'+c['title'],body)
+
+def video(video_id,image,title,button='播放作品',youtube_id=None,direct_youtube=False):
+ if youtube_id and direct_youtube:
+  return f'<div class="video-shell" data-youtube="{youtube_id}" data-title="{e(title)}"><img src="{image}" alt="" loading="lazy"><a href="https://youtu.be/{youtube_id}" target="_blank" rel="noopener" class="play-button play-button--icon ui-control" aria-label="{e("在 YouTube 播放："+title)}"><span class="play-icon" aria-hidden="true">▶</span></a></div>'
+ if youtube_id:
+  return f'<div class="video-shell" data-youtube="{youtube_id}" data-title="{e(title)}"><img src="{image}" alt="" loading="lazy"><button type="button" class="play-button ui-control" aria-label="{e(button+"："+title)}"><span class="play-icon" aria-hidden="true">▶</span>{button}</button></div><div class="video-links"><a href="https://youtu.be/{youtube_id}" target="_blank" rel="noopener">在 YouTube 開啟影片 ↗</a></div>'
+ return f'<div class="video-shell" data-video="{video_id}" data-title="{e(title)}"><img src="{image}" alt="" loading="lazy"><button type="button" class="play-button ui-control" aria-label="{e(button+"："+title)}"><span class="play-icon" aria-hidden="true">▶</span>{button}</button></div>'
+
+
+for w in WORKS:
+ w['description'],w['short']=WORK_COPY[w['slug']]
+ w['image']=first_frame(ROOT/WORK_SOURCES[w['slug']],w['slug']+'-first-frame.jpg')
+INTERVIEW_POSTER=first_frame(ROOT/'穗芬談消失的台北原住民故事創作思維.mp4','suifen-interview-first-frame.jpg')
+for key,media in ACTIVITY_MEDIA.items():
+ media['video']['poster']=first_frame(SITE/media['video']['src'],'fieldwork-'+key+'-first-frame.jpg')
+
+def save_md(name,title,paragraphs):
+ if args.write_content:
+  (CONTENT/name).write_text('# '+title+'\n\n'+'\n\n'.join(paragraphs)+'\n',encoding='utf-8')
+
+def intro_parts(value):
+ return [part.strip() for part in value.split('\n\n') if part.strip()]
+
+def intro_lead(value):
+ return intro_parts(value)[0]
+
+def photo(src,caption='',cls='',priority=False,show_caption=True):
+ caption=TEACHER_CAPTIONS.get(Path(src).name,caption)
+ path=SITE/src
+ with Image.open(path) as image: width,height=image.size
+ loading='fetchpriority="high"' if priority else 'loading="lazy"'
+ return f'<figure class="{cls}"><img src="{src}" width="{width}" height="{height}" alt="{e(caption)}" {loading} decoding="async">'+ (f'<figcaption>{e(caption)}</figcaption>' if caption and show_caption else '')+'</figure>'
+
+
+def responsive_images(markup):
+ """Size non-player images and supply WebP copies; original JPEGs stay intact."""
+ protected=[]
+ def protect(match):
+  protected.append(match[0]); return f'__PLAYER_UNCHANGED_{len(protected)-1}__'
+ markup=re.sub(r'<section\b[^>]*class="[^"]*\bactivity-film\b[^"]*"[^>]*>.*?</section>|<div\b[^>]*class="[^"]*\bvideo-shell\b[^"]*"[^>]*>.*?</div>',protect,markup,flags=re.S)
+ def picture(match):
+  tag=match[0]
+  src=re.search(r'\bsrc="([^"]+)"',tag)
+  if not src or src[1].startswith(('http:','https:','data:')): return tag
+  path=SITE/src[1]
+  if not path.exists(): return tag
+  with Image.open(path) as source:
+   width,height=source.size
+   for name,value in (('width',str(width)),('height',str(height)),('decoding','async')):
+    if not re.search(r'\b'+name+r'=',tag): tag=tag[:-1]+f' {name}="{value}">'
+   if 'fetchpriority="high"' not in tag and 'loading=' not in tag: tag=tag[:-1]+' loading="lazy">'
+   if path.suffix.lower() not in ('.jpg','.jpeg') or width<800: return tag
+   sizes=sorted(set((min(480,width),min(960,width),min(1600,width))))
+   variants=[]
+   for size in sizes:
+    target=path.with_name(path.stem+f'-w{size}.webp')
+    valid_variant=False
+    if target.exists():
+     with Image.open(target) as existing: valid_variant=existing.width==size
+    if not valid_variant or target.stat().st_mtime_ns<path.stat().st_mtime_ns:
+     preview=source.convert('RGB').resize((size,round(height*size/width)),Image.Resampling.LANCZOS)
+     preview.save(target,'WEBP',quality=82,method=6)
+    variants.append(target.relative_to(SITE).as_posix()+f' {size}w')
+  # Cards and collage cells need less data than full article photographs.
+  if 'first-frame' in src[1] or 'fieldwork-overview' in markup:
+   sizes_attr='(min-width: 1200px) 520px, (min-width: 768px) calc((100vw - 112px) / 2), calc(100vw - 72px)'
+  elif '/walks-' in src[1]:
+   sizes_attr='(min-width: 768px) 500px, calc(100vw - 32px)'
+  elif 'fetchpriority="high"' in tag:
+   sizes_attr='100vw'
+  else:
+   sizes_attr='(min-width: 1200px) 1100px, (min-width: 768px) calc(100vw - 64px), calc(100vw - 32px)'
+  return f'<picture class="responsive-picture"><source type="image/webp" srcset="{", ".join(variants)}" sizes="{sizes_attr}">{tag}</picture>'
+ markup=re.sub(r'<img\b[^>]*>',picture,markup)
+ for index,original in enumerate(protected): markup=markup.replace(f'__PLAYER_UNCHANGED_{index}__',original)
+ return markup
+
+def row(url,image,label,title,intro,short,playable=False):
+ caption=TEACHER_CAPTIONS.get(Path(image).name)
+ picture=photo(image,caption) if caption else f'<img src="{image}" alt="{e(title)}" loading="lazy">'
+ if playable: picture='<div class="work-poster">'+picture+'<span class="poster-play" aria-hidden="true">▶</span></div>'
+ action='觀看作品' if playable else '閱讀故事'
+ return f'<a class="entry" href="{url}"><div class="entry-image">{picture}</div><div class="entry-copy"><h3>{e(title)}</h3><span class="kicker">{e(label)}</span><p class="desktop-intro">{e(intro_lead(intro))}</p><p class="mobile-intro">{e(short)}</p><span class="entry-link">{action}</span></div></a>'
+
+def legacy_body(html):
+ # Old prose retains its established formatting; new components keep their arrows.
+ protected=[]
+ def protect(match):
+  protected.append(match[0]); return f'__SHARED_{len(protected)-1}__'
+ html=re.sub(r'<a class="(?:shared-card|primary-entry)\b.*?</a>|<span class="viewall-arrow".*?</span>|<section class="creator-note wrap".*?</section>|<details class="reflection-card wrap".*?</details>',protect,html,flags=re.S)
+ for old,new in [('老師的敘述','土地的記憶'),('老師的陳述','土地的記憶'),('故事總覽','故事目錄'),('田野與空拍','沿河而行'),('四堂田野與空拍紀實','沿河而行'),('同學作品','鏡頭裡的故事')]:
+  html=html.replace(old,new)
+ html=html.replace('四堂沿河而行紀實','沿河而行')
+ html=re.sub(r'<div class="cover-lines".*?</div>','',html)
+ html=html.replace('<span class="title-dot">。</span>','')
+ html=re.sub(r'<span aria-hidden="true">[↗→←↑↓]</span>','',html)
+ html=re.sub(r'[↗→←↑↓]','',html)
+ html=html.replace('aria-label="回到頁首">','aria-label="回到頁首">回到頁首')
+ def clean_heading(match):
+  return match[1]+re.sub(r'[，、：。？！?！・‧]','',match[2])+match[3]
+ html=re.sub(r'(<h[1-3][^>]*>)(.*?)(</h[1-3]>)',clean_heading,html,flags=re.S)
+ html=re.sub(r'(<nav\b[^>]*>)(.*?)(</nav>)',lambda m:m[1]+re.sub(r'[，、：。？！?！・‧]','',m[2])+m[3],html,flags=re.S)
+ html=html.replace('華麗轉向：','華麗轉向 ').replace('田野・空拍・創作紀實','文獻 走讀 空拍 創作')
+ html=html.replace('<span>文獻 走讀 空拍 創作</span>','<span class="brand-subtitle"><span>飛越歷史</span> <span>紀錄土地</span></span>')
+ html=html.replace('首頁 /','卷首 /')
+ html=html.replace('閱讀老師、田野與鏡頭裡的故事','翻閱土地與影像的故事')
+ html=html.replace('閱讀老師、田野與同學作品','翻閱土地與影像的故事')
+ html=html.replace('原民故事</h1>','原民故事</h1>')
+ for i,component in enumerate(protected): html=html.replace(f'__SHARED_{i}__',component)
+ return html
+
+
+def page(filename,title,body,home=False,legacy=True):
+ if selected_pages is not None and filename not in selected_pages:
+  return
+ # Preserve the approved fieldwork composition as a source template.
+ if filename in {'fieldwork-0829.html','fieldwork-0903.html','fieldwork-0905.html','fieldwork-0910.html'}:
+  source_template=CONTENT/(Path(filename).stem+'-body.html')
+  if source_template.exists():
+   body=source_template.read_text(encoding='utf-8')
+   legacy=False
+ if legacy:
+  body=legacy_body(body)
+  title=legacy_body(title)
+ body=re.sub(r'(<h[123]\b[^>]*>)沿著河尋找三個社的土地記憶(</h[123]>)',r'\1沿著河<br>尋找三個社的土地記憶\2',body)
+ styles='<link rel="stylesheet" href="magazine.css?v=16">'
+ if filename=='teacher.html':styles='<link rel="stylesheet" href="magazine.css?v=17">'
+ if filename=='walks.html':styles+='<link rel="stylesheet" href="walks.css?v=1">'
+ body_class=('home' if home else 'inner') + (' teacher-page' if filename=='teacher.html' else '')
+ if filename.startswith('fieldwork-'): body_class+=' field-page'
+ if filename in {'abby.html','suifen.html','kuncan.html','wenjin.html','yuan.html'}: body_class+=' work-page'
+ if home: styles+='<link rel="stylesheet" href="editorial-home.css?v=7">'
+ styles+='<link rel="stylesheet" href="reading-layout.css?v=final-polish-1">'
+ styles+='<link rel="stylesheet" href="video-layout.css?v='+('abby-play-icon-2' if filename=='abby.html' or filename.startswith('fieldwork-') else '1')+'">'
+ if filename in {'abby.html','yuan.html'}: styles+='<link rel="stylesheet" href="uiux-polish.css?v=reflection-1">'
+ reflection_script='<script src="work-reflection.js?v=review-1" defer></script>' if filename in {'abby.html','yuan.html'} else ''
+ html=f'''<!doctype html>
+<html lang="zh-Hant-TW"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">{render_seo(filename,title)}<meta name="theme-color" content="#234f56"><title>{e(title)}｜消失的原民故事</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&family=Noto+Serif+TC:wght@400;500;600;700&display=swap" rel="stylesheet">{styles}<script src="documentary.js?v=6" defer></script>{reflection_script}</head>
 <body id="top" class="{body_class}"><a class="skip" href="#main">跳到主要內容</a>{render_header(filename)}<main id="main">{responsive_images(body)}{render_page_sequence(filename)}</main>{render_footer()}</body></html>'''
  if filename=='404.html':
   # A Pages 404 is also served at arbitrary nested URLs; fragments stay local.

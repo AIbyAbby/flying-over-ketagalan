@@ -1,0 +1,359 @@
+:root {
+ --color-primary:#234f56; --color-primary-rgb:35 79 86;
+ --color-primary-hover:#1a3d43; --color-primary-hover-rgb:26 61 67;
+ --color-primary-soft:#e8f0ef; --color-primary-soft-rgb:232 240 239;
+ --color-accent:#a9532c; --color-accent-rgb:169 83 44;
+ --color-bg:#faf8f3; --color-bg-rgb:250 248 243;
+ --color-surface:#ffffff; --color-surface-rgb:255 255 255;
+ --color-surface-alt:#f1f4f2; --color-surface-alt-rgb:241 244 242;
+ --color-text:#1f2a2c; --color-text-rgb:31 42 44;
+ --color-text-muted:#4a5a5d; --color-text-muted-rgb:74 90 93;
+ --color-border:#d5dcd8; --color-border-rgb:213 220 216;
+ --color-section-teacher:#2e6a66; --color-section-teacher-rgb:46 106 102;
+ --color-section-fieldwork:#3d6a80; --color-section-fieldwork-rgb:61 106 128;
+ --color-section-walks:#5a6b3a; --color-section-walks-rgb:90 107 58;
+ --color-focus:var(--color-primary); --color-transparent:transparent;
+ --color-primary-alpha-006:rgb(var(--color-primary-rgb) / 0.06);
+ --color-text-alpha-08:rgb(var(--color-text-rgb) / 0.8);
+ --color-text-alpha-02:rgb(var(--color-text-rgb) / 0.2);
+ --color-text-alpha-088:rgb(var(--color-text-rgb) / 0.88);
+ --color-surface-alpha-07:rgb(var(--color-surface-rgb) / 0.7);
+ --color-text-alpha-04:rgb(var(--color-text-rgb) / 0.4);
+ --color-primary-hover-alpha-096:rgb(var(--color-primary-hover-rgb) / 0.96);
+ --color-text-alpha-055:rgb(var(--color-text-rgb) / 0.55);
+ --paper:var(--color-bg); --paper-soft:var(--color-surface); --ink:var(--color-text); --muted:var(--color-text-muted); --river:var(--color-primary); --river-dark:var(--color-primary); --brick:var(--color-accent); --moss:var(--color-section-walks); --gold:var(--color-accent); --deep:var(--color-primary); --accent:var(--color-accent);
+ --sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+ --serif:"Noto Serif TC","Songti TC","PMingLiU",serif; --reading-sans:var(--sans);
+ --text-xs:.8125rem; --text-sm:.9375rem; --text-base:clamp(1.0625rem,1.02rem + .2vw,1.1875rem);
+ --text-lg:clamp(1.25rem,1.15rem + .5vw,1.5rem); --text-xl:clamp(1.5rem,1.3rem + 1vw,2rem); --text-2xl:clamp(1.875rem,1.5rem + 1.8vw,2.75rem);
+ --type-h1:var(--text-2xl); --type-h2:var(--text-xl); --type-h3:var(--text-lg); --type-body:var(--text-base); --type-lead:var(--text-base); --line-body:1.85; --type-caption:var(--text-xs); --type-meta:var(--text-sm); --type-button:var(--text-sm);
+ --space-1:.5rem; --space-2:1rem; --space-3:1.5rem; --space-4:2rem; --space-5:3rem; --space-6:4rem;
+ --layout-media:900px; --border-thin:1px; --border-accent:4px;
+ --radius-control:.5rem; --radius-inset:.375rem; --control-height:3rem;
+ --focus-width:3px; --focus-offset:2px; --motion-fast:200ms;
+ --shadow-card:0 2px 8px rgb(var(--color-text-rgb) / .05);
+ --shadow-card-open:0 4px 16px rgb(var(--color-primary-rgb) / .08);
+ --preview-mask:linear-gradient(180deg, var(--color-text) 40%, var(--color-transparent) 100%);
+ --press-offset:1px; --enter-offset:-.375rem;
+ --layout-site:1100px; --layout-gutter:clamp(20px,4vw,48px); --header-clearance:88px;
+ --ui-text:var(--color-primary); --ui-text-muted:var(--color-text-muted); --ui-border:var(--color-primary); --ui-border-subtle:var(--color-border);
+ --ui-surface:var(--color-surface); --ui-surface-hover:var(--color-primary-soft); --ui-focus:var(--color-focus); --ui-current:var(--color-primary); --ui-on-image:var(--color-surface);
+}
+
+.sr-only {position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+/* ==========================================================================
+   創作心得可展開卡片 (Reflection Card Component)
+   共用元件樣式：供 abby.html、yuan.html 等作品頁套用
+   ========================================================================== */
+
+/* 1. 卡片外層容器 */
+.reflection-card {
+  width: min(var(--layout-media), calc(100% - 2 * var(--layout-gutter)));
+  max-width: var(--layout-media);
+  margin-inline: auto;
+  margin-block: var(--space-4) var(--space-5);
+  background-color: var(--color-surface);
+  border: var(--border-thin) solid var(--color-border);
+  border-left: var(--border-accent) solid var(--color-accent); /* 收合時左側陶土赭紅 */
+  border-radius: var(--radius-control); /* 與影片區圓角一致 */
+  box-shadow: var(--shadow-card);
+  box-sizing: border-box;
+  scroll-margin-top: calc(var(--reflection-header-height, var(--header-clearance)) + var(--space-3)); /* 避開固定 header */
+  transition: border-color var(--motion-fast) ease, box-shadow var(--motion-fast) ease;
+  overflow: visible;
+}
+
+/* 展開時邊框改為主色 */
+.reflection-card[open] {
+  border-color: var(--color-primary);
+  border-left: var(--border-accent) solid var(--color-primary);
+  box-shadow: var(--shadow-card-open);
+}
+
+/* 2. 原生 Summary 互動區塊 */
+.reflection-summary {
+  display: block;
+  width: 100%;
+  padding: var(--space-3) var(--space-3);
+  box-sizing: border-box;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+  position: relative;
+  border-radius: var(--radius-inset);
+}
+
+.reflection-summary::-webkit-details-marker {
+  display: none;
+}
+.reflection-summary::marker {
+  display: none;
+}
+
+.reflection-summary:hover {
+  background-color: rgb(var(--color-primary-rgb) / .02);
+}
+
+.reflection-summary:focus-visible {
+  outline: var(--focus-width) solid var(--color-focus);
+  outline-offset: var(--focus-offset);
+}
+
+/* 3. 小標與標題 */
+.reflection-kicker {
+  display: inline-block;
+  font-family: var(--sans);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: .12em;
+  color: var(--color-accent); /* 陶土赭紅 */
+  margin-bottom: var(--space-1);
+}
+
+.reflection-title {
+  font-family: var(--serif);
+  font-size: var(--text-xl);
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--color-primary);
+  margin-block: 0 var(--space-1);
+}
+
+/* 4. 作者與預估時間 */
+.reflection-meta {
+  font-family: var(--sans);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  line-height: 1.6;
+  margin-bottom: var(--space-2);
+}
+
+/* 5. 前 2 行預覽文字（line-clamp + 漸層淡出） */
+.reflection-preview {
+  font-family: var(--sans);
+  font-size: var(--text-base);
+  line-height: 1.85;
+  color: var(--color-text);
+  max-width: 38em;
+  margin-bottom: var(--space-2);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+  position: relative;
+  -webkit-mask-image: var(--preview-mask);
+  mask-image: var(--preview-mask);
+}
+
+/* 展開後隱藏預覽 */
+.reflection-card[open] .reflection-preview {
+  display: none;
+}
+
+/* 6. 切換按鈕（閱讀全文 ＋ / 收合 －） */
+.reflection-toggle-bar {
+  display: flex;
+  align-items: center;
+  margin-top: var(--space-1);
+}
+
+.reflection-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--control-height);
+  padding: var(--space-1) var(--space-3);
+  font-family: var(--sans);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  border-radius: var(--radius-control);
+  box-sizing: border-box;
+  text-align: center;
+  border: var(--border-thin) solid var(--color-primary);
+  background-color: var(--color-primary-soft);
+  color: var(--color-primary);
+  transition: background-color var(--motion-fast) ease, color var(--motion-fast) ease, border-color var(--motion-fast) ease;
+}
+
+.reflection-summary:hover .reflection-toggle-btn {
+  background-color: var(--color-primary);
+  color: var(--color-surface);
+}
+
+.reflection-toggle-btn .reflection-toggle-close {
+  display: none;
+}
+.reflection-toggle-btn .reflection-toggle-open {
+  display: inline;
+}
+
+/* 展開時按鈕顯示收合樣式 */
+.reflection-card[open] .reflection-toggle-btn {
+  background-color: var(--color-transparent);
+  color: var(--color-text-muted);
+  border-color: var(--color-border);
+}
+.reflection-card[open] .reflection-summary:hover .reflection-toggle-btn {
+  background-color: var(--color-surface-alt);
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+.reflection-card[open] .reflection-toggle-btn .reflection-toggle-open {
+  display: none;
+}
+.reflection-card[open] .reflection-toggle-btn .reflection-toggle-close {
+  display: inline;
+}
+
+/* 7. 正文展開區塊 */
+.reflection-body {
+  padding: var(--space-1) var(--space-3) var(--space-4) var(--space-3);
+  border-top: var(--border-thin) dashed var(--color-border);
+  animation: reflectionExpand var(--motion-fast) ease-out;
+}
+
+@keyframes reflectionExpand {
+  from {
+    opacity: 0;
+    transform: translateY(var(--enter-offset));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reflection-body p {
+  font-family: var(--sans);
+  font-size: var(--text-base);
+  line-height: 1.85;
+  color: var(--color-text);
+  max-width: 38em;
+  margin-bottom: 1em;
+}
+
+.reflection-body h3 {
+  font-family: var(--serif);
+  font-size: var(--text-lg);
+  line-height: 1.4;
+  color: var(--color-primary);
+  margin-block: var(--space-4) var(--space-2);
+  text-wrap: balance;
+}
+
+/* 8. 文末收合按鈕 */
+.reflection-footer {
+  margin-top: var(--space-5);
+  padding-top: var(--space-3);
+  border-top: var(--border-thin) solid var(--color-border);
+  display: flex;
+  justify-content: flex-start;
+}
+
+.reflection-close-btn {
+  font-family: var(--sans);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  min-height: var(--control-height);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-control);
+  background-color: var(--color-surface);
+  color: var(--color-primary);
+  border: var(--border-thin) solid var(--color-primary);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color var(--motion-fast) ease, color var(--motion-fast) ease;
+}
+
+.reflection-close-btn:hover {
+  background-color: var(--color-primary-soft);
+  color: var(--color-primary-hover);
+}
+
+.reflection-close-btn:active {
+  transform: translateY(var(--press-offset));
+}
+
+.reflection-close-btn:focus-visible {
+  outline: var(--focus-width) solid var(--color-focus);
+  outline-offset: var(--focus-offset);
+}
+
+/* 9. 響應式：手機與桌機調校 */
+@media (max-width: 48rem) {
+  .reflection-card {
+    border-radius: var(--radius-control);
+  }
+  .reflection-summary {
+    padding: var(--space-3) var(--space-2);
+  }
+  .reflection-body {
+    padding: var(--space-1) var(--space-2) var(--space-3) var(--space-2);
+  }
+  .reflection-title {
+    font-size: var(--text-lg);
+  }
+  .reflection-toggle-btn {
+    width: 100%; /* 手機版按鈕滿版 */
+  }
+  .reflection-close-btn {
+    width: 100%; /* 手機版文末收合按鈕滿版 */
+  }
+}
+
+@media (min-width: 48rem) {
+  .reflection-summary {
+    padding: var(--space-4) var(--space-5);
+  }
+  .reflection-body {
+    padding: var(--space-1) var(--space-5) var(--space-5) var(--space-5);
+  }
+}
+
+/* 10. prefers-reduced-motion 與 列印 */
+@media (prefers-reduced-motion: reduce) {
+  .reflection-body {
+    animation: none !important;
+    transition: none !important;
+  }
+  .reflection-card,
+  .reflection-toggle-btn,
+  .reflection-close-btn {
+    transition: none !important;
+  }
+}
+
+@media print {
+  .reflection-card {
+    border: var(--border-thin) solid var(--color-text-muted) !important;
+    box-shadow: none !important;
+    break-inside: auto;
+    margin-block: var(--space-2) !important;
+  }
+  .reflection-summary {
+    cursor: default !important;
+    padding: 0 0 var(--space-2) 0 !important;
+  }
+  .reflection-card .reflection-preview,
+  .reflection-card .reflection-toggle-bar,
+  .reflection-card .reflection-footer {
+    display: none !important;
+  }
+  .reflection-card .reflection-body {
+    display: block !important;
+    padding: 0 !important;
+    border-top: none !important;
+    animation: none !important;
+  }
+}
+
+
+/* Native summary remains the only disclosure control without JavaScript. */
+.reflection-card:not([data-reflection-ready]) .reflection-footer {display:none}
+.reflection-summary:active {background-color:var(--color-primary-soft)}
+.reflection-summary:active .reflection-toggle-btn {transform:translateY(var(--press-offset))}
+
+.reflection-meta {display:block}
