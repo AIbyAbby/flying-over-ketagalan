@@ -256,24 +256,58 @@ figcaption,.teacher-page .teacher-photo figcaption,.scene-grid .scene-photo figc
 }
 
 /* Optional viewing-quality reminder beneath the fieldwork cover. */
-.field-page .activity-film .fieldwork-youtube { margin-bottom:.5rem; }
-.field-page .activity-film .film-quality-note {
- margin:0 0 .75rem;
- font:400 .9375rem/1.8 var(--sans);
- color:var(--muted); text-align:right; overflow-wrap:break-word;
+.field-page .activity-film .fieldwork-youtube { margin-bottom:.75rem; }
+
+/* 田調頁面影片按鈕與畫質提示：預設手機版縱向排列，按鈕上移緊鄰圖片 */
+.field-page .activity-film {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+.field-page .activity-film > * {
+  grid-column: 1 / -1;
 }
 
 .field-page .activity-film .film-watch-link {
- display:inline-flex; align-items:center; justify-content:center; gap:.5rem;
- min-height:2.75rem; padding:.5rem 1rem; margin:0 0 1.5rem;
- box-sizing:border-box; border-radius:.375rem;
- background:var(--river-dark); color:#fff; text-decoration:none;
- font:500 1rem/1.5 var(--sans);
+  display:inline-flex; align-items:center; justify-content:center; gap:.5rem;
+  min-height:2.75rem; padding:.5rem 1rem; margin:0 0 .5rem;
+  box-sizing:border-box; border-radius:.375rem;
+  background:var(--river-dark); color:#fff; text-decoration:none;
+  font:500 1rem/1.5 var(--sans);
+  order: 4;
+  justify-self: start;
 }
 .field-page .activity-film .film-watch-link:hover { background:var(--ink); }
 .field-page .activity-film .film-watch-link:active { transform:translateY(1px); }
 .field-page .activity-film .film-watch-link:focus-visible {
- outline:3px solid var(--river-dark); outline-offset:3px;
+  outline:3px solid var(--river-dark); outline-offset:3px;
+}
+
+.field-page .activity-film .film-quality-note {
+  margin:0 0 1.5rem;
+  font:400 .9375rem/1.8 var(--sans);
+  color:var(--muted); text-align:left; overflow-wrap:break-word;
+  order: 5;
+}
+
+/* 桌機與平板（寬度 >= 600px）：按鈕往上移，與右側畫質說明同高度並排 */
+@media (min-width: 37.5rem) {
+  .field-page .activity-film {
+    grid-template-columns: auto 1fr;
+    align-items: center;
+  }
+  .field-page .activity-film .film-watch-link {
+    grid-column: 1;
+    order: 4;
+    margin: 0 1.25rem 1.75rem 0;
+    align-self: center;
+  }
+  .field-page .activity-film .film-quality-note {
+    grid-column: 2;
+    order: 5;
+    text-align: right;
+    margin: 0 0 1.75rem 0;
+    align-self: center;
+  }
 }
 
 /* Keep all four date/place headings on one line at readable sizes. */
