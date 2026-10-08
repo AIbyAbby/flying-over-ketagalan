@@ -328,11 +328,14 @@ for idx,c in enumerate(COURSES):
  save_md('fieldwork-'+c['key']+'.md',c['date']+' '+c['place']+'｜'+c['title'],paragraphs)
  page('fieldwork-'+c['key']+'.html',c['place']+'・'+c['title'],body)
 
-def video(video_id,image,title,button='播放作品'):
+def video(video_id,image,title,button='播放作品',youtube_id=None):
+ if youtube_id:
+  return f'<div class="video-shell" data-youtube="{youtube_id}" data-title="{e(title)}"><img src="{image}" alt="" loading="lazy"><button type="button" class="play-button ui-control" aria-label="{e(button+"："+title)}"><span class="play-icon" aria-hidden="true">▶</span>{button}</button></div><div class="video-links"><a href="https://youtu.be/{youtube_id}" target="_blank" rel="noopener">在 YouTube 開啟影片 ↗</a></div>'
  return f'<div class="video-shell" data-video="{video_id}" data-title="{e(title)}"><img src="{image}" alt="" loading="lazy"><button type="button" class="play-button ui-control" aria-label="{e(button+"："+title)}"><span class="play-icon" aria-hidden="true">▶</span>{button}</button></div><div class="video-links"><a href="https://drive.google.com/file/d/{video_id}/view" target="_blank" rel="noopener">在雲端開啟影片 ↗</a></div>'
 
 for w in WORKS:
- body=f'<header class="article-heading wrap work-heading"><a class="breadcrumb" href="works.html">故事總覽 / 同學作品</a><span class="kicker">{w["author"]}・{w["duration"]}</span><h1>{w["title"]}</h1><p class="article-lead">{w["subtitle"]}</p></header><article class="work-reading wrap"><div class="work-introduction"><span class="kicker">這件作品的出發點</span><p>{w["description"]}</p></div>'+video(w['id'],w['image'],w['title'])+'</article>'
+ youtube_id=w.get('youtube')
+ body=f'<header class="article-heading wrap work-heading"><a class="breadcrumb" href="works.html">故事總覽 / 同學作品</a><span class="kicker">{w["author"]}・{w["duration"]}</span><h1>{w["title"]}</h1><p class="article-lead">{w["subtitle"]}</p></header><article class="work-reading wrap"><div class="work-introduction"><span class="kicker">這件作品的出發點</span><p>{w["description"]}</p></div>'+video(w['id'],w['image'],w['title'],youtube_id=youtube_id)+'</article>'
  if w['slug']=='abby':
   voiceover_intro='<p>十三行人究竟是不是凱達格蘭族的祖先？走進十三行博物館，Abby 從田野走讀中拍下的展件影像出發，結合語音敘事與情境音效，完成這份富有探索精神的配音成果。</p><p>透過《番社采風圖》的歷史圖說、一比一復原的干欄式住屋、細緻拍印的幾何陶罐紋樣，以及火塘邊的生活日常，將靜態的照片轉化為生動的歷史漫遊。這不只是一次課堂作業，更是讓走讀足跡有了聲音，讓沉睡千年的考古記憶在當代重新甦醒。</p>'
   voiceover_shell='<div class="video-shell" data-youtube="S2_Z2z-UeqE" data-title="十三行人真的是凱達格蘭族的祖先嗎？"><img src="assets/abby-voiceover-first-frame.jpg" alt="" loading="lazy"><button type="button" class="play-button ui-control" aria-label="播放作品：十三行人真的是凱達格蘭族的祖先嗎？"><span class="play-icon" aria-hidden="true">▶</span>播放作品</button></div><div class="video-links"><a href="https://youtu.be/S2_Z2z-UeqE" target="_blank" rel="noopener">在 YouTube 開啟影片 ↗</a></div>'
@@ -343,7 +346,8 @@ for w in WORKS:
  for v in WORKS:
   if v['slug']!=w['slug']:body+=row(v['slug']+'.html',v['image'],v['author'],v['title'],v['description'],v['short'],playable=True)
  body+='</section>'
- save_md(w['slug']+'.md',w['title'],['作者：'+w['author'],w['subtitle'],w['description'],'影片：https://drive.google.com/file/d/'+w['id']+'/view'])
+ video_link='https://youtu.be/'+youtube_id if youtube_id else 'https://drive.google.com/file/d/'+w['id']+'/view'
+ save_md(w['slug']+'.md',w['title'],['作者：'+w['author'],w['subtitle'],w['description'],'影片：'+video_link])
  page(w['slug']+'.html',w['title'],body)
 
 if args.write_content:
