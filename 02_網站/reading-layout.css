@@ -191,3 +191,28 @@ figcaption,.teacher-page .teacher-photo figcaption,.scene-grid .scene-photo figc
  .creator-note { padding:3rem; margin-bottom:4rem; }
  .creator-note h3 { margin-top:3.5rem; }
 }
+
+/* Fieldwork introductions follow the reading typography, without changing players. */
+.field-page .activity-film .film-description {
+ font-family:var(--serif);
+ font-size:var(--type-lead);
+ line-height:var(--line-body);
+ color:var(--ink);
+}
+@media (min-width:48rem) {
+ .field-page .activity-film .film-description { font-size:1.5rem; }
+}
+
+/* Direct YouTube access for the four fieldwork films. */
+.field-page .fieldwork-youtube .fieldwork-youtube-link {
+ position:absolute; right:1rem; bottom:1rem; z-index:1;
+ display:inline-flex; align-items:center; justify-content:center;
+ min-height:2.75rem; padding:.5rem 1rem;
+ background:var(--river-dark); color:#fff; border-radius:.375rem;
+ font:500 1.0625rem/1.5 var(--sans); text-decoration:none;
+}
+.field-page .fieldwork-youtube .fieldwork-youtube-link:hover { background:var(--ink); }
+.field-page .fieldwork-youtube .fieldwork-youtube-link:active { transform:translateY(1px); }
+.field-page .fieldwork-youtube .fieldwork-youtube-link:focus-visible {
+ outline:3px solid #fff; outline-offset:3px; box-shadow:0 0 0 6px var(--river-dark);
+}

@@ -248,7 +248,7 @@ for w in WORKS: overview+=row(w['slug']+'.html',w['image'],w['author']+'・'+w['
 overview+='</section></div>'
 page('stories.html','故事總覽',overview)
 FIELDWORK_OVERVIEW=json.loads((CONTENT/'fieldwork-overview.json').read_text(encoding='utf-8'))
-air_cards=[render_card(f'fieldwork-{c["key"]}.html',f'assets/flight-{c["cover"]}.jpg',c['title'],FIELDWORK_OVERVIEW['cards'][c['key']]['summary'],label=f'{c["place"]}｜{c["date"]}',cta=FIELDWORK_OVERVIEW['cards'][c['key']]['cta']) for c in COURSES]
+air_cards=[render_card(f'fieldwork-{c["key"]}.html',f'assets/flight-{c["cover"]}.jpg',f'{c["date"]} {c["place"]}',FIELDWORK_OVERVIEW['cards'][c['key']]['summary'],label='空拍紀實影片',cta=FIELDWORK_OVERVIEW['cards'][c['key']]['cta']) for c in COURSES]
 page('fieldwork.html','空拍紀錄',render_overview('空拍紀錄',FIELDWORK_OVERVIEW['lead'],'四次出發',air_cards,'fieldwork.html',show_breadcrumb=False,show_view_all=False),legacy=False)
 def render_work_card(w):
  author='Abby 陳翠碧' if w['slug']=='abby' else w['author']
