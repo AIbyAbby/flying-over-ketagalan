@@ -27,8 +27,10 @@ def render_entry():
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta http-equiv="refresh" content="0; url=intro.html">
 ''' + render_seo('index.html', '消失的原民故事') + '''
-<link rel="stylesheet" href="magazine.css?v=16">
-<link rel="stylesheet" href="reading-layout.css?v=final-polish-1">
+<link rel="stylesheet" href="magazine.css?v=uiux-1">
+<link rel="stylesheet" href="reading-layout.css?v=uiux-1">
+<link rel="stylesheet" href="uiux-fonts.css?v=uiux-1">
+<link rel="stylesheet" href="uiux-polish.css?v=uiux-1">
 <title>消失的原民故事</title>
 <script src="documentary.js?v=6" defer></script>
 </head>

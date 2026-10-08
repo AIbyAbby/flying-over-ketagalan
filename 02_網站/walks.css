@@ -11,7 +11,7 @@
  display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:var(--collage-gap);
  width:min(1000px,calc(100% - 2 * var(--layout-gutter))); margin:0 auto 1.5rem; align-items:stretch;
 }
-.walks-page .collage-photo { position:relative; margin:0; min-width:0; overflow:hidden; aspect-ratio:1; display:block; }
+.walks-page .collage-photo { position:relative; margin:0; min-width:0; width:100%; max-width:100%; overflow:hidden; aspect-ratio:1; display:block; }
 .walks-page .collage-photo :is(picture, .responsive-picture) { display:block; width:100%; height:100%; }
 .walks-page .collage-photo img { display:block; width:100%; height:100%; object-fit:cover; object-position:var(--photo-focus,50% 50%); }
 .walks-page .collage-feature { grid-column:1/-1; aspect-ratio:4/3; }

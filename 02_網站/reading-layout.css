@@ -49,7 +49,7 @@ figcaption,.teacher-page .teacher-photo figcaption,.scene-grid .scene-photo figc
 
 /* Brand and navigation form two deliberate rows on small screens. */
 .header-row { grid-template-columns:minmax(0,1fr); gap:0; min-height:0; padding:.5rem var(--layout-gutter); }
-.site-header.shared-header .brand { font-size:1.1875rem; justify-self:start; }
+.site-header.shared-header .brand { font-size:var(--text-base); justify-self:start; }
 .top-nav-list { justify-content:flex-start; gap:.25rem; }
 .top-nav-link,.air-toggle,.air-subnav a { font-size:var(--type-button); min-height:2.75rem; }
 .top-nav-link { padding-inline:.5rem; }
@@ -59,8 +59,8 @@ figcaption,.teacher-page .teacher-photo figcaption,.scene-grid .scene-photo figc
 .air-subnav ul { display:grid; grid-template-columns:minmax(0,1fr); gap:.25rem; }
 .air-subnav a { padding:.5rem; overflow-wrap:break-word; }
 .nav-scroll-hint { display:block; position:absolute; right:0; top:0; bottom:0; width:1.5rem; opacity:0; }
-.nav-scroll-shell[data-can-scroll=true] .nav-scroll-hint { opacity:1; background:linear-gradient(90deg,transparent,var(--paper)); }
-.nav-scroll-shell[data-scrolled=true]::before { content:''; position:absolute; left:0; top:0; bottom:0; z-index:1; width:1rem; background:linear-gradient(90deg,var(--paper),transparent); }
+.nav-scroll-shell[data-can-scroll=true] .nav-scroll-hint { opacity:1; background:linear-gradient(90deg,var(--color-transparent),var(--paper)); }
+.nav-scroll-shell[data-scrolled=true]::before { content:''; position:absolute; left:0; top:0; bottom:0; z-index:1; width:1rem; background:linear-gradient(90deg,var(--paper),var(--color-transparent)); }
 
 /* Only prose receives a reading surface; photographs remain outside it. */
 .intro-page { max-width:51rem; padding-block:2rem 4rem; }
@@ -74,7 +74,7 @@ figcaption,.teacher-page .teacher-photo figcaption,.scene-grid .scene-photo figc
 .intro-page .intro-block p:last-child { margin-bottom:0; }
 .intro-page .intro-method { display:block; }
 .intro-page .intro-method+.intro-method { border-top:0; }
-.intro-page .intro-method-label { width:3.75rem; height:3.75rem; font-size:1.375rem; margin-bottom:1.25rem; }
+.intro-page .intro-method-label { width:3.75rem; height:3.75rem; font-size:var(--text-lg); margin-bottom:1.25rem; }
 .intro-page .intro-method-copy h2 { font-size:var(--type-h2); }
 .teacher-page .article-heading { width:min(51rem,calc(100% - 2 * var(--layout-gutter))); max-width:51rem; margin-top:2rem; }
 .teacher-page .article-heading h1 { font-size:var(--type-h1); line-height:1.3; text-wrap:balance; }
@@ -93,7 +93,7 @@ figcaption,.teacher-page .teacher-photo figcaption,.scene-grid .scene-photo figc
   .shared-card-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:4rem 3rem; }
   .intro-page .intro-block { margin-bottom:3rem; }
   .intro-page .intro-method { display:grid; grid-template-columns:5rem minmax(0,1fr); gap:1.5rem; }
-  .intro-page .intro-method-label { width:5rem; height:5rem; font-size:1.625rem; margin-bottom:0; }
+  .intro-page .intro-method-label { width:5rem; height:5rem; font-size:var(--text-lg); margin-bottom:0; }
   .air-subnav ul { grid-template-columns:repeat(2,minmax(0,1fr)); }
 }
 @media (min-width:64rem) {
@@ -115,12 +115,12 @@ figcaption,.teacher-page .teacher-photo figcaption,.scene-grid .scene-photo figc
 /* Work headings: title, subtitle, then creator information. */
 .article-heading.work-heading { padding-block:2rem 2rem; }
 .article-heading.work-heading h1 { margin:0 0 .75rem; }
-.article-heading.work-heading .article-lead { font-size:1.375rem; line-height:1.65; margin:0 0 1.25rem; }
-.article-heading.work-heading .work-author { font-family:var(--sans); font-size:1.0625rem; line-height:1.8; letter-spacing:normal; color:var(--muted); margin:0; }
+.article-heading.work-heading .article-lead { font-size:var(--text-lg); line-height:1.65; margin:0 0 1.25rem; }
+.article-heading.work-heading .work-author { font-family:var(--sans); font-size:var(--text-base); line-height:1.8; letter-spacing:normal; color:var(--muted); margin:0; }
 @media (min-width:48rem) {
   .article-heading.work-heading { padding-block:3rem 2.5rem; }
-  .article-heading.work-heading .article-lead { font-size:1.5rem; }
-  .article-heading.work-heading .work-author { font-size:1.125rem; }
+  .article-heading.work-heading .article-lead { font-size:var(--text-lg); }
+  .article-heading.work-heading .work-author { font-size:var(--text-base); }
 }
 
 /* Full fieldwork notices remain readable as the final documentary section. */
@@ -153,20 +153,20 @@ figcaption,.teacher-page .teacher-photo figcaption,.scene-grid .scene-photo figc
 .intro-page .intro-destinations { margin-block:3rem; }
 .intro-page .intro-destinations > h2 { font-size:var(--type-h2); color:var(--river-dark); margin-bottom:1.5rem; }
 .intro-page .intro-method { display:grid; grid-template-columns:3rem minmax(0,1fr); gap:1rem; padding:1.5rem; margin-bottom:1rem; box-shadow:none; }
-.intro-page .intro-method-label { width:3rem; height:3rem; font-size:1.0625rem; margin:0; background:var(--river-dark); }
+.intro-page .intro-method-label { width:3rem; height:3rem; font-size:var(--text-base); margin:0; background:var(--river-dark); }
 .intro-page .intro-method h3 { font-size:var(--type-h3); line-height:1.4; margin:0 0 .75rem; }
 .intro-page .intro-method h3 a { display:inline-block; min-height:44px; color:var(--river-dark); text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:.3em; }
 .intro-page .intro-method h3 a:hover { color:var(--ink); }
 .intro-page .intro-method h3 a:focus-visible { outline:2px solid var(--river-dark); outline-offset:5px; border-radius:2px; }
 .intro-page .intro-method h3 a:active { opacity:.8; }
-.intro-page .intro-thanks { background:transparent; border:0; border-top:1px solid var(--ui-border-subtle); border-radius:0; box-shadow:none; padding-inline:1rem; padding-top:2.5rem; }
+.intro-page .intro-thanks { background:var(--color-transparent); border:0; border-top:1px solid var(--ui-border-subtle); border-radius:0; box-shadow:none; padding-inline:1rem; padding-top:2.5rem; }
 .intro-page .intro-credits { padding-inline:1rem; }
 .intro-page .intro-credits p { overflow-wrap:anywhere; }
 @media (min-width:48rem) {
  .intro-page { padding-top:3rem; }
  .intro-page .intro-block { padding:3rem; margin-bottom:3rem; }
  .intro-page .intro-method { grid-template-columns:4rem minmax(0,1fr); gap:1.5rem; padding:2rem; margin-bottom:1.25rem; }
- .intro-page .intro-method-label { width:4rem; height:4rem; font-size:1.375rem; }
+ .intro-page .intro-method-label { width:4rem; height:4rem; font-size:var(--text-lg); }
  .intro-page .intro-thanks { padding-inline:3rem; }
  .intro-page .intro-credits { padding-inline:3rem; }
 }
@@ -200,7 +200,7 @@ figcaption,.teacher-page .teacher-photo figcaption,.scene-grid .scene-photo figc
  color:var(--ink);
 }
 @media (min-width:48rem) {
- .field-page .activity-film .film-description { font-size:1.5rem; }
+ .field-page .activity-film .film-description { font-size:var(--text-lg); }
 }
 
 /* Direct YouTube access for the four fieldwork films. */
@@ -208,13 +208,13 @@ figcaption,.teacher-page .teacher-photo figcaption,.scene-grid .scene-photo figc
  position:absolute; right:1rem; bottom:1rem; z-index:1;
  display:inline-flex; align-items:center; justify-content:center;
  min-height:2.75rem; padding:.5rem 1rem;
- background:var(--river-dark); color:#fff; border-radius:.375rem;
- font:500 1.0625rem/1.5 var(--sans); text-decoration:none;
+ background:var(--river-dark); color:var(--color-surface); border-radius:.375rem;
+ font:500 var(--text-base)/1.5 var(--sans); text-decoration:none;
 }
 .field-page .fieldwork-youtube .fieldwork-youtube-link:hover { background:var(--ink); }
 .field-page .fieldwork-youtube .fieldwork-youtube-link:active { transform:translateY(1px); }
 .field-page .fieldwork-youtube .fieldwork-youtube-link:focus-visible {
- outline:3px solid #fff; outline-offset:3px; box-shadow:0 0 0 6px var(--river-dark);
+ outline:3px solid var(--color-surface); outline-offset:3px; box-shadow:0 0 0 6px var(--river-dark);
 }
 
 /* Editorial date and place grouping for fieldwork entry cards. */
@@ -222,16 +222,16 @@ figcaption,.teacher-page .teacher-photo figcaption,.scene-grid .scene-photo figc
  display:flex; align-items:baseline; gap:1rem; margin:0 0 1.25rem;
 }
 .fieldwork-overview .field-entry-date {
- flex-shrink:0; font:400 1.875rem/1.35 var(--serif);
+ flex-shrink:0; font:400 var(--text-base)/1.35 var(--serif);
  letter-spacing:.04em; color:var(--river-dark);
 }
 .fieldwork-overview .field-entry-place {
  min-width:0;
- font:600 1.875rem/1.35 var(--serif); letter-spacing:.06em; color:var(--river-dark);
+ font:600 var(--text-base)/1.35 var(--serif); letter-spacing:.06em; color:var(--river-dark);
 }
 @media (min-width:48rem) {
  .fieldwork-overview .field-entry-date,
- .fieldwork-overview .field-entry-place { font-size:2.125rem; }
+ .fieldwork-overview .field-entry-place { font-size:var(--text-xl); }
 }
 
 /* Fieldwork editorial cards: breathing room and stronger serif headings. */
@@ -260,21 +260,21 @@ figcaption,.teacher-page .teacher-photo figcaption,.scene-grid .scene-photo figc
 
 /* 田調頁面影片按鈕與畫質提示：預設手機版縱向排列，按鈕上移緊鄰圖片 */
 .field-page .activity-film {
-  display: grid;
-  grid-template-columns: 1fr;
+  display:grid;
+  grid-template-columns:1fr;
 }
 .field-page .activity-film > * {
-  grid-column: 1 / -1;
+  grid-column:1 / -1;
 }
 
 .field-page .activity-film .film-watch-link {
   display:inline-flex; align-items:center; justify-content:center; gap:.5rem;
   min-height:2.75rem; padding:.5rem 1rem; margin:0 0 .5rem;
   box-sizing:border-box; border-radius:.375rem;
-  background:var(--river-dark); color:#fff; text-decoration:none;
-  font:500 1rem/1.5 var(--sans);
-  order: 4;
-  justify-self: start;
+  background:var(--river-dark); color:var(--color-surface); text-decoration:none;
+  font:500 var(--text-sm)/1.5 var(--sans);
+  order:4;
+  justify-self:start;
 }
 .field-page .activity-film .film-watch-link:hover { background:var(--ink); }
 .field-page .activity-film .film-watch-link:active { transform:translateY(1px); }
@@ -284,29 +284,29 @@ figcaption,.teacher-page .teacher-photo figcaption,.scene-grid .scene-photo figc
 
 .field-page .activity-film .film-quality-note {
   margin:0 0 1.5rem;
-  font:400 .9375rem/1.8 var(--sans);
+  font:400 var(--text-sm)/1.8 var(--sans);
   color:var(--muted); text-align:left; overflow-wrap:break-word;
-  order: 5;
+  order:5;
 }
 
 /* 桌機與平板（寬度 >= 600px）：按鈕往上移，與右側畫質說明同高度並排 */
 @media (min-width: 37.5rem) {
   .field-page .activity-film {
-    grid-template-columns: auto 1fr;
-    align-items: center;
+    grid-template-columns:auto 1fr;
+    align-items:center;
   }
   .field-page .activity-film .film-watch-link {
-    grid-column: 1;
-    order: 4;
-    margin: 0 1.25rem 1.75rem 0;
-    align-self: center;
+    grid-column:1;
+    order:4;
+    margin:0 1.25rem 1.75rem 0;
+    align-self:center;
   }
   .field-page .activity-film .film-quality-note {
-    grid-column: 2;
-    order: 5;
-    text-align: right;
-    margin: 0 0 1.75rem 0;
-    align-self: center;
+    grid-column:2;
+    order:5;
+    text-align:right;
+    margin:0 0 1.75rem 0;
+    align-self:center;
   }
 }
 
@@ -314,21 +314,21 @@ figcaption,.teacher-page .teacher-photo figcaption,.scene-grid .scene-photo figc
 .fieldwork-overview .field-entry-preview .field-entry-heading { gap:.5rem; }
 .fieldwork-overview .field-entry-preview .field-entry-date,
 .fieldwork-overview .field-entry-preview .field-entry-place {
- font-size:1.3125rem; white-space:nowrap; letter-spacing:.025em;
+ font-size:var(--text-lg); white-space:nowrap; letter-spacing:.025em;
 }
 @media (min-width:64rem) {
  .fieldwork-overview .field-entry-preview .field-entry-date,
- .fieldwork-overview .field-entry-preview .field-entry-place { font-size:1.5rem; }
+ .fieldwork-overview .field-entry-preview .field-entry-place { font-size:var(--text-lg); }
 }
 
 /* Compact fieldwork entry buttons with a comfortable touch target. */
 .fieldwork-overview .field-entry-preview .fieldwork-card-action {
  min-height:2.75rem; padding:.5rem .875rem;
- font:500 1rem/1.6 var(--sans); letter-spacing:.025em;
+ font:500 var(--text-sm)/1.6 var(--sans); letter-spacing:.025em;
  border-radius:.375rem;
 }
 .fieldwork-overview .field-entry-preview .field-entry-play {
- font-size:.75em; vertical-align:.08em; margin-right:.2rem;
+ font-size:var(--text-xs); vertical-align:.08em; margin-right:.2rem;
 }
 
 /* Final reading/accessibility polish; player rules and video markup stay intact. */
@@ -360,7 +360,7 @@ h1,h2,h3 { text-wrap:balance; }
 }
 .site-header.shared-header :is(.top-nav-link,.air-subnav a)[aria-current="page"] {
  font-weight:700; border-bottom:3px solid var(--river-dark);
- background:rgba(35,79,86,.06); color:var(--river-dark);
+ background:var(--color-primary-alpha-006); color:var(--river-dark);
 }
 .work-card .stretched-link { display:inline-flex; align-items:center; min-height:44px; }
 .work-card .stretched-link::after { content:""; position:absolute; inset:0; z-index:1; }
@@ -372,16 +372,16 @@ h1,h2,h3 { text-wrap:balance; }
  display:flex; flex-wrap:wrap; justify-content:space-between; gap:.75rem 1.5rem;
  width:min(51rem,calc(100% - 2 * var(--layout-gutter))); margin:1rem auto 3rem;
  padding-top:1rem; border-top:1px solid var(--ui-border-subtle);
- font:400 1rem/1.8 var(--reading-sans); color:var(--river-dark);
+ font:400 var(--text-sm)/1.8 var(--reading-sans); color:var(--river-dark);
 }
 .page-sequence a { gap:.5rem; text-decoration:underline; text-underline-offset:.25em; }
-.page-sequence a span { color:var(--muted); font-size:.875rem; }
+.page-sequence a span { color:var(--muted); font-size:var(--text-xs); }
 .page-sequence .sequence-next { margin-left:auto; }
 .site-footer .copyright {
- max-width:38em; margin:1.25rem auto 0; font:400 .875rem/1.9 var(--reading-sans);
+ max-width:38em; margin:1.25rem auto 0; font:400 var(--text-xs)/1.9 var(--reading-sans);
  color:var(--muted); text-wrap:pretty;
 }
-.contact-placeholder { color:var(--river-dark); font-weight:600; }
+.contact-placeholder { color:var(--river-dark); font-weight:700; }
 .redirect-note { width:min(38em,calc(100% - 2rem)); margin:1rem auto; }
 .not-found { max-width:51rem; padding-block:3rem; }
 .not-found nav { display:flex; flex-wrap:wrap; gap:.5rem 1.25rem; }

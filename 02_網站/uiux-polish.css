@@ -40,7 +40,30 @@
  --ui-surface:var(--color-surface); --ui-surface-hover:var(--color-primary-soft); --ui-focus:var(--color-focus); --ui-current:var(--color-primary); --ui-on-image:var(--color-surface);
 }
 
+body { background:var(--color-bg); color:var(--color-text); font-family:var(--sans); font-size:var(--text-base); line-height:1.85; letter-spacing:.02em; line-break:strict; text-autospace:normal; }
+h1,h2,h3 { font-family:var(--serif); color:var(--color-primary); font-weight:700; line-height:1.35; letter-spacing:.01em; text-wrap:balance; }
+h1,.page-heading h1,.article-heading h1,.work-heading h1,.field-record-title {font-size:var(--text-2xl);font-weight:700;line-height:1.35}
+h2,.section-heading h2,.shared-section-heading h2 {font-size:var(--text-xl);line-height:1.35;font-weight:700}
+h3,.shared-card h3 {font-size:var(--text-lg);line-height:1.35;font-weight:600}
+p,li {text-wrap:pretty; text-align:left}
+:is(.intro-block,.chapter-reading,.work-introduction,.work-secondary,.creator-note,.reflection-body,.reading-block,.walks-section,.entry-copy,.card-copy) p,.activity-film .film-description,.work-heading .article-lead {font-family:var(--sans);font-size:var(--text-base);line-height:1.85;max-width:38em;margin-bottom:1em}
+figcaption,.film-quality-note,.byline,.kicker {font-family:var(--sans);font-size:var(--text-xs);line-height:1.6;color:var(--color-text-muted)}
+h2 {margin-block:var(--space-5) var(--space-3)}
+a {color:var(--color-primary);text-underline-offset:.2em}
+a:hover {color:var(--color-primary-hover)}
+:is(a,button):focus-visible {outline:3px solid var(--color-focus);outline-offset:2px}
+button,.primary-entry,.film-watch-link {font-family:var(--sans);font-size:var(--text-sm);min-height:48px;border-radius:8px;padding:.75rem 1rem;background:var(--color-primary);color:var(--color-surface);border:1px solid var(--color-primary)}
+button:hover,.primary-entry:hover,.film-watch-link:hover {background:var(--color-primary-hover);color:var(--color-surface)}
+button:active,.primary-entry:active {transform:translateY(1px)}
+button:disabled {opacity:.55;cursor:not-allowed}
+img {border-radius:10px}
+.shared-card,.intro-method {background:var(--color-surface);border:1px solid var(--color-border);box-shadow:0 2px 8px rgb(var(--color-text-rgb) / .05)}
+.shared-card:hover {border-color:var(--color-primary);transform:translateY(-2px)}
 .sr-only {position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+[hidden] {display:none!important}
+@media(max-width:768px){h3 {font-family:var(--sans)} }
+@media(prefers-reduced-motion:reduce){html {scroll-behavior:auto} *,*::before,*::after {animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
 /* ==========================================================================
    創作心得可展開卡片 (Reflection Card Component)
    共用元件樣式：供 abby.html、yuan.html 等作品頁套用
@@ -355,5 +378,20 @@
 .reflection-card:not([data-reflection-ready]) .reflection-footer {display:none}
 .reflection-summary:active {background-color:var(--color-primary-soft)}
 .reflection-summary:active .reflection-toggle-btn {transform:translateY(var(--press-offset))}
+:root body.inner :is(h1,h2,h3) {font-family:var(--serif);font-weight:700;line-height:1.35;letter-spacing:.01em}
+:root body :is(figcaption,.film-quality-note,.byline,.kicker) {font-family:var(--sans);font-size:var(--text-xs);line-height:1.6;color:var(--color-text-muted)}
+:root body .intro-page .intro-opening > p:first-of-type {font-size:var(--text-base);line-height:1.85}
+:root body :is(.intro-block,.chapter-reading,.work-introduction,.work-secondary,.creator-note,.reading-block,.walks-section,.entry-copy,.card-copy) p {font-size:var(--text-base);line-height:1.85}
+:is(time,.kicker,.nav-number,.byline) {font-variant-numeric:tabular-nums}
+@media(max-width:768px){:root body.inner h3 {font-family:var(--sans)}}
 
 .reflection-meta {display:block}
+
+/* Keep work-card copy clear of its bordered edges. */
+body.inner .work-card .card-copy { padding:var(--space-4); }
+body.inner .work-card .card-label { margin-bottom:var(--space-2); }
+body.inner .work-card .card-copy h3 { margin-bottom:var(--space-2); }
+body.inner .work-card .card-copy p { margin-bottom:var(--space-3); }
+@media (max-width:48rem) {
+ body.inner .work-card .card-copy { padding:var(--space-3); }
+}

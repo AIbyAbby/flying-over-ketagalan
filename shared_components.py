@@ -200,5 +200,4 @@ def render_page_sequence(filename):
 def render_footer():
     return ('<footer class="site-footer compact-footer">'
             '<a class="back-top ui-control" href="#top" aria-label="回到頁首">回到頁首</a>'
-            '<p class="copyright">本站所有作品、照片與文字，著作權屬原創作者。'
-            '如需撤下或更正，請聯繫：<strong class="contact-placeholder">［聯絡方式待補］</strong></p></footer>')
+            '</footer>')

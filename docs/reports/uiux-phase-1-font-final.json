@@ -1,0 +1,19 @@
+[
+  {
+    "family": "NotoSansTC",
+    "weight": 400,
+    "bytes": 212520
+  },
+  {
+    "family": "NotoSansTC",
+    "weight": 700,
+    "bytes": 107796,
+    "unique_characters": 734
+  },
+  {
+    "family": "NotoSerifTC",
+    "weight": 700,
+    "bytes": 71480,
+    "unique_characters": 352
+  }
+]

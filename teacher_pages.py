@@ -96,6 +96,8 @@ def ordered_teacher(root,write_content=True):
             pieces.append('<div class="chapter-reading">'+''.join('<p>'+escape(p)+'</p>' for p in paragraphs)+'</div>');markdown.append(value)
         else:
             filename,caption=value
+            if filename == 'teacher-photo-6-1.jpg':
+                caption = caption.removeprefix('遺址博物館館研析：')
             pieces.append(f'<figure class="teacher-photo"><img src="assets/{filename}" alt="{escape(caption)}" loading="lazy"><figcaption>{escape(caption)}</figcaption></figure>')
             markdown.append(f'![{caption}](../assets/{filename})\n\n{caption}')
     if opened: pieces.append('</section>')

@@ -1,0 +1,32 @@
+[
+  {
+    "width": 1440,
+    "run": 1,
+    "measurement": "{\"lcp\":1348,\"cls\":0,\"fontReady\":true,\"fontResources\":[{\"url\":\"http://127.0.0.1:8083/flying-over-ketagalan/assets/fonts/NotoSansTC-400-site.woff2\",\"bytes\":300,\"duration\":0},{\"url\":\"http://127.0.0.1:8083/flying-over-ketagalan/assets/fonts/NotoSansTC-700-site.woff2\",\"bytes\":300,\"duration\":0},{\"url\":\"http://127.0.0.1:8083/flying-over-ketagalan/assets/fonts/NotoSerifTC-700-site.woff2\",\"bytes\":300,\"duration\":0}],\"lcpElement\":\"IMG\",\"lcpURL\":\"http://127.0.0.1:8083/flying-over-ketagalan/assets/abby-first-frame-w960.webp\"}"
+  },
+  {
+    "width": 1440,
+    "run": 2,
+    "measurement": "{\"lcp\":1008,\"cls\":0,\"fontReady\":true,\"fontResources\":[{\"url\":\"http://127.0.0.1:8083/flying-over-ketagalan/assets/fonts/NotoSansTC-400-site.woff2\",\"bytes\":300,\"duration\":0},{\"url\":\"http://127.0.0.1:8083/flying-over-ketagalan/assets/fonts/NotoSansTC-700-site.woff2\",\"bytes\":300,\"duration\":0},{\"url\":\"http://127.0.0.1:8083/flying-over-ketagalan/assets/fonts/NotoSerifTC-700-site.woff2\",\"bytes\":300,\"duration\":0}],\"lcpElement\":\"IMG\",\"lcpURL\":\"http://127.0.0.1:8083/flying-over-ketagalan/assets/abby-first-frame-w960.webp\"}"
+  },
+  {
+    "width": 1440,
+    "run": 3,
+    "measurement": "{\"lcp\":2036,\"cls\":0,\"fontReady\":true,\"fontResources\":[{\"url\":\"http://127.0.0.1:8083/flying-over-ketagalan/assets/fonts/NotoSansTC-400-site.woff2\",\"bytes\":300,\"duration\":0},{\"url\":\"http://127.0.0.1:8083/flying-over-ketagalan/assets/fonts/NotoSansTC-700-site.woff2\",\"bytes\":300,\"duration\":0},{\"url\":\"http://127.0.0.1:8083/flying-over-ketagalan/assets/fonts/NotoSerifTC-700-site.woff2\",\"bytes\":300,\"duration\":0}],\"lcpElement\":\"IMG\",\"lcpURL\":\"http://127.0.0.1:8083/flying-over-ketagalan/assets/abby-first-frame-w960.webp\"}"
+  },
+  {
+    "width": 375,
+    "run": 1,
+    "measurement": "{\"lcp\":1880,\"cls\":0,\"fontReady\":true,\"fontResources\":[{\"url\":\"http://127.0.0.1:8083/flying-over-ketagalan/assets/fonts/NotoSansTC-400-site.woff2\",\"bytes\":300,\"duration\":0},{\"url\":\"http://127.0.0.1:8083/flying-over-ketagalan/assets/fonts/NotoSansTC-700-site.woff2\",\"bytes\":300,\"duration\":0},{\"url\":\"http://127.0.0.1:8083/flying-over-ketagalan/assets/fonts/NotoSerifTC-700-site.woff2\",\"bytes\":300,\"duration\":0}],\"lcpElement\":\"IMG\",\"lcpURL\":\"http://127.0.0.1:8083/flying-over-ketagalan/assets/abby-first-frame-w960.webp\"}"
+  },
+  {
+    "width": 375,
+    "run": 2,
+    "measurement": "{\"lcp\":2028,\"cls\":0,\"fontReady\":true,\"fontResources\":[{\"url\":\"http://127.0.0.1:8083/flying-over-ketagalan/assets/fonts/NotoSansTC-400-site.woff2\",\"bytes\":300,\"duration\":0},{\"url\":\"http://127.0.0.1:8083/flying-over-ketagalan/assets/fonts/NotoSansTC-700-site.woff2\",\"bytes\":300,\"duration\":0},{\"url\":\"http://127.0.0.1:8083/flying-over-ketagalan/assets/fonts/NotoSerifTC-700-site.woff2\",\"bytes\":300,\"duration\":0}],\"lcpElement\":\"IMG\",\"lcpURL\":\"http://127.0.0.1:8083/flying-over-ketagalan/assets/abby-first-frame-w960.webp\"}"
+  },
+  {
+    "width": 375,
+    "run": 3,
+    "measurement": "{\"lcp\":2028,\"cls\":0,\"fontReady\":true,\"fontResources\":[{\"url\":\"http://127.0.0.1:8083/flying-over-ketagalan/assets/fonts/NotoSansTC-400-site.woff2\",\"bytes\":300,\"duration\":0},{\"url\":\"http://127.0.0.1:8083/flying-over-ketagalan/assets/fonts/NotoSansTC-700-site.woff2\",\"bytes\":300,\"duration\":0},{\"url\":\"http://127.0.0.1:8083/flying-over-ketagalan/assets/fonts/NotoSerifTC-700-site.woff2\",\"bytes\":300,\"duration\":0}],\"lcpElement\":\"IMG\",\"lcpURL\":\"http://127.0.0.1:8083/flying-over-ketagalan/assets/abby-first-frame-w960.webp\"}"
+  }
+]

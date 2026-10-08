@@ -1,0 +1,117 @@
+{
+  "contrasts": [
+    {
+      "name": "正文／頁底",
+      "foreground": "#1f2a2c",
+      "background": "#faf8f3",
+      "ratio": 13.88
+    },
+    {
+      "name": "次要字／頁底",
+      "foreground": "#4a5a5d",
+      "background": "#faf8f3",
+      "ratio": 6.8
+    },
+    {
+      "name": "次要字／卡片",
+      "foreground": "#4a5a5d",
+      "background": "#ffffff",
+      "ratio": 7.21
+    },
+    {
+      "name": "連結／頁底",
+      "foreground": "#234f56",
+      "background": "#faf8f3",
+      "ratio": 8.51
+    },
+    {
+      "name": "白字／主按鈕",
+      "foreground": "#ffffff",
+      "background": "#234f56",
+      "ratio": 9.04
+    },
+    {
+      "name": "白字／hover",
+      "foreground": "#ffffff",
+      "background": "#1a3d43",
+      "ratio": 11.72
+    },
+    {
+      "name": "accent／卡片",
+      "foreground": "#a9532c",
+      "background": "#ffffff",
+      "ratio": 5.3
+    },
+    {
+      "name": "focus／淺主色",
+      "foreground": "#234f56",
+      "background": "#e8f0ef",
+      "ratio": 7.81
+    }
+  ],
+  "residuals": [
+    {
+      "file": "aviation.css",
+      "raw_colors": 0,
+      "literal_font_sizes": 0
+    },
+    {
+      "file": "documentary.css",
+      "raw_colors": 0,
+      "literal_font_sizes": 0
+    },
+    {
+      "file": "editorial-home.css",
+      "raw_colors": 0,
+      "literal_font_sizes": 2
+    },
+    {
+      "file": "editorial.css",
+      "raw_colors": 0,
+      "literal_font_sizes": 0
+    },
+    {
+      "file": "magazine.css",
+      "raw_colors": 0,
+      "literal_font_sizes": 1
+    },
+    {
+      "file": "reading-layout.css",
+      "raw_colors": 0,
+      "literal_font_sizes": 0
+    },
+    {
+      "file": "stories-trial.css",
+      "raw_colors": 0,
+      "literal_font_sizes": 0
+    },
+    {
+      "file": "styles.css",
+      "raw_colors": 0,
+      "literal_font_sizes": 0
+    },
+    {
+      "file": "uiux-fonts.css",
+      "raw_colors": 0,
+      "literal_font_sizes": 0
+    },
+    {
+      "file": "uiux-polish.css",
+      "raw_colors": 0,
+      "literal_font_sizes": 0
+    },
+    {
+      "file": "video-layout.css",
+      "raw_colors": 0,
+      "literal_font_sizes": 0
+    },
+    {
+      "file": "walks.css",
+      "raw_colors": 0,
+      "literal_font_sizes": 0
+    }
+  ],
+  "total_raw_colors": 0,
+  "total_literal_font_sizes": 3,
+  "font_bytes": 391796
+}

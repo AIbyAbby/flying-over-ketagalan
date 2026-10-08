@@ -96,6 +96,17 @@ def render_walks(root, photo):
                 body += panels(section) + '</section>'
             section += 1
             body += '<section class="walks-section" id="walks-section-' + str(section + 1) + '"><div class="reading-container"><h2>' + escape(chunk.removeprefix('## ')) + '</h2></div>'
+        elif chunk.startswith('### '):
+            body += '<div class="reading-container"><h3>' + escape(chunk.removeprefix('### ')) + '</h3></div>'
+        elif chunk.startswith('!['):
+            import re
+            match = re.fullmatch(r'!\[(.*?)\]\(\.\./(.*?)\)', chunk)
+            if not match:
+                raise ValueError('Unexpected walks photo markup')
+            caption, src = match.groups()
+            with Image.open(root / '02_網站' / src) as image:
+                width, height = image.size
+            body += '<div class="reading-container"><figure class="museum-photo"><img src="' + escape(src, quote=True) + '" alt="' + escape(caption, quote=True) + '" width="' + str(width) + '" height="' + str(height) + '" loading="lazy" decoding="async" style="display:block;width:100%;height:auto"><figcaption>' + escape(caption) + '</figcaption></figure></div>'
         else:
             body += '<div class="reading-container"><p>' + escape(chunk) + '</p></div>'
     body += panels(section) + '</section>'

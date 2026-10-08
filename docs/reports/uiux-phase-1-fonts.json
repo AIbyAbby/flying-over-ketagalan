@@ -1,0 +1,26 @@
+[
+  {
+    "family": "NotoSansTC",
+    "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/notosanstc/NotoSansTC%5Bwght%5D.ttf",
+    "source_bytes": 11941968,
+    "source_download_seconds": 0.0,
+    "woff2_bytes": 378588,
+    "unique_characters": 1393,
+    "weights": [
+      400,
+      700
+    ]
+  },
+  {
+    "family": "NotoSerifTC",
+    "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/notoseriftc/NotoSerifTC%5Bwght%5D.ttf",
+    "source_bytes": 16851596,
+    "source_download_seconds": 1.27,
+    "woff2_bytes": 117732,
+    "unique_characters": 358,
+    "weights": [
+      600,
+      700
+    ]
+  }
+]

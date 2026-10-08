@@ -1,0 +1,84 @@
+[
+  {
+    "body": "17.0696px",
+    "bodyBg": "rgb(250, 248, 243)",
+    "bodyColor": "rgb(31, 42, 44)",
+    "bodyLine": "31.5788px",
+    "cardBg": "rgb(255, 255, 255)",
+    "headingColor": "rgb(35, 79, 86)",
+    "headings": [
+      {
+        "family": "\"Noto Serif TC\", \"Songti TC\", PMingLiU, serif",
+        "size": "30.7467px",
+        "tag": "H1",
+        "text": "空拍奇遇記"
+      },
+      {
+        "family": "\"Noto Serif TC\", \"Songti TC\", PMingLiU, serif",
+        "size": "20.2741px",
+        "tag": "H2",
+        "text": "Abby 的創作之路｜把學習變成一場空拍奇遇"
+      },
+      {
+        "family": "\"Noto Sans TC\", \"PingFang TC\", \"Microsoft JhengHei\", system-ui, sans-serif",
+        "size": "20.2741px",
+        "tag": "H3",
+        "text": "一、先想清楚故事，再安排畫面"
+      },
+      {
+        "family": "\"Noto Sans TC\", \"PingFang TC\", \"Microsoft JhengHei\", system-ui, sans-serif",
+        "size": "20.2741px",
+        "tag": "H3",
+        "text": "二、用實拍留下當下，用插畫想像過去"
+      },
+      {
+        "family": "\"Noto Sans TC\", \"PingFang TC\", \"Microsoft JhengHei\", system-ui, sans-serif",
+        "size": "20.2741px",
+        "tag": "H3",
+        "text": "三、讓聲音帶著故事往前走"
+      }
+    ],
+    "width": 375
+  },
+  {
+    "body": "19px",
+    "bodyBg": "rgb(250, 248, 243)",
+    "bodyColor": "rgb(31, 42, 44)",
+    "bodyLine": "35.15px",
+    "cardBg": "rgb(255, 255, 255)",
+    "headingColor": "rgb(35, 79, 86)",
+    "headings": [
+      {
+        "family": "\"Noto Serif TC\", \"Songti TC\", PMingLiU, serif",
+        "size": "44px",
+        "tag": "H1",
+        "text": "空拍奇遇記"
+      },
+      {
+        "family": "\"Noto Serif TC\", \"Songti TC\", PMingLiU, serif",
+        "size": "32px",
+        "tag": "H2",
+        "text": "Abby 的創作之路｜把學習變成一場空拍奇遇"
+      },
+      {
+        "family": "\"Noto Serif TC\", \"Songti TC\", PMingLiU, serif",
+        "size": "24px",
+        "tag": "H3",
+        "text": "一、先想清楚故事，再安排畫面"
+      },
+      {
+        "family": "\"Noto Serif TC\", \"Songti TC\", PMingLiU, serif",
+        "size": "24px",
+        "tag": "H3",
+        "text": "二、用實拍留下當下，用插畫想像過去"
+      },
+      {
+        "family": "\"Noto Serif TC\", \"Songti TC\", PMingLiU, serif",
+        "size": "24px",
+        "tag": "H3",
+        "text": "三、讓聲音帶著故事往前走"
+      }
+    ],
+    "width": 1440
+  }
+]
