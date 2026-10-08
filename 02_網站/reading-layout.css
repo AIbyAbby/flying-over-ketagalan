@@ -107,3 +107,87 @@ figcaption,.teacher-page .teacher-photo figcaption,.scene-grid .scene-photo figc
   .nav-scroll-hint { display:none; }
   .nav-scroll-shell[data-scrolled=true]::before { content:none; }
 }
+
+/* Dated title replaces the redundant page heading on fieldwork records. */
+.field-page .field-record-title { font-size:var(--type-h2); line-height:1.3; text-wrap:balance; margin:0 0 1.5rem; }
+.field-page .scene-section .section-heading h2 br { display:none; }
+
+/* Work headings: title, subtitle, then creator information. */
+.article-heading.work-heading { padding-block:2rem 2rem; }
+.article-heading.work-heading h1 { margin:0 0 .75rem; }
+.article-heading.work-heading .article-lead { font-size:1.375rem; line-height:1.65; margin:0 0 1.25rem; }
+.article-heading.work-heading .work-author { font-family:var(--sans); font-size:1.0625rem; line-height:1.8; letter-spacing:normal; color:var(--muted); margin:0; }
+@media (min-width:48rem) {
+  .article-heading.work-heading { padding-block:3rem 2.5rem; }
+  .article-heading.work-heading .article-lead { font-size:1.5rem; }
+  .article-heading.work-heading .work-author { font-size:1.125rem; }
+}
+
+/* Full fieldwork notices remain readable as the final documentary section. */
+.field-page .field-notice { margin-top:3rem; padding-top:2rem; border-top:1px solid var(--ui-border-subtle); }
+.field-page .field-notice .reading-block > h2 { margin-top:0; }
+.field-page .field-notice .reading-block > h3 { font-size:var(--type-h3); margin:2.5rem 0 1rem; line-height:1.4; }
+.field-page .field-notice .reading-block > h4 { font-size:var(--type-body); margin:2rem 0 .75rem; line-height:1.5; }
+@media (min-width:48rem) {
+ .field-page .field-notice { margin-top:4rem; padding-top:3rem; }
+}
+
+/* A consistent caption rhythm for fieldwork photos and notice illustrations. */
+.field-page .scene-photo figcaption,
+.field-page .scene-feature-photo figcaption,
+.field-page .museum-photo figcaption,
+.field-page .source-map figcaption {
+ font-family:var(--sans);
+ font-size:var(--type-caption);
+ line-height:1.9;
+ color:var(--muted);
+ margin:.75rem 0 0;
+ max-width:none;
+}
+
+/* Introduction: quiet paper cards, a clear reading path, and scoped typography. */
+.intro-page { max-width:51rem; padding-block:2rem 4rem; }
+.intro-page .intro-block { padding:2rem; margin:0 0 2rem; border:1px solid var(--ui-border-subtle); }
+.intro-page .intro-opening h1 { font-size:var(--type-h1); margin-bottom:1.5rem; color:var(--river-dark); }
+.intro-page .intro-opening > p:first-of-type { font-size:var(--type-lead); color:var(--river-dark); line-height:1.8; }
+.intro-page .intro-destinations { margin-block:3rem; }
+.intro-page .intro-destinations > h2 { font-size:var(--type-h2); color:var(--river-dark); margin-bottom:1.5rem; }
+.intro-page .intro-method { display:grid; grid-template-columns:3rem minmax(0,1fr); gap:1rem; padding:1.5rem; margin-bottom:1rem; box-shadow:none; }
+.intro-page .intro-method-label { width:3rem; height:3rem; font-size:1.0625rem; margin:0; background:var(--river-dark); }
+.intro-page .intro-method h3 { font-size:var(--type-h3); line-height:1.4; margin:0 0 .75rem; }
+.intro-page .intro-method h3 a { display:inline-block; min-height:44px; color:var(--river-dark); text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:.3em; }
+.intro-page .intro-method h3 a:hover { color:var(--ink); }
+.intro-page .intro-method h3 a:focus-visible { outline:2px solid var(--river-dark); outline-offset:5px; border-radius:2px; }
+.intro-page .intro-method h3 a:active { opacity:.8; }
+.intro-page .intro-thanks { background:transparent; border:0; border-top:1px solid var(--ui-border-subtle); border-radius:0; box-shadow:none; padding-inline:1rem; padding-top:2.5rem; }
+.intro-page .intro-credits { padding-inline:1rem; }
+.intro-page .intro-credits p { overflow-wrap:anywhere; }
+@media (min-width:48rem) {
+ .intro-page { padding-top:3rem; }
+ .intro-page .intro-block { padding:3rem; margin-bottom:3rem; }
+ .intro-page .intro-method { grid-template-columns:4rem minmax(0,1fr); gap:1.5rem; padding:2rem; margin-bottom:1.25rem; }
+ .intro-page .intro-method-label { width:4rem; height:4rem; font-size:1.375rem; }
+ .intro-page .intro-thanks { padding-inline:3rem; }
+ .intro-page .intro-credits { padding-inline:3rem; }
+}
+
+/* On phones, the circle shares the title row; prose gets the full card width. */
+.intro-page .intro-method-copy { display:contents; }
+.intro-page .intro-method-copy h3 { grid-column:2; align-self:center; margin-bottom:0; }
+.intro-page .intro-method-copy p { grid-column:1/-1; }
+@media (min-width:48rem) {
+ .intro-page .intro-method-copy { display:block; }
+ .intro-page .intro-method-copy h3 { margin-bottom:.75rem; }
+}
+
+/* Creator reflection below the film; isolated from player and poster styling. */
+.creator-note { width:min(816px,calc(100% - 2 * var(--layout-gutter))); max-width:816px; margin:0 auto 3rem; padding:1.5rem; background:var(--paper-soft); border:1px solid var(--ui-border-subtle); border-radius:var(--reading-card-radius); box-shadow:var(--reading-card-shadow); }
+.creator-note h2 { font-size:var(--type-h2); color:var(--river-dark); margin:0 0 1rem; line-height:1.4; text-wrap:balance; }
+.creator-note .creator-note-author { font:400 var(--type-meta)/1.8 var(--sans); color:var(--muted); margin:0 0 1.5rem; }
+.creator-note h3 { font-size:var(--type-h3); line-height:1.4; color:var(--river-dark); margin:3rem 0 1.25rem; text-wrap:balance; }
+.creator-note > p { font:400 var(--type-body)/var(--line-body) var(--serif); color:var(--ink); margin:0 0 1.25rem; overflow-wrap:break-word; }
+.creator-note > p:last-child { margin-bottom:0; }
+@media (min-width:48rem) {
+ .creator-note { padding:3rem; margin-bottom:4rem; }
+ .creator-note h3 { margin-top:3.5rem; }
+}

@@ -89,19 +89,26 @@ def render_card(url, image, title, summary, label='', playable=False, cta=''):
 
 
 def render_intro(data, photo):
-    """Do not normalize punctuation or wording in the supplied introduction."""
+    """Render the approved introduction and its four reading destinations."""
     body = photo(data['image'], data['image_alt'], 'intro-hero', True, show_caption=False)
     body += '<article class="intro-page wrap" aria-label="' + escape(data['title'], quote=True) + '">'
+    def methods():
+        result = '<section class="intro-destinations" aria-labelledby="intro-destinations-title">'
+        result += '<h2 id="intro-destinations-title">' + escape(data['methods_heading']) + '</h2>'
+        for item in data.get('methods', []):
+            result += '<div class="intro-block intro-method"><span class="intro-method-label" aria-hidden="true">' + escape(item['label']) + '</span>'
+            result += '<div class="intro-method-copy"><h3><a href="' + escape(item['url'], quote=True) + '">' + escape(item['title']) + '<span aria-hidden="true"> →</span></a></h3>'
+            result += ''.join('<p>' + escape(p) + '</p>' for p in item['paragraphs'])
+            result += '</div></div>'
+        return result + '</section>'
     for index, section in enumerate(data['sections']):
         level = 1 if index == 0 else 2
-        body += f'<section class="intro-block"><h{level}>' + escape(section['title']) + f'</h{level}>'
+        kind = ' intro-opening' if index == 0 else (' intro-thanks' if index == len(data['sections']) - 1 else ' intro-making')
+        body += '<section class="intro-block' + kind + '"><h' + str(level) + '>' + escape(section['title']) + '</h' + str(level) + '>'
         body += ''.join('<p>' + escape(p) + '</p>' for p in section['paragraphs'])
         body += '</section>'
-    for section in data.get('methods', []):
-        body += '<section class="intro-block intro-method"><span class="intro-method-label">' + escape(section['label']) + '</span>'
-        body += '<div class="intro-method-copy"><h2>' + escape(section['title']) + '</h2>'
-        body += ''.join('<p>' + escape(p) + '</p>' for p in section['paragraphs'])
-        body += '</div></section>'
+        if index + 1 == data.get('methods_after', 1):
+            body += methods()
     if data.get('closing_image'):
         body += photo(data['closing_image'], data['closing_image_alt'], 'intro-closing-photo', show_caption=False)
     body += '<div class="intro-credits" aria-label="參與名單">'

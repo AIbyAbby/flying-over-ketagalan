@@ -169,7 +169,7 @@ def legacy_body(html):
  protected=[]
  def protect(match):
   protected.append(match[0]); return f'__SHARED_{len(protected)-1}__'
- html=re.sub(r'<a class="(?:shared-card|primary-entry)\b.*?</a>|<span class="viewall-arrow".*?</span>',protect,html,flags=re.S)
+ html=re.sub(r'<a class="(?:shared-card|primary-entry)\b.*?</a>|<span class="viewall-arrow".*?</span>|<section class="creator-note wrap".*?</section>',protect,html,flags=re.S)
  for old,new in [('老師的敘述','土地的記憶'),('老師的陳述','土地的記憶'),('故事總覽','故事目錄'),('田野與空拍','沿河而行'),('四堂田野與空拍紀實','沿河而行'),('同學作品','鏡頭裡的故事')]:
   html=html.replace(old,new)
  html=html.replace('四堂沿河而行紀實','沿河而行')
@@ -195,6 +195,12 @@ def legacy_body(html):
 def page(filename,title,body,home=False,legacy=True):
  if selected_pages is not None and filename not in selected_pages:
   return
+ # Preserve the approved fieldwork composition as a source template.
+ if filename in {'fieldwork-0829.html','fieldwork-0903.html','fieldwork-0905.html','fieldwork-0910.html'}:
+  source_template=CONTENT/(Path(filename).stem+'-body.html')
+  if source_template.exists():
+   body=source_template.read_text(encoding='utf-8')
+   legacy=False
  if legacy:
   body=legacy_body(body)
   title=legacy_body(title)
@@ -244,7 +250,11 @@ page('stories.html','故事總覽',overview)
 FIELDWORK_OVERVIEW=json.loads((CONTENT/'fieldwork-overview.json').read_text(encoding='utf-8'))
 air_cards=[render_card(f'fieldwork-{c["key"]}.html',f'assets/flight-{c["cover"]}.jpg',c['title'],FIELDWORK_OVERVIEW['cards'][c['key']]['summary'],label=f'{c["place"]}｜{c["date"]}',cta=FIELDWORK_OVERVIEW['cards'][c['key']]['cta']) for c in COURSES]
 page('fieldwork.html','空拍紀錄',render_overview('空拍紀錄',FIELDWORK_OVERVIEW['lead'],'四次出發',air_cards,'fieldwork.html',show_breadcrumb=False,show_view_all=False),legacy=False)
-work_cards=[render_card(w['slug']+'.html',w['image'],w['title'],CARD_SUMMARIES[w['slug']],label=w['author']+'｜'+w['duration'],playable=True) for w in WORKS]
+def render_work_card(w):
+ author='Abby 陳翠碧' if w['slug']=='abby' else w['author']
+ card=render_card(w['slug']+'.html',w['image'],w['title'],CARD_SUMMARIES[w['slug']],playable=True)
+ return card.replace('</h3>','</h3><span class="card-label">創作者｜'+e(author)+'</span>',1)
+work_cards=[render_work_card(w) for w in WORKS]
 page('works.html','影音創作',render_overview('影音創作','從共同走過的土地，長出各自觀看與敘說的方式。','鏡頭裡的故事',work_cards,'works.html',show_breadcrumb=False,show_view_all=False),legacy=False)
 # Retain the supplied full-resolution photograph and export a web-sized copy.
 intro_source=ROOT/INTRO_DATA['image_source']
@@ -333,13 +343,26 @@ def video(video_id,image,title,button='播放作品',youtube_id=None):
   return f'<div class="video-shell" data-youtube="{youtube_id}" data-title="{e(title)}"><img src="{image}" alt="" loading="lazy"><button type="button" class="play-button ui-control" aria-label="{e(button+"："+title)}"><span class="play-icon" aria-hidden="true">▶</span>{button}</button></div><div class="video-links"><a href="https://youtu.be/{youtube_id}" target="_blank" rel="noopener">在 YouTube 開啟影片 ↗</a></div>'
  return f'<div class="video-shell" data-video="{video_id}" data-title="{e(title)}"><img src="{image}" alt="" loading="lazy"><button type="button" class="play-button ui-control" aria-label="{e(button+"："+title)}"><span class="play-icon" aria-hidden="true">▶</span>{button}</button></div><div class="video-links"><a href="https://drive.google.com/file/d/{video_id}/view" target="_blank" rel="noopener">在雲端開啟影片 ↗</a></div>'
 
+def render_creation_journey(source):
+ chunks=source.read_text(encoding='utf-8').strip().split('\n\n')
+ title=chunks.pop(0).removeprefix('# ')
+ author=chunks.pop(0)
+ result='<section class="creator-note wrap" aria-labelledby="creator-note-title"><header><h2 id="creator-note-title">'+e(title)+'</h2><p class="creator-note-author">'+e(author)+'</p></header>'
+ for chunk in chunks:
+  if chunk.startswith('## '): result+='<h3>'+e(chunk[3:])+'</h3>'
+  else: result+='<p>'+e(chunk)+'</p>'
+ return result+'</section>'
+
 for w in WORKS:
  youtube_id=w.get('youtube')
- body=f'<header class="article-heading wrap work-heading"><a class="breadcrumb" href="works.html">故事總覽 / 同學作品</a><span class="kicker">{w["author"]}・{w["duration"]}</span><h1>{w["title"]}</h1><p class="article-lead">{w["subtitle"]}</p></header><article class="work-reading wrap"><div class="work-introduction"><span class="kicker">這件作品的出發點</span><p>{w["description"]}</p></div>'+video(w['id'],w['image'],w['title'],youtube_id=youtube_id)+'</article>'
+ body=f'<header class="article-heading wrap work-heading"><h1>{w["title"]}</h1><p class="article-lead">{w["subtitle"]}</p><p class="work-author">創作者｜{w["author"]}</p></header><article class="work-reading wrap"><div class="work-introduction"><p>{w["description"]}</p></div>'+video(w['id'],w['image'],w['title'],youtube_id=youtube_id)+'</article>'
+ if w['slug']=='yuan':
+  body+=render_creation_journey(CONTENT/'yuan-creation-journey.md')
  if w['slug']=='abby':
+  body+=render_creation_journey(CONTENT/'abby-creation-journey.md')
   voiceover_intro='<p>十三行人究竟是不是凱達格蘭族的祖先？走進十三行博物館，Abby 從田野走讀中拍下的展件影像出發，結合語音敘事與情境音效，完成這份富有探索精神的配音成果。</p><p>透過《番社采風圖》的歷史圖說、一比一復原的干欄式住屋、細緻拍印的幾何陶罐紋樣，以及火塘邊的生活日常，將靜態的照片轉化為生動的歷史漫遊。這不只是一次課堂作業，更是讓走讀足跡有了聲音，讓沉睡千年的考古記憶在當代重新甦醒。</p>'
   voiceover_shell='<div class="video-shell" data-youtube="S2_Z2z-UeqE" data-title="十三行人真的是凱達格蘭族的祖先嗎？"><img src="assets/abby-voiceover-first-frame.jpg" alt="" loading="lazy"><button type="button" class="play-button ui-control" aria-label="播放作品：十三行人真的是凱達格蘭族的祖先嗎？"><span class="play-icon" aria-hidden="true">▶</span>播放作品</button></div><div class="video-links"><a href="https://youtu.be/S2_Z2z-UeqE" target="_blank" rel="noopener">在 YouTube 開啟影片 ↗</a></div>'
-  body+=f'<section class="interview wrap"><div class="work-introduction work-secondary"><span class="kicker">走讀配音功課・4 分 17 秒</span><h2>十三行人真的是凱達格蘭族的祖先嗎？</h2>{voiceover_intro}</div>{voiceover_shell}</section>'
+  body+=f'<section class="interview wrap"><div class="work-introduction work-secondary"><h2>十三行人真的是凱達格蘭族的祖先嗎？</h2><p class="work-author">配音功課　創作者｜Abby 陳翠碧</p>{voiceover_intro}</div>{voiceover_shell}</section>'
  if w['slug']=='suifen':
   body+='<section class="interview wrap"><div class="section-heading"><span class="kicker">聽創作者說</span><h2>穗芬談創作思維</h2><p>從作品回到創作的過程，聽穗芬分享自己的觀看與思考。</p></div>'+video('1Uxapk_yIMfmXcGxE9QF9Vz7gEEVUsIFz',INTERVIEW_POSTER,'穗芬談創作思維','播放創作分享')+'</section>'
  body+='<section class="other-works wrap"><div class="section-heading"><span class="kicker">還有另一種觀看</span><h2>繼續走進其他作品</h2></div>'

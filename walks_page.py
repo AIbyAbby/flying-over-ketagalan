@@ -33,20 +33,25 @@ def prepare_walks_photos(root):
         record.write_text(serialized, encoding='utf-8')
 
 
-def render_collages(root):
+def render_collages(root, group_id=None, panel_index=None, show_heading=True):
     body = '<div class="walks-collages">'
     for group in collage_groups(root):
+        if group_id is not None and group['id'] != group_id:
+            continue
         heading_id = 'walks-photos-' + group['id']
-        body += f'<section class="walks-collage-group" aria-labelledby="{heading_id}">'
-        body += f'<h2 id="{heading_id}" class="reading-container">{escape(group["title"])}</h2>'
+        body += (f'<section class="walks-collage-group" aria-labelledby="{heading_id}">' if show_heading else '<section class="walks-collage-group" aria-label="' + escape(group["title"], quote=True) + '照片">')
+        if show_heading:
+            body += f'<h2 id="{heading_id}" class="reading-container">{escape(group["title"])}</h2>'
         photos = group['photos']
         panels = group.get('panels', [{'count': min(6, len(photos) - start), 'layout': 'feature'} for start in range(0, len(photos), 6)])
         if sum(spec['count'] for spec in panels) != len(photos):
             raise ValueError('拼貼分組數量與照片不符')
         start = 0
-        for spec in panels:
+        for number, spec in enumerate(panels):
             panel = photos[start:start + spec['count']]
             start += spec['count']
+            if panel_index is not None and number != panel_index:
+                continue
             focus_layout = spec['layout'] == 'focus'
             small_layout = spec['layout'] == 'small'
             classes = 'walks-collage-panel' if len(panel) >= 5 else 'walks-collage-pair'
@@ -76,27 +81,25 @@ def render_collages(root):
     return body + '</div>'
 
 
+
 def render_walks(root, photo):
     chunks = (root / '02_網站/content/walks.md').read_text(encoding='utf-8').strip().split('\n\n')
     title = chunks.pop(0).removeprefix('# ')
-    body = '<article class="walks-page"><header class="walks-heading reading-container">'
-    body += '<span class="kicker">走讀紀錄・課程心得</span><h1>' + escape(title) + '</h1></header>'
+    body = '<article class="walks-page"><header class="walks-heading reading-container"><h1>' + escape(title) + '</h1></header>'
     section = -1
+    breaks = {0: [('air', 0)], 1: [('air', 1), ('air', 2)], 2: [('museum', 0), ('museum', 1)]}
+    def panels(index):
+        return ''.join(render_collages(root, group, number, show_heading=False) for group, number in breaks.get(index, []))
     for chunk in chunks:
         if chunk.startswith('## '):
             if section >= 0:
-                body += '</section>'
+                body += panels(section) + '</section>'
             section += 1
-            parts = chunk.removeprefix('## ').split('｜', 1)
-            body += f'<section class="walks-section" id="walks-section-{section + 1}">'
-            body += '<div class="reading-container"><h2>' + escape(parts[0])
-            if len(parts) == 2:
-                body += '<span class="walks-heading-detail">' + escape(parts[1]) + '</span>'
-            body += '</h2></div>'
+            body += '<section class="walks-section" id="walks-section-' + str(section + 1) + '"><div class="reading-container"><h2>' + escape(chunk.removeprefix('## ')) + '</h2></div>'
         else:
             body += '<div class="reading-container"><p>' + escape(chunk) + '</p></div>'
-    body += '</section>' + render_collages(root)
+    body += panels(section) + '</section>'
     body += '<nav class="walks-next reading-container" aria-label="繼續探索">'
-    body += render_primary_link('works.html', '看看同學的影音創作')
+    body += render_primary_link('works.html', '觀看影音創作')
     body += '<a class="text-link" href="fieldwork.html">閱讀四次空拍紀錄 →</a></nav></article>'
     return body
