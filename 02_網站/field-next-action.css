@@ -21,12 +21,14 @@
   cursor:pointer;
   transition:background-color .15s, border-color .15s;
 }
+@media (hover: hover) and (pointer: fine) {
 .field-next-action .field-next-button:hover {
   background:var(--color-primary-hover, #1a3d43);
   border-color:var(--color-primary-hover, #1a3d43);
   color:#fff;
   text-decoration:none;
-}
+}}
+
 .field-next-action .field-next-button:focus-visible {
   outline:3px solid var(--color-primary, #234f56);
   outline-offset:4px;

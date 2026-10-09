@@ -83,12 +83,14 @@ html, body {
   
   transition:background-color 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
 }
+@media (hover: hover) and (pointer: fine) {
 
 .video-shell .play-button:hover {
   background-color:var(--color-primary-hover-alpha-096);
   border-color:var(--color-surface);
   transform:translate(-50%, -50%) scale(1.04);
-}
+}}
+
 
 .video-shell .play-button:active {
   transform:translate(-50%, -50%) scale(0.98);
@@ -154,11 +156,13 @@ html, body {
   text-decoration-thickness:1.5px;
   padding:8px 6px;
 }
+@media (hover: hover) and (pointer: fine) {
 
 .video-links a:hover {
   color:var(--river, var(--color-primary));
   text-decoration-thickness:2px;
-}
+}}
+
 
 .video-links a:focus-visible {
   outline:3px solid var(--river-dark, var(--color-primary-hover));
@@ -228,10 +232,12 @@ html, body {
   font-size:var(--text-sm);
   display:inline-block;
 }
+@media (hover: hover) and (pointer: fine) {
 
 .activity-film .film-open:hover {
   color:var(--river, var(--color-primary));
-}
+}}
+
 
 .activity-film .film-open:focus-visible {
   outline:3px solid var(--river-dark, var(--color-primary-hover));

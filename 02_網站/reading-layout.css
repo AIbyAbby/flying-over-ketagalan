@@ -156,7 +156,9 @@ figcaption,.teacher-page .teacher-photo figcaption,.scene-grid .scene-photo figc
 .intro-page .intro-method-label { width:3rem; height:3rem; font-size:var(--text-base); margin:0; background:var(--river-dark); }
 .intro-page .intro-method h3 { font-size:var(--type-h3); line-height:1.4; margin:0 0 .75rem; }
 .intro-page .intro-method h3 a { display:inline-block; min-height:44px; color:var(--river-dark); text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:.3em; }
-.intro-page .intro-method h3 a:hover { color:var(--ink); }
+@media (hover: hover) and (pointer: fine) {
+.intro-page .intro-method h3 a:hover { color:var(--ink); }}
+
 .intro-page .intro-method h3 a:focus-visible { outline:2px solid var(--river-dark); outline-offset:5px; border-radius:2px; }
 .intro-page .intro-method h3 a:active { opacity:.8; }
 .intro-page .intro-thanks { background:var(--color-transparent); border:0; border-top:1px solid var(--ui-border-subtle); border-radius:0; box-shadow:none; padding-inline:1rem; padding-top:2.5rem; }
@@ -211,7 +213,9 @@ figcaption,.teacher-page .teacher-photo figcaption,.scene-grid .scene-photo figc
  background:var(--river-dark); color:var(--color-surface); border-radius:.375rem;
  font:500 var(--text-base)/1.5 var(--sans); text-decoration:none;
 }
-.field-page .fieldwork-youtube .fieldwork-youtube-link:hover { background:var(--ink); }
+@media (hover: hover) and (pointer: fine) {
+.field-page .fieldwork-youtube .fieldwork-youtube-link:hover { background:var(--ink); }}
+
 .field-page .fieldwork-youtube .fieldwork-youtube-link:active { transform:translateY(1px); }
 .field-page .fieldwork-youtube .fieldwork-youtube-link:focus-visible {
  outline:3px solid var(--color-surface); outline-offset:3px; box-shadow:0 0 0 6px var(--river-dark);
@@ -276,7 +280,9 @@ figcaption,.teacher-page .teacher-photo figcaption,.scene-grid .scene-photo figc
   order:4;
   justify-self:start;
 }
-.field-page .activity-film .film-watch-link:hover { background:var(--ink); }
+@media (hover: hover) and (pointer: fine) {
+.field-page .activity-film .film-watch-link:hover { background:var(--ink); }}
+
 .field-page .activity-film .film-watch-link:active { transform:translateY(1px); }
 .field-page .activity-film .film-watch-link:focus-visible {
   outline:3px solid var(--river-dark); outline-offset:3px;

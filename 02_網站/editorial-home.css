@@ -38,7 +38,9 @@
 .journal-method p { font:400 var(--type-body)/var(--line-body) var(--serif); color:var(--ink); margin:0; }
 .journal-copy .shared-section-heading,.journal-section-heading .shared-section-heading { margin-bottom:var(--space-4); }
 .journal-copy .shared-section-heading h2,.journal-section-heading .shared-section-heading h2 { margin:0; }
-@media (hover:hover) and (pointer:fine) { .journal-contents a:hover { color:var(--accent); } }
+@media (hover:hover) and (pointer:fine) {
+@media (hover: hover) and (pointer: fine) { .journal-contents a:hover { color:var(--accent); }}
+ }
 @media (max-width:1000px) {
  .journal-methods { grid-template-columns:repeat(2,minmax(0,1fr)); }
  .journal-opening .journal-reading { gap:var(--space-4); }
