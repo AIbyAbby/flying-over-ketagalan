@@ -77,7 +77,11 @@ function requireCheck(value,label){if(!value)report.failures.push(label);}
  report.menu.push(opened);
  await page.evaluate(()=>window.scrollTo({top:500,behavior:'instant'}));
  const priorScroll=await page.evaluate(()=>window.scrollY);
- await page.locator('.site-menu summary').click(); await page.waitForFunction(()=>document.body.style.position==='fixed');
+ // A locator click can auto-scroll a sticky header before pressing it. Use
+ // physical touch coordinates so this checks the user's original scroll position.
+ const menuTapBox=await page.locator('.site-menu summary').boundingBox();
+ await page.touchscreen.tap(menuTapBox.x+menuTapBox.width/2,menuTapBox.y+menuTapBox.height/2);
+ await page.waitForFunction(()=>document.body.style.position==='fixed');
  const scrolledMenu=await page.evaluate(()=>{const h=document.querySelector('header').getBoundingClientRect(),p=document.querySelector('.menu-panel').getBoundingClientRect();return {headerTop:h.top,panelTop:p.top,panelHeight:p.height,expected:innerHeight-h.height};});
  requireCheck(Math.abs(scrolledMenu.headerTop)<1&&Math.abs(scrolledMenu.panelHeight-scrolledMenu.expected)<1,'menu viewport containment after scroll');
  await page.locator('.menu-close').click();

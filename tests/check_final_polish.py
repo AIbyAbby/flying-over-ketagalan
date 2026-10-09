@@ -87,7 +87,8 @@ def check():
         require(doc.find('meta', name='twitter:card', content='summary_large_image'), '缺少 Twitter card')
         require('noindex' not in markup.lower(), '不應有 noindex')
         require(doc.find('details', **{'class':'site-menu'}), '缺少原生網站選單')
-        require(doc.find('summary', role='button', **{'aria-controls':'site-menu-panel', 'aria-expanded':'false'}), '選單開關屬性錯誤')
+        require(doc.find('summary', role='button', **{'aria-controls':'site-menu-panel'}), '選單開關屬性錯誤')
+        require(all('aria-expanded' not in n['attrs'] for n in doc.find('summary', **{'aria-controls':'site-menu-panel'})), 'JS 載入前應保留原生 details 展開語意')
         require(not doc.find('button', **{'class':'air-toggle'}) and not doc.find(id='air-subnav'), '舊空拍下拉不應恢復')
         desktop = doc.find('nav', **{'class':'desktop-navigation'})
         menu_links = [n for n in doc.find('a') if desktop and desktop[0] in n['parents']]
