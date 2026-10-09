@@ -78,3 +78,6 @@ tmp/
 /LINE_ALBUM_消失台北原住民空拍課_261003_4.jpg
 /凱達格蘭1632-玉安.mov
 
+# 本地預覽伺服器臨時檔案
+/preview-server.cjs
+/preview-server*.log
