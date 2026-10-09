@@ -53,5 +53,5 @@
     if (wide.matches && !header.classList.contains('nav-compact') && menu.open) close();
   }
   window.addEventListener('resize',layout);
-  document.fonts?.ready.then(layout); layout();
+  document.fonts?.ready.then(layout); layout(); sync();
 })();
