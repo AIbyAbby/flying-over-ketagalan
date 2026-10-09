@@ -446,3 +446,16 @@ body.inner .work-card .card-copy p { margin-bottom:var(--space-3); }
  :root body.inner :is(.page-heading,.section-heading) > p,
  :root body.inner .work-heading .article-lead {font-size:var(--text-base);line-height:1.85;}
 }
+.field-page .activity-film .film-watch-link.film-watch-link--outline {
+  background:transparent;
+  color:var(--color-primary);
+  border:1px solid var(--color-primary);
+}
+@media (hover: hover) and (pointer: fine) {
+  .field-page .activity-film .film-watch-link.film-watch-link--outline:hover {
+    background:var(--color-primary-soft);
+    color:var(--color-primary-hover);
+    border-color:var(--color-text);
+    text-decoration:underline;
+  }
+}
