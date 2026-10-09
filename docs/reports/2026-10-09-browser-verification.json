@@ -1,0 +1,1350 @@
+{
+  "layouts": [
+    {
+      "page": "404.html",
+      "width": 320,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "abby.html",
+      "width": 320,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 56,
+      "padding": 72
+    },
+    {
+      "page": "fieldwork-0829.html",
+      "width": 320,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "fieldwork-0903.html",
+      "width": 320,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "fieldwork-0905.html",
+      "width": 320,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "fieldwork-0910.html",
+      "width": 320,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "fieldwork.html",
+      "width": 320,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "index.html",
+      "width": 320,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "intro.html",
+      "width": 320,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "kuncan.html",
+      "width": 320,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 56,
+      "padding": 72
+    },
+    {
+      "page": "stories.html",
+      "width": 320,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "suifen.html",
+      "width": 320,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 56,
+      "padding": 72
+    },
+    {
+      "page": "teacher.html",
+      "width": 320,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "walks.html",
+      "width": 320,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "wenjin.html",
+      "width": 320,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 56,
+      "padding": 72
+    },
+    {
+      "page": "works.html",
+      "width": 320,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "yuan.html",
+      "width": 320,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 56,
+      "padding": 72
+    },
+    {
+      "page": "404.html",
+      "width": 360,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "abby.html",
+      "width": 360,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 56,
+      "padding": 72
+    },
+    {
+      "page": "fieldwork-0829.html",
+      "width": 360,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "fieldwork-0903.html",
+      "width": 360,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "fieldwork-0905.html",
+      "width": 360,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "fieldwork-0910.html",
+      "width": 360,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "fieldwork.html",
+      "width": 360,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "index.html",
+      "width": 360,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "intro.html",
+      "width": 360,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "kuncan.html",
+      "width": 360,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 56,
+      "padding": 72
+    },
+    {
+      "page": "stories.html",
+      "width": 360,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "suifen.html",
+      "width": 360,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 56,
+      "padding": 72
+    },
+    {
+      "page": "teacher.html",
+      "width": 360,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "walks.html",
+      "width": 360,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "wenjin.html",
+      "width": 360,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 56,
+      "padding": 72
+    },
+    {
+      "page": "works.html",
+      "width": 360,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "yuan.html",
+      "width": 360,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 56,
+      "padding": 72
+    },
+    {
+      "page": "404.html",
+      "width": 390,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "abby.html",
+      "width": 390,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 56,
+      "padding": 72
+    },
+    {
+      "page": "fieldwork-0829.html",
+      "width": 390,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "fieldwork-0903.html",
+      "width": 390,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "fieldwork-0905.html",
+      "width": 390,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "fieldwork-0910.html",
+      "width": 390,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "fieldwork.html",
+      "width": 390,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "index.html",
+      "width": 390,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "intro.html",
+      "width": 390,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "kuncan.html",
+      "width": 390,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 56,
+      "padding": 72
+    },
+    {
+      "page": "stories.html",
+      "width": 390,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "suifen.html",
+      "width": 390,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 56,
+      "padding": 72
+    },
+    {
+      "page": "teacher.html",
+      "width": 390,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "walks.html",
+      "width": 390,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "wenjin.html",
+      "width": 390,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 56,
+      "padding": 72
+    },
+    {
+      "page": "works.html",
+      "width": 390,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "yuan.html",
+      "width": 390,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 56,
+      "padding": 72
+    },
+    {
+      "page": "404.html",
+      "width": 430,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "abby.html",
+      "width": 430,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 56,
+      "padding": 72
+    },
+    {
+      "page": "fieldwork-0829.html",
+      "width": 430,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "fieldwork-0903.html",
+      "width": 430,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "fieldwork-0905.html",
+      "width": 430,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "fieldwork-0910.html",
+      "width": 430,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "fieldwork.html",
+      "width": 430,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "index.html",
+      "width": 430,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "intro.html",
+      "width": 430,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "kuncan.html",
+      "width": 430,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 56,
+      "padding": 72
+    },
+    {
+      "page": "stories.html",
+      "width": 430,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "suifen.html",
+      "width": 430,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 56,
+      "padding": 72
+    },
+    {
+      "page": "teacher.html",
+      "width": 430,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "walks.html",
+      "width": 430,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "wenjin.html",
+      "width": 430,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 56,
+      "padding": 72
+    },
+    {
+      "page": "works.html",
+      "width": 430,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "yuan.html",
+      "width": 430,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 56,
+      "padding": 72
+    },
+    {
+      "page": "404.html",
+      "width": 768,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "abby.html",
+      "width": 768,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 56,
+      "padding": 72
+    },
+    {
+      "page": "fieldwork-0829.html",
+      "width": 768,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "fieldwork-0903.html",
+      "width": 768,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "fieldwork-0905.html",
+      "width": 768,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "fieldwork-0910.html",
+      "width": 768,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "fieldwork.html",
+      "width": 768,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "index.html",
+      "width": 768,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "intro.html",
+      "width": 768,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "kuncan.html",
+      "width": 768,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 56,
+      "padding": 72
+    },
+    {
+      "page": "stories.html",
+      "width": 768,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "suifen.html",
+      "width": 768,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 56,
+      "padding": 72
+    },
+    {
+      "page": "teacher.html",
+      "width": 768,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "walks.html",
+      "width": 768,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "wenjin.html",
+      "width": 768,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 56,
+      "padding": 72
+    },
+    {
+      "page": "works.html",
+      "width": 768,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "yuan.html",
+      "width": 768,
+      "overflow": 0,
+      "header": 56,
+      "navRows": 0,
+      "bar": 56,
+      "padding": 72
+    },
+    {
+      "page": "404.html",
+      "width": 1024,
+      "overflow": 0,
+      "header": 72,
+      "navRows": 1,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "abby.html",
+      "width": 1024,
+      "overflow": 0,
+      "header": 72,
+      "navRows": 1,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "fieldwork-0829.html",
+      "width": 1024,
+      "overflow": 0,
+      "header": 72,
+      "navRows": 1,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "fieldwork-0903.html",
+      "width": 1024,
+      "overflow": 0,
+      "header": 72,
+      "navRows": 1,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "fieldwork-0905.html",
+      "width": 1024,
+      "overflow": 0,
+      "header": 72,
+      "navRows": 1,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "fieldwork-0910.html",
+      "width": 1024,
+      "overflow": 0,
+      "header": 72,
+      "navRows": 1,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "fieldwork.html",
+      "width": 1024,
+      "overflow": 0,
+      "header": 72,
+      "navRows": 1,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "index.html",
+      "width": 1024,
+      "overflow": 0,
+      "header": 72,
+      "navRows": 1,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "intro.html",
+      "width": 1024,
+      "overflow": 0,
+      "header": 72,
+      "navRows": 1,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "kuncan.html",
+      "width": 1024,
+      "overflow": 0,
+      "header": 72,
+      "navRows": 1,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "stories.html",
+      "width": 1024,
+      "overflow": 0,
+      "header": 72,
+      "navRows": 1,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "suifen.html",
+      "width": 1024,
+      "overflow": 0,
+      "header": 72,
+      "navRows": 1,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "teacher.html",
+      "width": 1024,
+      "overflow": 0,
+      "header": 72,
+      "navRows": 1,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "walks.html",
+      "width": 1024,
+      "overflow": 0,
+      "header": 72,
+      "navRows": 1,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "wenjin.html",
+      "width": 1024,
+      "overflow": 0,
+      "header": 72,
+      "navRows": 1,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "works.html",
+      "width": 1024,
+      "overflow": 0,
+      "header": 72,
+      "navRows": 1,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "yuan.html",
+      "width": 1024,
+      "overflow": 0,
+      "header": 72,
+      "navRows": 1,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "404.html",
+      "width": 1440,
+      "overflow": 0,
+      "header": 72,
+      "navRows": 1,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "abby.html",
+      "width": 1440,
+      "overflow": 0,
+      "header": 72,
+      "navRows": 1,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "fieldwork-0829.html",
+      "width": 1440,
+      "overflow": 0,
+      "header": 72,
+      "navRows": 1,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "fieldwork-0903.html",
+      "width": 1440,
+      "overflow": 0,
+      "header": 72,
+      "navRows": 1,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "fieldwork-0905.html",
+      "width": 1440,
+      "overflow": 0,
+      "header": 72,
+      "navRows": 1,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "fieldwork-0910.html",
+      "width": 1440,
+      "overflow": 0,
+      "header": 72,
+      "navRows": 1,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "fieldwork.html",
+      "width": 1440,
+      "overflow": 0,
+      "header": 72,
+      "navRows": 1,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "index.html",
+      "width": 1440,
+      "overflow": 0,
+      "header": 72,
+      "navRows": 1,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "intro.html",
+      "width": 1440,
+      "overflow": 0,
+      "header": 72,
+      "navRows": 1,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "kuncan.html",
+      "width": 1440,
+      "overflow": 0,
+      "header": 72,
+      "navRows": 1,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "stories.html",
+      "width": 1440,
+      "overflow": 0,
+      "header": 72,
+      "navRows": 1,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "suifen.html",
+      "width": 1440,
+      "overflow": 0,
+      "header": 72,
+      "navRows": 1,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "teacher.html",
+      "width": 1440,
+      "overflow": 0,
+      "header": 72,
+      "navRows": 1,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "walks.html",
+      "width": 1440,
+      "overflow": 0,
+      "header": 72,
+      "navRows": 1,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "wenjin.html",
+      "width": 1440,
+      "overflow": 0,
+      "header": 72,
+      "navRows": 1,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "works.html",
+      "width": 1440,
+      "overflow": 0,
+      "header": 72,
+      "navRows": 1,
+      "bar": 0,
+      "padding": 0
+    },
+    {
+      "page": "yuan.html",
+      "width": 1440,
+      "overflow": 0,
+      "header": 72,
+      "navRows": 1,
+      "bar": 0,
+      "padding": 0
+    }
+  ],
+  "taps": [
+    {
+      "card": "suifen",
+      "area": "img",
+      "hit": {
+        "tag": "A",
+        "href": "suifen.html",
+        "pointer": "auto"
+      },
+      "target": "suifen.html"
+    },
+    {
+      "card": "suifen",
+      "area": ".poster-play",
+      "hit": {
+        "tag": "A",
+        "href": "suifen.html",
+        "pointer": "auto"
+      },
+      "target": "suifen.html"
+    },
+    {
+      "card": "suifen",
+      "area": "h3",
+      "hit": {
+        "tag": "A",
+        "href": "suifen.html",
+        "pointer": "auto"
+      },
+      "target": "suifen.html"
+    },
+    {
+      "card": "suifen",
+      "area": "p",
+      "hit": {
+        "tag": "A",
+        "href": "suifen.html",
+        "pointer": "auto"
+      },
+      "target": "suifen.html"
+    },
+    {
+      "card": "kuncan",
+      "area": "img",
+      "hit": {
+        "tag": "A",
+        "href": "kuncan.html",
+        "pointer": "auto"
+      },
+      "target": "kuncan.html"
+    },
+    {
+      "card": "kuncan",
+      "area": ".poster-play",
+      "hit": {
+        "tag": "A",
+        "href": "kuncan.html",
+        "pointer": "auto"
+      },
+      "target": "kuncan.html"
+    },
+    {
+      "card": "kuncan",
+      "area": "h3",
+      "hit": {
+        "tag": "A",
+        "href": "kuncan.html",
+        "pointer": "auto"
+      },
+      "target": "kuncan.html"
+    },
+    {
+      "card": "kuncan",
+      "area": "p",
+      "hit": {
+        "tag": "A",
+        "href": "kuncan.html",
+        "pointer": "auto"
+      },
+      "target": "kuncan.html"
+    },
+    {
+      "card": "wenjin",
+      "area": "img",
+      "hit": {
+        "tag": "A",
+        "href": "wenjin.html",
+        "pointer": "auto"
+      },
+      "target": "wenjin.html"
+    },
+    {
+      "card": "wenjin",
+      "area": ".poster-play",
+      "hit": {
+        "tag": "A",
+        "href": "wenjin.html",
+        "pointer": "auto"
+      },
+      "target": "wenjin.html"
+    },
+    {
+      "card": "wenjin",
+      "area": "h3",
+      "hit": {
+        "tag": "A",
+        "href": "wenjin.html",
+        "pointer": "auto"
+      },
+      "target": "wenjin.html"
+    },
+    {
+      "card": "wenjin",
+      "area": "p",
+      "hit": {
+        "tag": "A",
+        "href": "wenjin.html",
+        "pointer": "auto"
+      },
+      "target": "wenjin.html"
+    },
+    {
+      "card": "yuan",
+      "area": "img",
+      "hit": {
+        "tag": "A",
+        "href": "yuan.html",
+        "pointer": "auto"
+      },
+      "target": "yuan.html"
+    },
+    {
+      "card": "yuan",
+      "area": ".poster-play",
+      "hit": {
+        "tag": "A",
+        "href": "yuan.html",
+        "pointer": "auto"
+      },
+      "target": "yuan.html"
+    },
+    {
+      "card": "yuan",
+      "area": "h3",
+      "hit": {
+        "tag": "A",
+        "href": "yuan.html",
+        "pointer": "auto"
+      },
+      "target": "yuan.html"
+    },
+    {
+      "card": "yuan",
+      "area": "p",
+      "hit": {
+        "tag": "A",
+        "href": "yuan.html",
+        "pointer": "auto"
+      },
+      "target": "yuan.html"
+    },
+    {
+      "card": "abby",
+      "area": "img",
+      "hit": {
+        "tag": "A",
+        "href": "abby.html",
+        "pointer": "auto"
+      },
+      "target": "abby.html"
+    },
+    {
+      "card": "abby",
+      "area": ".poster-play",
+      "hit": {
+        "tag": "A",
+        "href": "abby.html",
+        "pointer": "auto"
+      },
+      "target": "abby.html"
+    },
+    {
+      "card": "abby",
+      "area": "h3",
+      "hit": {
+        "tag": "A",
+        "href": "abby.html",
+        "pointer": "auto"
+      },
+      "target": "abby.html"
+    },
+    {
+      "card": "abby",
+      "area": "p",
+      "hit": {
+        "tag": "A",
+        "href": "abby.html",
+        "pointer": "auto"
+      },
+      "target": "abby.html"
+    }
+  ],
+  "otherTaps": [
+    {
+      "page": "intro.html",
+      "card": 0,
+      "hit": "teacher.html",
+      "target": "teacher.html"
+    },
+    {
+      "page": "intro.html",
+      "card": 1,
+      "hit": "fieldwork.html",
+      "target": "fieldwork.html"
+    },
+    {
+      "page": "intro.html",
+      "card": 2,
+      "hit": "walks.html",
+      "target": "walks.html"
+    },
+    {
+      "page": "intro.html",
+      "card": 3,
+      "hit": "works.html",
+      "target": "works.html"
+    },
+    {
+      "page": "fieldwork.html",
+      "card": 0,
+      "hit": "fieldwork-0829.html",
+      "target": "fieldwork-0829.html"
+    },
+    {
+      "page": "fieldwork.html",
+      "card": 1,
+      "hit": "fieldwork-0903.html",
+      "target": "fieldwork-0903.html"
+    },
+    {
+      "page": "fieldwork.html",
+      "card": 2,
+      "hit": "fieldwork-0905.html",
+      "target": "fieldwork-0905.html"
+    },
+    {
+      "page": "fieldwork.html",
+      "card": 3,
+      "hit": "fieldwork-0910.html",
+      "target": "fieldwork-0910.html"
+    }
+  ],
+  "menu": [
+    {
+      "focus": "menu-close",
+      "expanded": "true",
+      "heights": [
+        52,
+        52,
+        52,
+        52,
+        52
+      ],
+      "inert": true
+    },
+    {
+      "headerTop": 0,
+      "panelTop": 56,
+      "panelHeight": 788,
+      "expected": 788
+    }
+  ],
+  "failures": [],
+  "errors": [],
+  "hoverViolations": []
+}

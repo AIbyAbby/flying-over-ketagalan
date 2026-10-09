@@ -16,8 +16,8 @@
 - [x] Phase 1: one title link per card, fine-pointer hover, active/touch feedback, verified fallback URLs. Test link structure and preserved content/player markup; commit.
 - [x] Phase 2: common header/footer and five-item details menu, separate focus/scroll controller, fieldwork local menu and breadcrumbs. Test all 17 pages and menu behavior; commit.
 - [x] Phase 3: primary page sequence cards, work switcher before content, work previous/next cards and mobile safe-area action bar. Test route graph and ordering; commit.
-- [ ] Align tests only for approved content changes and obsolete navigation expectations; retain player checks. Commit independently.
-- [ ] Verify seven widths and touch hit testing where browser access permits; explicitly report any blocked browser verification.
+- [x] Align tests only for approved content changes and obsolete navigation expectations; retain player checks. Commit independently.
+- [x] Verify seven widths and touch hit testing where browser access permits; explicitly report any blocked browser verification.
 
 ## Review focus
 - Native links work without JavaScript, and all visible card surfaces share one target.

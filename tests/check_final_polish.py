@@ -9,6 +9,7 @@ from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / '02_網站'
+PROSE_EXPECTATIONS = json.loads((ROOT / 'tests/approved-prose-expectations.json').read_text(encoding='utf-8'))['pages']
 
 
 def approved_copy(markup, page_name):
@@ -74,7 +75,7 @@ def check():
         require(doc.find('main', id='main'), '缺少主要內容錨點')
         require(doc.find('a', href='#main', **{'class':'skip'}), '缺少跳到內容連結')
         require(doc.find('a', href='#top', **{'class':'back-top ui-control'}), '回到頁首錨點錯誤')
-        require('［聯絡方式待補］' in markup, '缺少聯絡方式佔位')
+        require('［聯絡方式待補］' not in markup, '已核准移除的聯絡方式佔位不應恢復')
         description = doc.find('meta', name='description')
         require(len(description) == 1, 'description 數量錯誤')
         if description:
@@ -85,7 +86,12 @@ def check():
             require(len(doc.find('meta', property=property_name)) == 1, '缺少或重複 ' + property_name)
         require(doc.find('meta', name='twitter:card', content='summary_large_image'), '缺少 Twitter card')
         require('noindex' not in markup.lower(), '不應有 noindex')
-        require(doc.find('button', **{'class':'air-toggle', 'aria-controls':'air-subnav', 'aria-expanded':'false'}), '缺少独立導覽開關')
+        require(doc.find('details', **{'class':'site-menu'}), '缺少原生網站選單')
+        require(doc.find('summary', role='button', **{'aria-controls':'site-menu-panel', 'aria-expanded':'false'}), '選單開關屬性錯誤')
+        require(not doc.find('button', **{'class':'air-toggle'}) and not doc.find(id='air-subnav'), '舊空拍下拉不應恢復')
+        desktop = doc.find('nav', **{'class':'desktop-navigation'})
+        menu_links = [n for n in doc.find('a') if desktop and desktop[0] in n['parents']]
+        require([n['attrs'].get('href','').rsplit('/',1)[-1] for n in menu_links] == ['intro.html','teacher.html','fieldwork.html','walks.html','works.html'], '主導覽順序錯誤')
         ids = [n['attrs']['id'] for n in doc.nodes if 'id' in n['attrs']]
         require(len(ids) == len(set(ids)), '重複 id')
         for node in doc.nodes:
@@ -139,7 +145,7 @@ def check():
             old = Document(approved_baseline)
             def original_prose(d):
                 return [n['text'] for n in d.nodes if n['tag'] in ('p','h1','h2','h3') and any(p['tag']=='main' for p in n['parents'])]
-            original, updated = original_prose(old), original_prose(doc)
+            original, updated = PROSE_EXPECTATIONS.get(path.name, original_prose(old)), original_prose(doc)
             if path.name != 'index.html':
                 iterator = iter(updated)
                 require(all(any(text == candidate for candidate in iterator) for text in original), '原文文字或段落順序改變')
