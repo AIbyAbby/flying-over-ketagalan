@@ -3,12 +3,34 @@
     "page": "404.html",
     "header": true,
     "menu": true,
-    "aria_current": true,
+    "aria_current": false,
     "previous_next": false,
     "top": true,
     "og": true,
     "description": true,
-    "canonical": true
+    "canonical": true,
+    "aria_current_by_region": {
+      "top": [
+        0,
+        0
+      ],
+      "menu": [
+        0,
+        0
+      ],
+      "breadcrumb": [
+        0,
+        0
+      ],
+      "switcher": [
+        0,
+        0
+      ],
+      "other": [
+        0,
+        0
+      ]
+    }
   },
   {
     "page": "abby.html",
@@ -19,7 +41,29 @@
     "top": true,
     "og": true,
     "description": true,
-    "canonical": true
+    "canonical": true,
+    "aria_current_by_region": {
+      "top": [
+        0,
+        1
+      ],
+      "menu": [
+        0,
+        1
+      ],
+      "breadcrumb": [
+        1,
+        0
+      ],
+      "switcher": [
+        1,
+        0
+      ],
+      "other": [
+        0,
+        0
+      ]
+    }
   },
   {
     "page": "fieldwork-0829.html",
@@ -30,7 +74,29 @@
     "top": true,
     "og": true,
     "description": true,
-    "canonical": true
+    "canonical": true,
+    "aria_current_by_region": {
+      "top": [
+        0,
+        1
+      ],
+      "menu": [
+        0,
+        1
+      ],
+      "breadcrumb": [
+        1,
+        0
+      ],
+      "switcher": [
+        0,
+        0
+      ],
+      "other": [
+        0,
+        0
+      ]
+    }
   },
   {
     "page": "fieldwork-0903.html",
@@ -41,7 +107,29 @@
     "top": true,
     "og": true,
     "description": true,
-    "canonical": true
+    "canonical": true,
+    "aria_current_by_region": {
+      "top": [
+        0,
+        1
+      ],
+      "menu": [
+        0,
+        1
+      ],
+      "breadcrumb": [
+        1,
+        0
+      ],
+      "switcher": [
+        0,
+        0
+      ],
+      "other": [
+        0,
+        0
+      ]
+    }
   },
   {
     "page": "fieldwork-0905.html",
@@ -52,7 +140,29 @@
     "top": true,
     "og": true,
     "description": true,
-    "canonical": true
+    "canonical": true,
+    "aria_current_by_region": {
+      "top": [
+        0,
+        1
+      ],
+      "menu": [
+        0,
+        1
+      ],
+      "breadcrumb": [
+        1,
+        0
+      ],
+      "switcher": [
+        0,
+        0
+      ],
+      "other": [
+        0,
+        0
+      ]
+    }
   },
   {
     "page": "fieldwork-0910.html",
@@ -63,7 +173,29 @@
     "top": true,
     "og": true,
     "description": true,
-    "canonical": true
+    "canonical": true,
+    "aria_current_by_region": {
+      "top": [
+        0,
+        1
+      ],
+      "menu": [
+        0,
+        1
+      ],
+      "breadcrumb": [
+        1,
+        0
+      ],
+      "switcher": [
+        0,
+        0
+      ],
+      "other": [
+        0,
+        0
+      ]
+    }
   },
   {
     "page": "fieldwork.html",
@@ -74,7 +206,29 @@
     "top": true,
     "og": true,
     "description": true,
-    "canonical": true
+    "canonical": true,
+    "aria_current_by_region": {
+      "top": [
+        1,
+        0
+      ],
+      "menu": [
+        1,
+        0
+      ],
+      "breadcrumb": [
+        0,
+        0
+      ],
+      "switcher": [
+        0,
+        0
+      ],
+      "other": [
+        0,
+        0
+      ]
+    }
   },
   {
     "page": "index.html",
@@ -85,7 +239,29 @@
     "top": true,
     "og": true,
     "description": true,
-    "canonical": true
+    "canonical": true,
+    "aria_current_by_region": {
+      "top": [
+        1,
+        0
+      ],
+      "menu": [
+        1,
+        0
+      ],
+      "breadcrumb": [
+        0,
+        0
+      ],
+      "switcher": [
+        0,
+        0
+      ],
+      "other": [
+        0,
+        0
+      ]
+    }
   },
   {
     "page": "intro.html",
@@ -96,7 +272,29 @@
     "top": true,
     "og": true,
     "description": true,
-    "canonical": true
+    "canonical": true,
+    "aria_current_by_region": {
+      "top": [
+        1,
+        0
+      ],
+      "menu": [
+        1,
+        0
+      ],
+      "breadcrumb": [
+        0,
+        0
+      ],
+      "switcher": [
+        0,
+        0
+      ],
+      "other": [
+        0,
+        0
+      ]
+    }
   },
   {
     "page": "kuncan.html",
@@ -107,18 +305,62 @@
     "top": true,
     "og": true,
     "description": true,
-    "canonical": true
+    "canonical": true,
+    "aria_current_by_region": {
+      "top": [
+        0,
+        1
+      ],
+      "menu": [
+        0,
+        1
+      ],
+      "breadcrumb": [
+        1,
+        0
+      ],
+      "switcher": [
+        1,
+        0
+      ],
+      "other": [
+        0,
+        0
+      ]
+    }
   },
   {
     "page": "stories.html",
     "header": true,
     "menu": true,
-    "aria_current": true,
+    "aria_current": false,
     "previous_next": false,
     "top": true,
     "og": true,
     "description": true,
-    "canonical": true
+    "canonical": true,
+    "aria_current_by_region": {
+      "top": [
+        0,
+        0
+      ],
+      "menu": [
+        0,
+        0
+      ],
+      "breadcrumb": [
+        0,
+        0
+      ],
+      "switcher": [
+        0,
+        0
+      ],
+      "other": [
+        0,
+        0
+      ]
+    }
   },
   {
     "page": "suifen.html",
@@ -129,7 +371,29 @@
     "top": true,
     "og": true,
     "description": true,
-    "canonical": true
+    "canonical": true,
+    "aria_current_by_region": {
+      "top": [
+        0,
+        1
+      ],
+      "menu": [
+        0,
+        1
+      ],
+      "breadcrumb": [
+        1,
+        0
+      ],
+      "switcher": [
+        1,
+        0
+      ],
+      "other": [
+        0,
+        0
+      ]
+    }
   },
   {
     "page": "teacher.html",
@@ -140,7 +404,29 @@
     "top": true,
     "og": true,
     "description": true,
-    "canonical": true
+    "canonical": true,
+    "aria_current_by_region": {
+      "top": [
+        1,
+        0
+      ],
+      "menu": [
+        1,
+        0
+      ],
+      "breadcrumb": [
+        0,
+        0
+      ],
+      "switcher": [
+        0,
+        0
+      ],
+      "other": [
+        0,
+        0
+      ]
+    }
   },
   {
     "page": "walks.html",
@@ -151,7 +437,29 @@
     "top": true,
     "og": true,
     "description": true,
-    "canonical": true
+    "canonical": true,
+    "aria_current_by_region": {
+      "top": [
+        1,
+        0
+      ],
+      "menu": [
+        1,
+        0
+      ],
+      "breadcrumb": [
+        0,
+        0
+      ],
+      "switcher": [
+        0,
+        0
+      ],
+      "other": [
+        0,
+        0
+      ]
+    }
   },
   {
     "page": "wenjin.html",
@@ -162,7 +470,29 @@
     "top": true,
     "og": true,
     "description": true,
-    "canonical": true
+    "canonical": true,
+    "aria_current_by_region": {
+      "top": [
+        0,
+        1
+      ],
+      "menu": [
+        0,
+        1
+      ],
+      "breadcrumb": [
+        1,
+        0
+      ],
+      "switcher": [
+        1,
+        0
+      ],
+      "other": [
+        0,
+        0
+      ]
+    }
   },
   {
     "page": "works.html",
@@ -173,7 +503,29 @@
     "top": true,
     "og": true,
     "description": true,
-    "canonical": true
+    "canonical": true,
+    "aria_current_by_region": {
+      "top": [
+        1,
+        0
+      ],
+      "menu": [
+        1,
+        0
+      ],
+      "breadcrumb": [
+        0,
+        0
+      ],
+      "switcher": [
+        0,
+        0
+      ],
+      "other": [
+        0,
+        0
+      ]
+    }
   },
   {
     "page": "yuan.html",
@@ -184,6 +536,28 @@
     "top": true,
     "og": true,
     "description": true,
-    "canonical": true
+    "canonical": true,
+    "aria_current_by_region": {
+      "top": [
+        0,
+        1
+      ],
+      "menu": [
+        0,
+        1
+      ],
+      "breadcrumb": [
+        1,
+        0
+      ],
+      "switcher": [
+        1,
+        0
+      ],
+      "other": [
+        0,
+        0
+      ]
+    }
   }
 ]

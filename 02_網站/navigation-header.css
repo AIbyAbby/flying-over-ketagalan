@@ -5,7 +5,7 @@
 .final-header .brand { display:block; flex:0 1 auto; min-width:0; margin:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-size:var(--text-lg); }
 .desktop-navigation { display:flex; flex:none; align-items:center; gap:16px; white-space:nowrap; }
 .desktop-navigation a { display:flex; align-items:center; gap:6px; min-height:44px; padding:4px 8px; border-bottom:3px solid transparent; font:400 var(--text-sm)/1.4 var(--sans); text-decoration:none; }
-.desktop-navigation a[aria-current="page"] { border-bottom-color:var(--color-primary); background:var(--color-primary-soft); font-weight:700; }
+.desktop-navigation a:is([aria-current="page"],[aria-current="true"]) { border-bottom-color:var(--color-primary); background:var(--color-primary-soft); font-weight:700; }
 .nav-number { font-variant-numeric:tabular-nums; font-size:var(--text-xs); }
 .site-menu { display:none; flex:none; }
 .site-menu summary { display:flex; align-items:center; justify-content:center; gap:8px; min-height:44px; padding:0 10px; list-style:none; cursor:pointer; font:500 var(--text-sm)/1.4 var(--sans); }
@@ -14,7 +14,7 @@
 .menu-panel { position:fixed; top:var(--nav-height); right:0; bottom:0; width:min(360px,92vw); box-sizing:border-box; padding:16px 16px calc(24px + env(safe-area-inset-bottom)); overflow-y:auto; background:var(--color-bg); }
 .menu-panel nav { display:flex; flex-direction:column; gap:8px; }
 .menu-panel nav a { display:flex; align-items:center; flex-wrap:wrap; gap:12px; min-height:52px; padding:8px 12px; box-sizing:border-box; border-left:4px solid transparent; text-decoration:none; font:400 var(--text-base)/1.4 var(--sans); }
-.menu-panel nav a[aria-current="page"] { background:var(--color-primary-soft); border-left-color:var(--color-primary); font-weight:700; }
+.menu-panel nav a:is([aria-current="page"],[aria-current="true"]) { background:var(--color-primary-soft); border-left-color:var(--color-primary); font-weight:700; }
 .current-page-note { margin-left:auto; font:400 var(--text-xs)/1.4 var(--sans); }
 .menu-close { display:flex; align-items:center; gap:8px; margin:0 0 16px auto; min-height:44px; }
 .menu-panel a:active,.desktop-navigation a:active { background:var(--color-primary-soft); }
