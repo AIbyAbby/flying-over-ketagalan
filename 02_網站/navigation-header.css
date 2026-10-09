@@ -1,5 +1,6 @@
 :root { --nav-height:72px; }
-.site-header.final-header { display:block; position:sticky; top:0; z-index:100; height:var(--nav-height); min-height:0; padding:0 24px; background:var(--color-bg); border-bottom:1px solid var(--color-border); }
+.site-header.final-header { display:block; position:sticky; top:0; z-index:100; height:var(--nav-height); min-height:0; padding:0 24px; background:var(--color-bg); border-bottom:1px solid var(--color-border); backdrop-filter:none; transform:none; filter:none; overflow:visible; }
+.site-header.final-header:has(.site-menu[open]) { position:fixed; top:0; left:0; right:0; }
 .final-header-row { display:flex; align-items:center; justify-content:space-between; height:100%; gap:24px; max-width:1200px; margin:auto; }
 .final-header .brand { display:block; flex:0 1 auto; min-width:0; margin:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-size:var(--text-lg); }
 .desktop-navigation { display:flex; flex:none; align-items:center; gap:16px; white-space:nowrap; }

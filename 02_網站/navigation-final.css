@@ -10,11 +10,11 @@
 }
 /* Keep the accessible intro heading clipped, but not its full-card hit area. */
 .intro-method .intro-entry-title {
-  position:static!important; width:auto!important; height:auto!important;
+  position:absolute!important; inset:0; width:auto!important; height:auto!important;
   margin:0!important; overflow:visible!important; clip:auto!important;
-  clip-path:none!important; font-size:0!important; line-height:0!important;
+  clip-path:none!important; font-size:0!important; line-height:0!important; pointer-events:none;
 }
-.intro-entry-title .stretched-link { font-size:0; }
+.intro-entry-title .stretched-link { font-size:0; pointer-events:auto; }
 :is(.shared-card,.entry,.intro-method):focus-within { outline:3px solid var(--color-focus); outline-offset:3px; }
 :is(.shared-card,.entry,.intro-method):active { background:var(--color-primary-soft); }
 :is(.poster-play,.card-arrow,.entry-arrow,.reflection-preview::after) { pointer-events:none; }

@@ -22,7 +22,11 @@
       locked=false;
       if (bodyStyle===null) document.body.removeAttribute('style'); else document.body.setAttribute('style',bodyStyle);
       inertBefore.forEach(([node,was])=>{node.inert=was;}); inertBefore=[];
-      panel.removeAttribute('aria-modal'); window.scrollTo(0,scrollY); summary.focus({preventScroll:true});
+      panel.removeAttribute('aria-modal');
+      const restorePosition=scrollY;
+      window.scrollTo({top:restorePosition,behavior:'instant'}); summary.focus({preventScroll:true});
+      // Reapply after fixed-body layout and native focus anchoring settle.
+      requestAnimationFrame(()=>{if(!locked)window.scrollTo({top:restorePosition,behavior:'instant'});});
     }
   }
   menu.addEventListener('toggle',sync);
