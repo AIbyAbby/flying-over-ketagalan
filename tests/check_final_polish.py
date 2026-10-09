@@ -10,6 +10,31 @@ from PIL import Image
 ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / '02_網站'
 PROSE_EXPECTATIONS = json.loads((ROOT / 'tests/approved-prose-expectations.json').read_text(encoding='utf-8'))['pages']
+FALLBACK_URLS = {row['name'] + '.html': row['url'] for row in json.loads(
+    (ROOT / 'docs/reports/2026-10-09-fallback-verification.json').read_text(encoding='utf-8'))}
+FALLBACK_URLS.update({
+    'fieldwork-0829.html': 'https://youtu.be/NwGF2bJ0U9c',
+    'fieldwork-0903.html': 'https://youtu.be/QO02vgJGm7g',
+    'fieldwork-0905.html': 'https://youtu.be/RQA2YVNCRv0',
+    'fieldwork-0910.html': 'https://youtu.be/7qWatUsWjdE',
+})
+
+
+def normalize_fallback_copy(fragment, expected_url):
+    """Ignore only the verified fallback anchor's own class and text nodes.
+
+    Preserve all other anchor attributes, child tags/attributes and surrounding
+    bytes; iframe, video IDs and player structure remain strict comparisons.
+    """
+    def normalize(match):
+        opening, contents = match.group(1), match.group(2)
+        anchor = Document(opening + '</a>').find('a')[0]
+        if anchor['attrs'].get('href') != expected_url:
+            return match.group(0)
+        opening = re.sub(r'\s+class=("[^"]*"|\x27[^\x27]*\x27)', '', opening, count=1)
+        tags = re.split(r'(<[^>]*>)', contents)[1::2]
+        return opening + ''.join(tags) + '</a>'
+    return re.sub(r'(<a\b[^>]*>)(.*?)</a>', normalize, fragment, flags=re.S)
 
 
 def approved_copy(markup, page_name):
@@ -93,6 +118,31 @@ def check():
         desktop = doc.find('nav', **{'class':'desktop-navigation'})
         menu_links = [n for n in doc.find('a') if desktop and desktop[0] in n['parents']]
         require([n['attrs'].get('href','').rsplit('/',1)[-1] for n in menu_links] == ['intro.html','teacher.html','fieldwork.html','walks.html','works.html'], '主導覽順序錯誤')
+        for nav in doc.find('nav'):
+            own = [n for n in doc.nodes if nav in n['parents'] and
+                   next((p for p in reversed(n['parents']) if p['tag'] == 'nav'), None) is nav]
+            require(sum(n['attrs'].get('aria-current') == 'page' for n in own) <= 1,
+                    '同一導覽區有多個目前頁面標示')
+        if path.stem in ('404', 'stories'):
+            require(not any('aria-current' in n['attrs'] for n in doc.nodes
+                            if any(p['tag'] == 'nav' for p in n['parents'])),
+                    '404/stories 導覽不應標示目前位置')
+            require(not doc.find('small', **{'class': 'current-page-note'}),
+                    '404/stories 不應顯示目前頁面文字')
+        elif path.stem in ('suifen', 'kuncan', 'wenjin', 'yuan', 'abby') or path.stem.startswith('fieldwork-'):
+            for nav in doc.find('nav'):
+                if nav['attrs'].get('class') == 'desktop-navigation' or nav['attrs'].get('aria-label') == '選單導覽':
+                    current = [n for n in doc.nodes if nav in n['parents'] and 'aria-current' in n['attrs']]
+                    require(len(current) == 1 and current[0]['attrs']['aria-current'] == 'true',
+                            '子頁上層導覽應使用 aria-current=true')
+        expected_url = FALLBACK_URLS.get(path.name)
+        if expected_url:
+            fallback = [n for n in doc.find('a') if set(n['attrs'].get('class', '').split()) &
+                        {'player-fallback', 'film-watch-link'}]
+            require(len(fallback) == 1 and fallback[0]['attrs'].get('href') == expected_url and
+                    fallback[0]['attrs'].get('target') == '_blank' and
+                    fallback[0]['attrs'].get('rel') == 'noopener',
+                    '備援連結 href/target/rel 與核實來源不符')
         ids = [n['attrs']['id'] for n in doc.nodes if 'id' in n['attrs']]
         require(len(ids) == len(set(ids)), '重複 id')
         for node in doc.nodes:
@@ -151,7 +201,10 @@ def check():
                 iterator = iter(updated)
                 require(all(any(text == candidate for candidate in iterator) for text in original), '原文文字或段落順序改變')
             pattern = r'<section\b[^>]*class="[^"]*\bactivity-film\b[^"]*"[^>]*>.*?</section>|<div\b[^>]*class="[^"]*\bvideo-shell\b[^"]*"[^>]*>.*?</div>'
-            require(re.findall(pattern, markup, re.S) == re.findall(pattern, approved_baseline, re.S), '播放器 HTML 被改動（含核准的引言例外）')
+            def strict_players(source):
+                return [normalize_fallback_copy(fragment, expected_url) if expected_url else fragment
+                        for fragment in re.findall(pattern, source, re.S)]
+            require(strict_players(markup) == strict_players(approved_baseline), '播放器 HTML 被改動（含核准的引言例外）')
     assert len(descriptions) == len(set(descriptions)), 'description 重複'
     sitemap = ElementTree.parse(SITE/'sitemap.xml')
     urls = [n.text for n in sitemap.findall('.//{*}loc')]
