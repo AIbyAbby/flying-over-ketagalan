@@ -50,15 +50,21 @@ p,li {text-wrap:pretty; text-align:left}
 figcaption,.film-quality-note,.byline,.kicker {font-family:var(--sans);font-size:var(--text-xs);line-height:1.6;color:var(--color-text-muted)}
 h2 {margin-block:var(--space-5) var(--space-3)}
 a {color:var(--color-primary);text-underline-offset:.2em}
-a:hover {color:var(--color-primary-hover)}
+@media (hover: hover) and (pointer: fine) {
+a:hover {color:var(--color-primary-hover)}}
+
 :is(a,button):focus-visible {outline:3px solid var(--color-focus);outline-offset:2px}
 button,.primary-entry,.film-watch-link {font-family:var(--sans);font-size:var(--text-sm);min-height:48px;border-radius:8px;padding:.75rem 1rem;background:var(--color-primary);color:var(--color-surface);border:1px solid var(--color-primary)}
-button:hover,.primary-entry:hover,.film-watch-link:hover {background:var(--color-primary-hover);color:var(--color-surface)}
+@media (hover: hover) and (pointer: fine) {
+button:hover,.primary-entry:hover,.film-watch-link:hover {background:var(--color-primary-hover);color:var(--color-surface)}}
+
 button:active,.primary-entry:active {transform:translateY(1px)}
 button:disabled {opacity:.55;cursor:not-allowed}
 img {border-radius:10px}
 .shared-card,.intro-method {background:var(--color-surface);border:1px solid var(--color-border);box-shadow:0 2px 8px rgb(var(--color-text-rgb) / .05)}
-.shared-card:hover {border-color:var(--color-primary);transform:translateY(-2px)}
+@media (hover: hover) and (pointer: fine) {
+.shared-card:hover {border-color:var(--color-primary);transform:translateY(-2px)}}
+
 .sr-only {position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
 [hidden] {display:none!important}
 @media(max-width:768px){h3 {font-family:var(--sans)} }
@@ -112,10 +118,12 @@ img {border-radius:10px}
 .reflection-summary::marker {
   display: none;
 }
+@media (hover: hover) and (pointer: fine) {
 
 .reflection-summary:hover {
   background-color: rgb(var(--color-primary-rgb) / .02);
-}
+}}
+
 
 .reflection-summary:focus-visible {
   outline: var(--focus-width) solid var(--color-focus);
@@ -198,11 +206,13 @@ img {border-radius:10px}
   color: var(--color-primary);
   transition: background-color var(--motion-fast) ease, color var(--motion-fast) ease, border-color var(--motion-fast) ease;
 }
+@media (hover: hover) and (pointer: fine) {
 
 .reflection-summary:hover .reflection-toggle-btn {
   background-color: var(--color-primary);
   color: var(--color-surface);
-}
+}}
+
 
 .reflection-toggle-btn .reflection-toggle-close {
   display: none;
@@ -217,11 +227,13 @@ img {border-radius:10px}
   color: var(--color-text-muted);
   border-color: var(--color-border);
 }
+@media (hover: hover) and (pointer: fine) {
 .reflection-card[open] .reflection-summary:hover .reflection-toggle-btn {
   background-color: var(--color-surface-alt);
   color: var(--color-primary);
   border-color: var(--color-primary);
-}
+}}
+
 .reflection-card[open] .reflection-toggle-btn .reflection-toggle-open {
   display: none;
 }
@@ -290,11 +302,13 @@ img {border-radius:10px}
   justify-content: center;
   transition: background-color var(--motion-fast) ease, color var(--motion-fast) ease;
 }
+@media (hover: hover) and (pointer: fine) {
 
 .reflection-close-btn:hover {
   background-color: var(--color-primary-soft);
   color: var(--color-primary-hover);
-}
+}}
+
 
 .reflection-close-btn:active {
   transform: translateY(var(--press-offset));

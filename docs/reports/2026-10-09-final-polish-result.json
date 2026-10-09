@@ -1,0 +1,23 @@
+{
+  "pages": 17,
+  "failures": [
+    "kuncan.html: 播放器 HTML 被改動（含核准的引言例外）",
+    "suifen.html: 播放器 HTML 被改動（含核准的引言例外）",
+    "wenjin.html: 播放器 HTML 被改動（含核准的引言例外）",
+    "yuan.html: 播放器 HTML 被改動（含核准的引言例外）"
+  ],
+  "player_images_awaiting_approval": [
+    "abby.html: assets/abby-first-frame.jpg",
+    "abby.html: assets/abby-voiceover-first-frame.jpg",
+    "fieldwork-0829.html: assets/fieldwork-0829-first-frame.jpg",
+    "fieldwork-0903.html: assets/fieldwork-0903-first-frame.jpg",
+    "fieldwork-0905.html: assets/fieldwork-0905-first-frame.jpg",
+    "fieldwork-0910.html: assets/fieldwork-0910-first-frame.jpg",
+    "suifen.html: assets/suifen-first-frame.jpg",
+    "suifen.html: assets/suifen-interview-first-frame.jpg",
+    "wenjin.html: assets/wenjin-first-frame.jpg",
+    "yuan.html: assets/yuan-first-frame.jpg"
+  ],
+  "exit_code": 1,
+  "note": "Only the four pre-existing player baseline failures remain; baseline and documentary.js intentionally unchanged."
+}
