@@ -1,0 +1,42 @@
+/* Keep both copies in the same grid cell to reserve their maximum height. */
+.drive-viewing-hint { display:none; }
+@media (hover: none) and (pointer: coarse) {
+  .drive-viewing-hint {
+    display:grid;
+    grid-template-columns:minmax(0,1fr);
+    margin:var(--space-3) 0 var(--space-2);
+    padding:var(--space-2) var(--space-3);
+    border-left:3px solid var(--color-primary);
+    background:var(--color-primary-soft);
+    color:var(--color-primary);
+    font:400 var(--text-sm)/1.7 var(--sans);
+  }
+  .drive-viewing-hint p {
+    grid-area:1 / 1;
+    align-self:center;
+    margin:0;
+    color:inherit;
+    font:inherit;
+    overflow-wrap:anywhere;
+  }
+  .drive-viewing-hint .drive-hint-line { visibility:hidden; }
+  .drive-viewing-hint[data-line="true"] .drive-hint-standard { visibility:hidden; }
+  .drive-viewing-hint[data-line="true"] .drive-hint-line { visibility:visible; }
+  .drive-viewing-hint + .player-fallback-row .player-fallback {
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-sizing:border-box;
+    width:100%;
+    min-height:48px;
+    padding:var(--space-1) var(--space-2);
+    border:1px solid var(--color-primary);
+    border-radius:var(--radius-control);
+    background:var(--color-primary);
+    color:var(--color-surface);
+    text-decoration:none;
+  }
+  .drive-viewing-hint + .player-fallback-row .player-fallback:active {
+    background:var(--color-primary-hover);
+  }
+}
