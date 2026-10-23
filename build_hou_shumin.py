@@ -94,8 +94,7 @@ def new_page(w, works, template):
                    '<p class="drive-viewing-hint"><span class="drive-hint-standard">手機觀看建議另開影片。</span>'
                    '<span class="drive-hint-line" aria-hidden="true">若在 LINE 內無法播放，請改用手機瀏覽器開啟。</span></p>')
     else:
-        body += ('<p class="work-author">作品形式｜圖像簡報</p><p>'+e(w['note'])+'</p>'
-                 + f'<div class="video-shell"><iframe src="https://drive.google.com/file/d/{w["id"]}/preview" '
+        body += (f'<div class="video-shell"><iframe src="https://drive.google.com/file/d/{w["id"]}/preview" '
                    f'title="{title}・簡報" loading="lazy" allowfullscreen></iframe></div>')
         # No video-shell: the existing player script binds buttons in video shells only.
         body = body.replace('<div class="video-shell"><iframe', '<div class="presentation-shell"><iframe')
@@ -121,17 +120,50 @@ def build():
     old = json.loads((CONTENT / 'works.json').read_text(encoding='utf-8'))
     featured = next(w for w in additions if w['slug'] == 'shumin-jinniang')
     remaining = [w for w in additions if w['slug'] != featured['slug']]
-    works = [featured] + old + remaining
+    additions = [featured] + remaining
+    group = dict(featured, slug='shumin')
+    works = old + [group]
+    individual_works = old + additions
     template = (SITE / 'suifen.html').read_text(encoding='utf-8')
     template = re.sub(r'<link rel="stylesheet" href="work-fonts-extra\.css\?v=[^"]+">', '', template)
     if 'class="site-header final-header"' not in template:
         raise RuntimeError('需要目前正式版的導覽模板；停止，避免套回舊版版面。')
     for w in additions:
-        (SITE / (w['slug']+'.html')).write_text(new_page(w, works, template), encoding='utf-8')
+        doc = new_page(w, individual_works, template)
+        doc = re.sub(r'<details class="work-switcher">.*?</details>', lambda _: switch(works, 'shumin'), doc, count=1, flags=re.S)
+        seq, bar = sequence(works, len(works)-1)
+        doc = re.sub(r'<nav class="final-work-sequence".*?</nav>', lambda _: seq, doc, count=1, flags=re.S)
+        doc = re.sub(r'<nav class="work-action-bar".*?</nav>', lambda _: bar, doc, count=1, flags=re.S)
+        (SITE / (w['slug']+'.html')).write_text(doc, encoding='utf-8')
+    # Like the existing multi-work creator pages, show all five works inline.
+    hub = new_page(group, works, template)
+    sections = ''
+    for w in remaining:
+        individual = (SITE / (w['slug']+'.html')).read_text(encoding='utf-8')
+        article = re.search(r'<article class="work-reading wrap">(.*?)</article>', individual, re.S)[1]
+        sections += ('<section class="interview wrap" id="'+w['slug']+'">'
+                     '<header class="article-heading work-heading shumin-work-heading"><h2>'+e(w['title'])+'</h2>'
+                     '<p class="article-lead">'+e(w['subtitle'])+'</p>'
+                     '<p class="work-author">創作者｜侯淑敏</p></header>'+article+'</section>')
+    hub = re.sub(r'<section class="other-works wrap">.*?</section>', lambda _: sections, hub, count=1, flags=re.S)
+    hub = hub.replace('</head>', '<link rel="stylesheet" href="shumin-layout.css?v=20261023-1"></head>')
+    if 'presentation-shell iframe' not in hub:
+        hub = hub.replace('</head>', '<style>.presentation-shell{aspect-ratio:16/9}.presentation-shell iframe{width:100%;height:100%;border:0}</style></head>')
+    (SITE / 'shumin.html').write_text(hub, encoding='utf-8')
     overview_path = SITE / 'works.html'
     overview = overview_path.read_text(encoding='utf-8')
+    # Keep the approved main title, subtitle and byline together on this creator card.
+    suifen = next(w for w in old if w['slug'] == 'suifen')
+    def format_suifen(match):
+        card = match[0]
+        if 'href="suifen.html"' not in card:
+            return card
+        card = re.sub(r'<p class="card-subtitle">.*?</p>', '', card, flags=re.S)
+        card = card.replace('</h3>', '</h3><p class="card-subtitle">'+e(suifen['subtitle'])+'</p>', 1)
+        return card
+    overview = re.sub(r'<article class="shared-card work-card">.*?</article>', format_suifen, overview, flags=re.S)
     overview = re.sub(r'<!-- hou-featured:start -->.*?<!-- hou-featured:end -->', '', overview, flags=re.S)
-    block = '<!-- hou-shumin:start -->'+''.join(work_card(w) for w in remaining)+'<!-- hou-shumin:end -->'
+    block = '<!-- hou-shumin:start -->'+work_card(group)+'<!-- hou-shumin:end -->'
     if '<!-- hou-shumin:start -->' in overview:
         overview = re.sub(r'<!-- hou-shumin:start -->.*?<!-- hou-shumin:end -->', lambda _: block, overview, flags=re.S)
     else:
@@ -139,11 +171,6 @@ def build():
         if overview.count(anchor) != 1:
             raise RuntimeError('作品總覽結構不符，停止避免誤插入。')
         overview = overview.replace(anchor, block+anchor, 1)
-    featured_block = '<!-- hou-featured:start -->'+work_card(featured)+'<!-- hou-featured:end -->'
-    first_card = '<article class="shared-card work-card">'
-    if first_card not in overview:
-        raise RuntimeError('作品總覽缺少卡片，停止避免誤插入。')
-    overview = overview.replace(first_card, featured_block+first_card, 1)
     overview_path.write_text(overview, encoding='utf-8')
     for i, w in enumerate(old):
         path = SITE / (w['slug']+'.html')
@@ -154,20 +181,21 @@ def build():
         doc = re.sub(r'<nav class="work-action-bar".*?</nav>', lambda _: bar, doc, count=1, flags=re.S)
         path.write_text(doc, encoding='utf-8')
     # Added glyphs use the same families/weights without changing original font subsets.
-    for w in works + [{'slug': 'works'}]:
+    for w in works + additions + [{'slug': 'works'}]:
         path = SITE / (w['slug']+'.html')
         doc = path.read_text(encoding='utf-8')
         if 'work-fonts-extra.css' not in doc:
-            doc = doc.replace('</head>', '<link rel="stylesheet" href="work-fonts-extra.css?v=20261023-1"></head>')
+            doc = doc.replace('</head>', '<link rel="stylesheet" href="work-fonts-extra.css?v=20261023-2"></head>')
+        doc = re.sub(r'work-fonts-extra\.css\?v=[^"\s]+', 'work-fonts-extra.css?v=20261023-2', doc)
         path.write_text(doc, encoding='utf-8')
     sitemap = SITE / 'sitemap.xml'
     xml = sitemap.read_text(encoding='utf-8')
-    for w in additions:
+    for w in additions + [group]:
         url = BASE+w['slug']+'.html'
         if '<loc>'+url+'</loc>' not in xml:
             xml = xml.replace('</urlset>', '<url><loc>'+url+'</loc></url>\n</urlset>')
     sitemap.write_text(xml, encoding='utf-8')
-    print('已產生 5 件作品頁，更新作品總覽與作品導覽。')
+    print('已集中五件作品於侯淑敏頁，總覽為 Abby 後的一張卡片。')
 
 
 if __name__ == '__main__':

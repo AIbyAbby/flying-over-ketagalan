@@ -1,0 +1,9 @@
+/* 集中頁保留 h2 層級，視覺大小沿用既有作品頁主標。 */
+:root body.inner .shumin-work-heading h2 {
+  font-family:var(--serif);
+  font-size:var(--text-2xl);
+  font-weight:700;
+  line-height:1.35;
+  letter-spacing:.01em;
+  margin:0 0 .75rem;
+}

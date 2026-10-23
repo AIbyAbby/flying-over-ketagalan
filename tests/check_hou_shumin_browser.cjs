@@ -29,7 +29,7 @@ function check(ok, message) { if (!ok) throw Error(message); }
     page.on('pageerror', error => report.errors.push(error.message));
     for (const width of [320,390,768,1440]) {
       await page.setViewportSize({width,height:900});
-      for (const name of ['works', ...slugs]) {
+      for (const name of ['works', 'shumin', ...slugs]) {
         await page.goto(base+'/'+name+'.html');
         const data = await page.evaluate(() => ({
           overflow:document.documentElement.scrollWidth > innerWidth+1,
@@ -45,7 +45,7 @@ function check(ok, message) { if (!ok) throw Error(message); }
       }
     }
     await page.setViewportSize({width:390,height:844});
-    for (const slug of slugs) {
+    for (const slug of ['shumin']) {
       for (const region of ['.card-media','h3','.card-copy p']) {
         await page.goto(base+'/works.html');
         const card=page.locator('article.work-card').filter({has:page.locator('a[href="'+slug+'.html"]')});
@@ -60,7 +60,7 @@ function check(ok, message) { if (!ok) throw Error(message); }
         report.taps.push({slug,region});
       }
     }
-    await page.goto(base+'/shumin-fude.html');
+    await page.goto(base+'/shumin.html');
     await page.locator('.site-menu summary').click();
     check(await page.locator('.site-menu').evaluate(n=>n.open), 'menu did not open');
     await page.keyboard.press('Escape');
@@ -90,6 +90,14 @@ function check(ok, message) { if (!ok) throw Error(message); }
       report.player.push({slug,src,actualStreaming:false});
     }
     const cdp=await desktop.context().newCDPSession(desktop);
+    await desktop.goto(base+'/shumin.html');
+    const hubIds=await desktop.locator('.video-shell').evaluateAll(nodes=>nodes.map(n=>n.dataset.video));
+    check(hubIds.length===4,'hub must contain four video players');
+    for(const id of hubIds){
+      const shell=desktop.locator('.video-shell[data-video="'+id+'"]');
+      await shell.locator('button').click();
+      check((await shell.locator('iframe').getAttribute('src')).includes('/'+id+'/preview'),'hub player ID mismatch');
+    }
     await cdp.send('DOM.enable');await cdp.send('CSS.enable');
     const selectors=['.article-heading h1','.work-heading .article-lead','.work-author','.work-introduction p'];
     async function typography(){
@@ -102,6 +110,17 @@ function check(ok, message) { if (!ok) throw Error(message); }
     for(const width of [390,1440]){
       await desktop.setViewportSize({width,height:1000});
       await desktop.goto(base+'/suifen.html');const baseline=await typography();
+      await desktop.goto(base+'/shumin.html');
+      await desktop.evaluate(()=>document.fonts.ready);
+      const hubHeadings=await desktop.evaluate(()=>[...document.querySelectorAll('main .article-heading.work-heading')].map(header=>{
+        return ['h1,h2','.article-lead','.work-author'].map(selector=>{
+          const s=getComputedStyle(header.querySelector(selector));
+          return {family:s.fontFamily,weight:s.fontWeight,size:s.fontSize,lineHeight:s.lineHeight};
+        });
+      }));
+      check(hubHeadings.length===5,'hub must have five work headings');
+      const expected=baseline.slice(0,3).map(({selector,...style})=>style);
+      for(const [index,heading] of hubHeadings.entries()) check(JSON.stringify(heading)===JSON.stringify(expected),'hub heading '+index+' differs from original at '+width+': '+JSON.stringify(heading));
       for(const slug of slugs){
         await desktop.goto(base+'/'+slug+'.html');const styles=await typography();
         check(JSON.stringify(styles)===JSON.stringify(baseline),slug+' typography differs from original at '+width);
@@ -122,10 +141,11 @@ function check(ok, message) { if (!ok) throw Error(message); }
     const nojs=await browser.newContext({javaScriptEnabled:false,viewport:{width:390,height:844}});
     await nojs.route('https://**/*',route=>route.abort());
     const simple=await nojs.newPage();
-    for(const slug of slugs){
+    for(const slug of ['shumin',...slugs]){
       await simple.goto(base+'/'+slug+'.html');
-      check(await simple.locator('.work-introduction p').isVisible(),slug+' no-JS introduction');
-      check(await simple.locator('.player-fallback').isVisible(),slug+' no-JS fallback');
+      check(await simple.locator('.work-introduction p').first().isVisible(),slug+' no-JS introduction');
+      check(await simple.locator('.player-fallback').first().isVisible(),slug+' no-JS fallback');
+      if(slug==='shumin')check(await simple.locator('.player-fallback').count()===5,'hub no-JS fallback count');
     }
     check(!report.errors.length, 'JS errors: '+report.errors.join(','));
     await page.goto(base+'/works.html');

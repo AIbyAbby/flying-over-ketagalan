@@ -14,18 +14,19 @@ NEW = ['shumin-fude', 'shumin-map', 'shumin-riverside', 'shumin-jinniang', 'shum
 def check():
     overview = html.parse(str(SITE / 'works.html'))
     cards = overview.xpath('//article[contains(concat(" ",@class," ")," work-card ")]')
-    assert len(cards) == 10, f'作品卡應為 10 件，目前 {len(cards)}'
-    assert cards[0].xpath('.//a[@class="stretched-link"]/@href') == ['shumin-jinniang.html'], '金娘傳奇應為第一件'
+    assert len(cards) == 6, f'創作者卡應為 6 張，目前 {len(cards)}'
+    creator_slugs = OLD + ['shumin']
+    assert [c.xpath('.//a[@class="stretched-link"]/@href')[0] for c in cards] == [s+'.html' for s in creator_slugs]
     for slug in NEW:
-        assert len(overview.xpath(f'//a[@class="stretched-link"][@href="{slug}.html"]')) == 1
-    all_slugs = ['shumin-jinniang'] + OLD + [s for s in NEW if s != 'shumin-jinniang']
+        assert not overview.xpath(f'//a[@class="stretched-link"][@href="{slug}.html"]'), '不可拆成五張總覽卡'
+    all_slugs = OLD + NEW + ['shumin']
     ids = json.loads((SITE / 'content/hou-shumin-media.json').read_text(encoding='utf-8'))
     for slug in all_slugs:
         doc = html.parse(str(SITE / (slug + '.html')))
-        assert [a.get('href') for a in doc.xpath('//details[@class="work-switcher"]//a')] == [s+'.html' for s in all_slugs], slug
-        index = all_slugs.index(slug)
-        previous = all_slugs[index-1]+'.html' if index else 'works.html'
-        following = all_slugs[index+1]+'.html' if index+1 < len(all_slugs) else 'works.html'
+        assert [a.get('href') for a in doc.xpath('//details[@class="work-switcher"]//a')] == [s+'.html' for s in creator_slugs], slug
+        index = creator_slugs.index(slug) if slug in OLD else len(creator_slugs)-1
+        previous = creator_slugs[index-1]+'.html' if index else 'works.html'
+        following = creator_slugs[index+1]+'.html' if index+1 < len(creator_slugs) else 'works.html'
         assert doc.xpath('//nav[@class="work-action-bar"]/a/@href') == [previous, 'works.html', following], slug
         for nav in doc.xpath('//nav'):
             assert len(nav.xpath('.//*[@aria-current="page"]')) <= 1, slug
@@ -42,7 +43,8 @@ def check():
         else:
             assert not doc.xpath('//div[@class="video-shell"]'), '簡報不可當影片'
             assert doc.xpath('//iframe[@title="平埔族秀朗社的靈魂信仰與祭儀・簡報"]')
-            assert 'AI 生成圖片' in ''.join(doc.xpath('//main//text()'))
+            assert '作品形式｜圖像簡報' not in ''.join(doc.xpath('//main//text()'))
+            assert '原簡報註明' not in ''.join(doc.xpath('//main//text()'))
         for img in doc.xpath('//img[@src]'):
             assert (SITE / img.get('src')).is_file(), img.get('src')
         for a in doc.xpath('//a[@href]'):
@@ -69,7 +71,13 @@ def check():
             continue  # A newly added helper has no previously published version to preserve.
         original = subprocess.check_output(['git', 'show', f'HEAD:02_網站/{filename}'], cwd=ROOT)
         assert original.replace(b'\r\n', b'\n') == (SITE / filename).read_bytes().replace(b'\r\n', b'\n'), filename
-    print('PASS: 10 作品卡；10 頁切換導覽；4 部影片與 1 份簡報；來源連結、圖片與目前位置')
+    hub = html.parse(str(SITE / 'shumin.html'))
+    expected = [next(w['id'] for w in ids if w['slug']==s) for s in ['shumin-jinniang','shumin-fude','shumin-map','shumin-riverside']]
+    assert hub.xpath('//div[@class="video-shell"]/@data-video') == expected
+    assert len(hub.xpath('//div[@class="presentation-shell"]/iframe')) == 1
+    assert len(hub.xpath('//a[@class="player-fallback"]')) == 5
+    assert hub.xpath('//h1/text()') == ['秀朗尪姨・金娘傳奇Ⅰ']
+    print('PASS: 6 張創作者卡；侯淑敏在 Abby 後；五件作品同頁，金娘第一；導覽與原文保留')
 
 
 if __name__ == '__main__':
