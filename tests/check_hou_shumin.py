@@ -59,7 +59,9 @@ def check():
         for region in regions:
             original = re.sub(region, '', original, flags=re.S)
             current = re.sub(region, '', current, flags=re.S)
-        current = re.sub(r'<link rel="stylesheet" href="work-fonts-extra\.css\?v=[^"]+">', '', current)
+        font_link = r'<link rel="stylesheet" href="work-fonts-extra\.css\?v=[^"]+">'
+        original = re.sub(font_link, '', original)
+        current = re.sub(font_link, '', current)
         assert original.replace('\r\n', '\n') == current.replace('\r\n', '\n'), slug+'：既有內容被改動'
     for filename in ['documentary.js', 'navigation-final.js', 'drive-viewing-hint.js']:
         tracked = subprocess.check_output(['git', 'ls-tree', '--name-only', 'HEAD', '--', f'02_網站/{filename}'], cwd=ROOT)
