@@ -40,6 +40,7 @@ function check(ok, message) { if (!ok) throw Error(message); }
         check(!data.overflow, name+' overflow '+width);
         check(!data.missing.length, name+' missing images');
         check(!data.badNav, name+' current location');
+        check(await page.locator('.drive-viewing-hint:visible').count()===0,name+' mobile hint must be removed');
         check(data.header === (width<=768?56:72), name+' header '+width);
         report.layouts.push({name,width,...data});
       }

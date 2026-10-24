@@ -110,6 +110,7 @@ def new_page(w, works, template):
     # Use the approved touch fallback on new pages without altering old players.
     if 'drive-viewing-hint.js' not in doc:
         doc = doc.replace('</head>', '<link rel="stylesheet" href="drive-viewing-hint.css?v=20261023-1"><script src="drive-viewing-hint.js?v=20261023-1" defer></script></head>')
+    doc = re.sub(r'drive-viewing-hint\.css\?v=[^"\s]+', 'drive-viewing-hint.css?v=20261024-1', doc)
     if w['kind'] == 'presentation':
         doc = doc.replace('</head>', '<style>.presentation-shell{aspect-ratio:16/9}.presentation-shell iframe{width:100%;height:100%;border:0}</style></head>')
     return doc
