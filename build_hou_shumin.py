@@ -186,8 +186,9 @@ def build():
         path = SITE / (w['slug']+'.html')
         doc = path.read_text(encoding='utf-8')
         if 'work-fonts-extra.css' not in doc:
-            doc = doc.replace('</head>', '<link rel="stylesheet" href="work-fonts-extra.css?v=20261023-2"></head>')
-        doc = re.sub(r'work-fonts-extra\.css\?v=[^"\s]+', 'work-fonts-extra.css?v=20261023-2', doc)
+            doc = doc.replace('</head>', '<link rel="stylesheet" href="work-fonts-extra.css?v=20261025-1"></head>')
+        if w['slug'] not in {item['slug'] for item in old} and w['slug'] != 'works':
+            doc = re.sub(r'work-fonts-extra\.css\?v=[^"\s]+', 'work-fonts-extra.css?v=20261025-1', doc)
         path.write_text(doc, encoding='utf-8')
     sitemap = SITE / 'sitemap.xml'
     xml = sitemap.read_text(encoding='utf-8')
@@ -196,7 +197,7 @@ def build():
         if '<loc>'+url+'</loc>' not in xml:
             xml = xml.replace('</urlset>', '<url><loc>'+url+'</loc></url>\n</urlset>')
     sitemap.write_text(xml, encoding='utf-8')
-    print('已集中五件作品於侯淑敏頁，總覽為 Abby 後的一張卡片。')
+    print(f'已集中 {len(additions)} 件作品於侯淑敏頁，總覽為 Abby 後的一張卡片。')
 
 
 if __name__ == '__main__':

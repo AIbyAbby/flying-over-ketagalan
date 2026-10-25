@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const http = require('http');
 const base = process.env.PREVIEW_URL || 'http://127.0.0.1:8773';
-const slugs = ['shumin-fude','shumin-map','shumin-riverside','shumin-jinniang','shumin-belief'];
+const slugs = ['shumin-fude','shumin-map','shumin-riverside','shumin-jinniang','shumin-belief','shumin-picturebook'];
 const report = {layouts:[], taps:[], player:[], touchFallback:[], typography:[], menu:[], errors:[]};
 function check(ok, message) { if (!ok) throw Error(message); }
 (async () => {
@@ -67,7 +67,7 @@ function check(ok, message) { if (!ok) throw Error(message); }
     await page.keyboard.press('Escape');
     check(!(await page.locator('.site-menu').evaluate(n=>n.open)), 'menu did not close');
     report.menu.push('mobile menu opens and Escape closes');
-    for(const slug of slugs.slice(0,4)){
+    for(const slug of slugs.filter(s=>s!=='shumin-belief')){
       await page.goto(base+'/'+slug+'.html');
       const expected=await page.locator('.player-fallback').getAttribute('href');
       const [popup]=await Promise.all([page.waitForEvent('popup'),page.locator('.video-shell button').click()]);
@@ -81,7 +81,7 @@ function check(ok, message) { if (!ok) throw Error(message); }
     await desktop.route('**/*',route=>new URL(route.request().url()).origin!==new URL(base).origin
       ? route.fulfill({status:200,contentType:'text/html',body:'<p>External preview stub</p>'}) : route.continue());
     desktop.on('pageerror',error=>report.errors.push(error.message));
-    for (const slug of slugs.slice(0,4)) {
+    for (const slug of slugs.filter(s=>s!=='shumin-belief')) {
       await desktop.goto(base+'/'+slug+'.html');
       await desktop.locator('.video-shell button').click();
       const frame=desktop.locator('.video-shell iframe');
@@ -93,7 +93,7 @@ function check(ok, message) { if (!ok) throw Error(message); }
     const cdp=await desktop.context().newCDPSession(desktop);
     await desktop.goto(base+'/shumin.html');
     const hubIds=await desktop.locator('.video-shell').evaluateAll(nodes=>nodes.map(n=>n.dataset.video));
-    check(hubIds.length===4,'hub must contain four video players');
+    check(hubIds.length===5,'hub must contain five video players');
     for(const id of hubIds){
       const shell=desktop.locator('.video-shell[data-video="'+id+'"]');
       await shell.locator('button').click();
@@ -119,7 +119,7 @@ function check(ok, message) { if (!ok) throw Error(message); }
           return {family:s.fontFamily,weight:s.fontWeight,size:s.fontSize,lineHeight:s.lineHeight};
         });
       }));
-      check(hubHeadings.length===5,'hub must have five work headings');
+      check(hubHeadings.length===6,'hub must have six work headings');
       const expected=baseline.slice(0,3).map(({selector,...style})=>style);
       for(const [index,heading] of hubHeadings.entries()) check(JSON.stringify(heading)===JSON.stringify(expected),'hub heading '+index+' differs from original at '+width+': '+JSON.stringify(heading));
       for(const slug of slugs){
@@ -146,7 +146,7 @@ function check(ok, message) { if (!ok) throw Error(message); }
       await simple.goto(base+'/'+slug+'.html');
       check(await simple.locator('.work-introduction p').first().isVisible(),slug+' no-JS introduction');
       check(await simple.locator('.player-fallback').first().isVisible(),slug+' no-JS fallback');
-      if(slug==='shumin')check(await simple.locator('.player-fallback').count()===5,'hub no-JS fallback count');
+      if(slug==='shumin')check(await simple.locator('.player-fallback').count()===6,'hub no-JS fallback count');
     }
     check(!report.errors.length, 'JS errors: '+report.errors.join(','));
     await page.goto(base+'/works.html');
@@ -159,6 +159,6 @@ function check(ok, message) { if (!ok) throw Error(message); }
     await page.evaluate(()=>scrollTo({top:0,behavior:'instant'}));
     await page.screenshot({path:path.join(__dirname,'../scratch/hou-shumin-detail-mobile.png'),fullPage:true});
     fs.writeFileSync(path.join(__dirname,'../scratch/hou-shumin-browser.json'),JSON.stringify(report,null,2));
-    console.log(JSON.stringify({layouts:report.layouts.length,taps:report.taps.length,players:report.player.length,touchFallback:report.touchFallback.length,typography:report.typography.length,noJS:5,errors:report.errors}));
+    console.log(JSON.stringify({layouts:report.layouts.length,taps:report.taps.length,players:report.player.length,touchFallback:report.touchFallback.length,typography:report.typography.length,noJS:slugs.length+1,errors:report.errors}));
   } finally {await browser.close(); if(server) await new Promise(resolve=>server.close(resolve));}
 })().catch(error => {console.error(error); process.exitCode=1;});

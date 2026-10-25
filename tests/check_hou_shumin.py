@@ -8,7 +8,7 @@ from lxml import html
 ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / '02_網站'
 OLD = ['suifen', 'kuncan', 'wenjin', 'yuan', 'abby']
-NEW = ['shumin-fude', 'shumin-map', 'shumin-riverside', 'shumin-jinniang', 'shumin-belief']
+NEW = ['shumin-fude', 'shumin-map', 'shumin-riverside', 'shumin-jinniang', 'shumin-picturebook', 'shumin-belief']
 
 
 def check():
@@ -72,12 +72,12 @@ def check():
         original = subprocess.check_output(['git', 'show', f'HEAD:02_網站/{filename}'], cwd=ROOT)
         assert original.replace(b'\r\n', b'\n') == (SITE / filename).read_bytes().replace(b'\r\n', b'\n'), filename
     hub = html.parse(str(SITE / 'shumin.html'))
-    expected = [next(w['id'] for w in ids if w['slug']==s) for s in ['shumin-jinniang','shumin-fude','shumin-map','shumin-riverside']]
+    expected = [next(w['id'] for w in ids if w['slug']==s) for s in ['shumin-jinniang','shumin-picturebook','shumin-fude','shumin-map','shumin-riverside']]
     assert hub.xpath('//div[@class="video-shell"]/@data-video') == expected
     assert len(hub.xpath('//div[@class="presentation-shell"]/iframe')) == 1
-    assert len(hub.xpath('//a[@class="player-fallback"]')) == 5
+    assert len(hub.xpath('//a[@class="player-fallback"]')) == 6
     assert hub.xpath('//h1/text()') == ['秀朗尪姨・金娘傳奇Ⅰ']
-    print('PASS: 6 張創作者卡；侯淑敏在 Abby 後；五件作品同頁，金娘第一；導覽與原文保留')
+    print('PASS: 6 張創作者卡；侯淑敏在 Abby 後；六件作品同頁，金娘第一、繪本第二；導覽與原文保留')
 
 
 if __name__ == '__main__':
