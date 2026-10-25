@@ -37,7 +37,7 @@ def build(sans, serif):
         font.save(SITE / 'assets/fonts' / filename)
         unicode_range = ','.join(f'U+{code:X}' for code in sorted(missing))
         family_name = 'Noto Sans TC' if family == 'NotoSansTC' else 'Noto Serif TC'
-        rules.append(f'@font-face{{font-family:"{family_name}";src:url("assets/fonts/{filename}?v=20261025-1") format("woff2");font-style:normal;font-weight:{weight};font-display:swap;unicode-range:{unicode_range}}}')
+        rules.append(f'@font-face{{font-family:"{family_name}";src:url("assets/fonts/{filename}?v=20261025-2") format("woff2");font-style:normal;font-weight:{weight};font-display:swap;unicode-range:{unicode_range}}}')
         print(f'{filename}: {len(missing)} 個補字，{(SITE / "assets/fonts" / filename).stat().st_size} bytes')
     (SITE / 'work-fonts-extra.css').write_text('\n'.join(rules)+'\n', encoding='utf-8')
 

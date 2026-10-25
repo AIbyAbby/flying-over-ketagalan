@@ -69,6 +69,20 @@ def work_card(w):
     return card.replace('</h3>', '</h3><span class="card-label">創作者｜侯淑敏</span>', 1)
 
 
+def storybook():
+    manifest_path = CONTENT / 'shumin-picturebook-pdf.json'
+    if not manifest_path.exists():
+        return ''
+    manifest = json.loads(manifest_path.read_text(encoding='utf-8'))
+    pdf = e(manifest['pdf'])
+    pages = ''.join('<figure><a href="'+pdf+'#page='+str(i)+'" target="_blank" rel="noopener" aria-label="另開 PDF 第 '+str(i)+' 頁">'
+                    + img(page, '故事繪本第 '+str(i)+' 頁')+'</a></figure>'
+                    for i, page in enumerate(manifest['pages'], 1))
+    return ('<details class="ui-storybook" id="picturebook-reading"><summary><span>故事繪本</span>'
+            '<span class="ui-storybook-cue" aria-hidden="true">閱讀 ↗</span></summary><div class="ui-storybook-body">'
+            '<div class="ui-storybook-pages">'+pages+'</div></div></details>')
+
+
 def new_page(w, works, template):
     title = e(w['title'])
     doc = re.sub(r'<title>.*?</title>', '<title>'+title+'｜消失的原民故事</title>', template, count=1)
@@ -100,6 +114,9 @@ def new_page(w, works, template):
         body = body.replace('<div class="video-shell"><iframe', '<div class="presentation-shell"><iframe')
     body += (f'<p class="player-fallback-row"><a class="player-fallback" href="{source}" target="_blank" rel="noopener">'
              + ('在雲端觀看影片 ↗' if w['kind'] == 'video' else '另開簡報閱讀 ↗')+'</a></p></article>')
+    if w['slug'] == 'shumin-picturebook':
+        body = body.replace('</article>', storybook()+'</article>', 1)
+        doc = doc.replace('</head>', '<link rel="stylesheet" href="picturebook-reader.css?v=20261025-2"></head>')
     body += ('<section class="other-works wrap"><div class="section-heading"><span class="kicker">沿著作品繼續閱讀</span>'
              '<h2>侯淑敏的其他作品</h2></div><div class="shared-card-grid">'
              + ''.join(work_card(other) for other in works if other.get('author') == '侯淑敏' and other['slug'] != w['slug'])
@@ -147,6 +164,8 @@ def build():
                      '<p class="article-lead">'+e(w['subtitle'])+'</p>'
                      '<p class="work-author">創作者｜侯淑敏</p></header>'+article+'</section>')
     hub = re.sub(r'<section class="other-works wrap">.*?</section>', lambda _: sections, hub, count=1, flags=re.S)
+    if 'class="ui-storybook"' in hub:
+        hub = hub.replace('</head>', '<link rel="stylesheet" href="picturebook-reader.css?v=20261025-2"></head>')
     hub = hub.replace('</head>', '<link rel="stylesheet" href="shumin-layout.css?v=20261023-1"></head>')
     if 'presentation-shell iframe' not in hub:
         hub = hub.replace('</head>', '<style>.presentation-shell{aspect-ratio:16/9}.presentation-shell iframe{width:100%;height:100%;border:0}</style></head>')
@@ -186,9 +205,9 @@ def build():
         path = SITE / (w['slug']+'.html')
         doc = path.read_text(encoding='utf-8')
         if 'work-fonts-extra.css' not in doc:
-            doc = doc.replace('</head>', '<link rel="stylesheet" href="work-fonts-extra.css?v=20261025-1"></head>')
-        if w['slug'] not in {item['slug'] for item in old} and w['slug'] != 'works':
-            doc = re.sub(r'work-fonts-extra\.css\?v=[^"\s]+', 'work-fonts-extra.css?v=20261025-1', doc)
+            doc = doc.replace('</head>', '<link rel="stylesheet" href="work-fonts-extra.css?v=20261025-2"></head>')
+        if w['slug'] in {'shumin', 'shumin-picturebook'}:
+            doc = re.sub(r'work-fonts-extra\.css\?v=[^"\s]+', 'work-fonts-extra.css?v=20261025-2', doc)
         path.write_text(doc, encoding='utf-8')
     sitemap = SITE / 'sitemap.xml'
     xml = sitemap.read_text(encoding='utf-8')

@@ -149,6 +149,21 @@ function check(ok, message) { if (!ok) throw Error(message); }
       if(slug==='shumin')check(await simple.locator('.player-fallback').count()===6,'hub no-JS fallback count');
     }
     check(!report.errors.length, 'JS errors: '+report.errors.join(','));
+    await page.goto(base+'/shumin.html');
+    const book=page.locator('.ui-storybook');
+    check(await book.count()===1,'storybook reader missing');
+    check(!(await book.evaluate(e=>e.open)),'storybook must start collapsed');
+    await book.locator('summary').click();
+    check(await book.evaluate(e=>e.open),'storybook did not expand');
+    check(await book.locator('figure').count()===24,'storybook page count');
+    check(await book.locator('summary').innerText()==='故事繪本閱讀 ↗' || (await book.locator('summary').innerText()).replace(/\s+/g,'')==='故事繪本閱讀↗','storybook reading cue');
+    check(await book.locator('a[download]').count()===0,'download button must be removed');
+    check(!(await book.innerText()).includes('另開 PDF'),'extra PDF control must be removed');
+    await book.locator('summary').scrollIntoViewIfNeeded();
+    await book.locator('img').first().evaluate(e=>e.decode());
+    await page.screenshot({path:path.join(__dirname,'../scratch/storybook-reader-mobile.png')});
+    await book.locator('summary').click();
+    check(!(await book.evaluate(e=>e.open)),'storybook did not collapse');
     await page.goto(base+'/works.html');
     await page.setViewportSize({width:390,height:844});
     for(const image of await page.locator('img').all()) {await image.scrollIntoViewIfNeeded();await image.evaluate(i=>i.decode());}
